@@ -2,6 +2,13 @@
 Project for IT class
 
 RDS Database that contains recipes for food items.
+## Executing
+#### Powershell
+
+```poetry run powershell.exe ./run.ps1```
+
+#### Bash
+```poetry run ./run.sh```
 ```
 Database should be formatted as such
 
