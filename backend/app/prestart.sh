@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
-
+export PYTHONPATH=$(pwd)
 # Let the DB start
 python ./app/backend_pre_start.py
 

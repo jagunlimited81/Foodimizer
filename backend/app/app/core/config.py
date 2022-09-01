@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     # Origins that match this regex OR are in the above list are allowed
     BACKEND_CORS_ORIGIN_REGEX: Optional[
         str
-    ] = "https.*\.(netlify.app|herokuapp.com)"  # noqa: W605
+    ] = "http*"  # noqa: W605
 
     @validator("BACKEND_CORS_ORIGINS", pre=True)
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:

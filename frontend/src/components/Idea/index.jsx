@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-const Idea = ({ idea}) => {
+const Idea = ({ idea }) => {
 
-    const init = idea.indexOf(":")
-    const fin = idea.lastIndexOf("(")
-    const fen = idea.lastIndexOf(")")
+	const init = idea.indexOf(":")
+	const fin = idea.lastIndexOf("(")
+	const fen = idea.lastIndexOf(")")
 
 
-    const url = idea.substr(fin+1,fen-fin-1)
-    const desc = idea.substr(init+1,fin-init-1)
+	const url = idea.substr(fin + 1, fen - fin - 1)
+	const desc = idea.substr(init + 1, fin - init - 1)
 
 	return (
 		idea && (
