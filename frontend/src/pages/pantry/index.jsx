@@ -5,12 +5,11 @@ import RecipeTable from "../../components/RecipeTable"
 import DashboardHeader from "../../components/DashboardHeader";
 import Footer from "../../components/Footer";
 import Loader from '../../components/Loader';
-import Carousel from '../../components/Carousel';
 
 const client = new FastAPIClient(config);
 
 
-const Home = () => {
+const Pantry = () => {
 
      const [loading, setLoading] = useState(true)
      const [recipes, setRecipes] = useState([])
@@ -47,36 +46,34 @@ const Home = () => {
           <>
                <section className="bg-gray-200 ">
                     <DashboardHeader />
-                    <div className="flex flex-col justify-center items-center md:py-12 md:px-12 mx-auto ">
-                         <Carousel />
-                    </div>
-                    <div className="container px-5 py-12 mx-auto lg:px-20 ">
 
+                    <div className="container px-5 py-12 mx-auto lg:px-20">
 
-                         {/* <!-- This is an example component --> */}
-                         <div className="container flex justify-center items-center mb-6">
-                              <div className="relative w-full max-w-xs m-auto">
-                                   <input
-                                        type="text"
-                                        onChange={(e) => setSearchValue(e.target.value)}
-                                        className={`text-black z-20 hover:text-black h-14 w-full max-w-xs m-auto pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none`} placeholder="Search for ingredients..." />
-                                   <div className="absolute top-2 right-2">
-                                        <button onClick={() => fetchRecipes(true)} className="h-10 w-20 text-white rounded bg-red-500 hover:bg-red-600">Search</button>
-                                   </div>
-                              </div>
-                         </div>
                          <div className="flex flex-col flex-wrap pb-6 mb-12 text-white ">
                               <h1 className="mb-6 text-3xl font-medium text-red-500">
                                    Save your pantry items to improve search results
                               </h1>
-
-                         </div>
-                         {/* <p className="text-base leading-relaxed">
+                              <div id="carousel" className="carousel slide relative">
+                              </div>
+                              {/* <!-- This is an example component --> */}
+                              <div className="container flex justify-center items-center mb-6">
+                                   <div className="relative w-full max-w-xs m-auto">
+                                        <input
+                                             type="text"
+                                             onChange={(e) => setSearchValue(e.target.value)}
+                                             className={`text-teal-500 z-20 hover:text-black h-14 w-full max-w-xs m-auto pr-8 pl-5 rounded z-0 focus:shadow focus:outline-none`} placeholder="Search for ingredients..." />
+                                        <div className="absolute top-2 right-2">
+                                             <button onClick={() => fetchRecipes(true)} className="h-10 w-20 text-white rounded bg-red-500 hover:bg-teal-600">Search</button>
+                                        </div>
+                                   </div>
+                              </div>
+                              {/* <p className="text-base leading-relaxed">
               Sample recipes...</p> */}
-                         <div className="mainViewport">
-                              <RecipeTable
-                                   recipes={recipes}
-                              />
+                              <div className="mainViewport">
+                                   <RecipeTable
+                                        recipes={recipes}
+                                   />
+                              </div>
                          </div>
                     </div>
                     <Footer />
@@ -85,4 +82,4 @@ const Home = () => {
      )
 }
 
-export default Home;
+export default Pantry;
