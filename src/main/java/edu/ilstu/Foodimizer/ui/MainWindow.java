@@ -11,19 +11,17 @@ public class MainWindow extends JFrame {
     }
 
     private void init() {
-        JPanel contentPanel = new JPanel();
-
+        contentPanel = MainWindowContentManager.getInstance();
         /* this */
         setTitle("Foodimizer");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
-        /* AppBar */
-        {
 
-        }
         contentPane.add(new AppBar(), BorderLayout.NORTH);
+
         contentPane.add(contentPanel, BorderLayout.CENTER);
     }
     /* Declare variables here */
+    private MainWindowContentManager contentPanel;
 }
