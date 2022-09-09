@@ -1,9 +1,6 @@
 package edu.ilstu.Foodimizer.ui;
 
-import edu.ilstu.Foodimizer.ui.pages.FindRecipesByAZ;
-import edu.ilstu.Foodimizer.ui.pages.FindRecipesByIngredient;
-import edu.ilstu.Foodimizer.ui.pages.FindRecipesByName;
-import edu.ilstu.Foodimizer.ui.pages.MyPantry;
+import edu.ilstu.Foodimizer.ui.pages.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,15 +19,15 @@ public class MainWindowContentManager extends JPanel {
         pages.add(new FindRecipesByIngredient(), "FindRecipesByIngredient");
         pages.add(new FindRecipesByAZ(), "FindRecipesByAZ");
         pages.add(new MyPantry(), "MyPantry");
+        pages.add(RecipePage.getInstance(), "RecipePage");
         this.add(pages);
-        //this.goToPage("Home");
+        this.goToPage("FindRecipesByName");
 
     }
 
     public void goToPage(String page) {
         System.out.println(page);
         contentPanelSwitcher.show(pages, page);
-
     }
 
     /**
