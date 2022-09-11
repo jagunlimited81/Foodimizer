@@ -21,9 +21,12 @@ public class AppBar extends JPanel {
         findRecipesByNameItem = new JMenuItem();
         findRecipesByIngredientsItem = new JMenuItem();
         findRecipesByAZItem = new JMenuItem();
-        /* my panry */
+        /* my pantry */
         myPantry = new JMenu();
-        myPantryGoToPanry = new JMenuItem();
+        myPantryGoToPantry = new JMenuItem();
+        /* my grocery list */
+        myGroceryList = new JMenu();
+        myGroceryListGoTo = new JMenuItem();
 
         description = new JLabel();
         /* this */
@@ -70,12 +73,20 @@ public class AppBar extends JPanel {
             {
                 myPantry.setText("My Pantry");
 
-                myPantryGoToPanry.setText("Go To Pantry");
-                myPantryGoToPanry.setMnemonic('m');
-                myPantryGoToPanry.addActionListener(e -> goToPageActionPerformed("MyPantry"));
-                myPantry.add(myPantryGoToPanry);
+                myPantryGoToPantry.setText("Go To Pantry");
+                myPantryGoToPantry.setMnemonic('m');
+                myPantryGoToPantry.addActionListener(e -> goToPageActionPerformed("MyPantry"));
+                myPantry.add(myPantryGoToPantry);
             }
             menuBar1.add(myPantry);
+            /* My Grocery List */
+            {
+                myGroceryList.setText("My Grocery List");
+
+                myGroceryListGoTo.setText("Go To Grocery List");
+                myGroceryList.add(myGroceryListGoTo);
+            }
+            menuBar1.add(myGroceryList);
         }
 
 
@@ -99,7 +110,9 @@ public class AppBar extends JPanel {
     private JMenuItem findRecipesByAZItem;
     /* My Pantry */
     private JMenu myPantry;
-    private JMenuItem myPantryGoToPanry;
+    private JMenuItem myPantryGoToPantry;
+    private JMenu myGroceryList;
+    private JMenuItem myGroceryListGoTo;
 
 
     private JLabel title;

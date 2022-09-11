@@ -1,5 +1,6 @@
 package edu.ilstu.Foodimizer.app;
 
+import edu.ilstu.Foodimizer.lib.Recipe;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 public class FoodimizerClientManager implements FoodimizerClient{
@@ -17,4 +18,14 @@ public class FoodimizerClientManager implements FoodimizerClient{
     }
 
     private static FoodimizerClientManager instance = null;
+
+    @Override
+    public void addToPantry(Recipe recipe) {
+
+    }
+
+    @Override
+    public void addToGroceryList(Recipe recipe) {
+
+    }
 }
