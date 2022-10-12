@@ -2,8 +2,10 @@ package edu.ilstu.Foodimizer.lib;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
+import javax.persistence.*;
 
 public class Recipe {
+
     private String uniqueId;
     private String name;
     private String description;

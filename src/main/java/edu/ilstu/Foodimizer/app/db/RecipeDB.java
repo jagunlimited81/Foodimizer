@@ -16,28 +16,7 @@ public class RecipeDB {
     }
 
     private void init() {
-        readInRecipes();
-    }
 
-    private void readInRecipes() {
-        System.out.println("attempting to read file");
-        try {
-            InputStream is = this.getClass().getClassLoader().getResourceAsStream("recipes.dbtxt");
-            Scanner scan = new Scanner(is).useDelimiter("\\t");
-            String line = "";
-            // ignore first line
-            //scan.nextLine();
-            /*
-            while (scan.hasNextLine()) {
-                Recipe readRecipe;
-
-                //recipes.add(new Recipe(scan.next(), scan.next(), scan.next(), scan.next(), scan.next(), scan.next(), scan.next(), scan.next(), scan.next(), scan.next()));
-            }
-
-             */
-        } catch (Exception e) {
-
-        }
     }
 
     public Recipe[] getAllRecipes() {

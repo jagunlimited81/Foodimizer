@@ -5,6 +5,10 @@ import edu.ilstu.Foodimizer.ui.jcomponents.AppBar;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ *
+ */
 public class MainWindow extends JFrame {
     public MainWindow() {
         init();

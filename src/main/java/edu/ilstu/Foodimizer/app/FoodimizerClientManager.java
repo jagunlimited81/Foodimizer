@@ -56,6 +56,11 @@ public class FoodimizerClientManager implements FoodimizerClient {
         return null;
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @param profile
+     */
     @Override
     public void setActiveProfile(Profile profile) {
 
