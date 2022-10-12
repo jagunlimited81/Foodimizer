@@ -7,8 +7,9 @@ import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 import java.util.ArrayList;
 
-public class FoodimizerClientManager implements FoodimizerClient{
+public class FoodimizerClientManager implements FoodimizerClient {
     private RecipeDB recipeDB;
+
     public FoodimizerClientManager() {
         init();
     }
@@ -26,6 +27,11 @@ public class FoodimizerClientManager implements FoodimizerClient{
     private static FoodimizerClientManager instance = null;
 
     @Override
+    public void createProfile(Profile p) {
+
+    }
+
+    @Override
     public void addToPantry(Recipe recipe) {
 
     }
@@ -38,14 +44,20 @@ public class FoodimizerClientManager implements FoodimizerClient{
     @Override
     public ArrayList<Profile> getAllProfiles() {
         ArrayList<Profile> profiles = new ArrayList<>();
-        profiles.add(new Profile("person1"));
-        profiles.add(new Profile("person2"));
-        profiles.add(new Profile("person3"));
+        int numProfiles = 8;
+        for (int i = 0; i < numProfiles; i++) {
+            profiles.add(new Profile(i, "person"+i));
+        }
         return profiles;
     }
 
     @Override
     public ArrayList<Recipe> getAllRecipes() {
         return null;
+    }
+
+    @Override
+    public void setActiveProfile(Profile profile) {
+
     }
 }

@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface FoodimizerClient {
+    public void createProfile(Profile p);
     public void addToPantry(Recipe recipe);
     public void addToGroceryList(Recipe recipe);
     public ArrayList<Profile> getAllProfiles();
     public ArrayList<Recipe> getAllRecipes();
 
+    void setActiveProfile(Profile profile);
 }

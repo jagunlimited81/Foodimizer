@@ -21,6 +21,7 @@ public class MainWindowContentManager extends JPanel {
         pages.add(new MyPantry(), "MyPantry");
         pages.add(new ProfileSelector(), "ProfileSelector");
         pages.add(RecipePage.getInstance(), "RecipePage");
+        pages.add(CreateOrEditProfile.getInstance(), "CreateOrEditProfile");
 
         this.add(pages);
         this.goToPage("ProfileSelector");

@@ -16,6 +16,7 @@ public class ProfileSelector extends JPanel {
         fcm = FoodimizerClientManager.getInstance();
         contentPane = new JPanel();
         profileSelectPanel = new JPanel();
+        contentScrollPanel = new JScrollPane();
 
 
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -33,10 +34,10 @@ public class ProfileSelector extends JPanel {
             profileSelectPanel.add(pc);
             profileSelectPanel.add(Box.createRigidArea(new Dimension(20, 20)));
         }
-        profileSelectPanel.setBorder(BorderFactory.createLineBorder(Color.red));
-
-
-        contentPane.add(profileSelectPanel, BorderLayout.CENTER);
+        //profileSelectPanel.setBorder(BorderFactory.createLineBorder(Color.red));
+        contentScrollPanel.setBorder(BorderFactory.createEmptyBorder());
+        contentScrollPanel.setViewportView(profileSelectPanel);
+        contentPane.add(contentScrollPanel, BorderLayout.CENTER);
         contentPane.add(Box.createVerticalGlue());
         this.setLayout(new BorderLayout());
         this.add(contentPane, BorderLayout.CENTER);
@@ -44,5 +45,6 @@ public class ProfileSelector extends JPanel {
 
     JPanel contentPane;
     JPanel profileSelectPanel;
+    JScrollPane contentScrollPanel;
     FoodimizerClientManager fcm;
 }
