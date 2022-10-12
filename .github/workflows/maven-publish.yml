@@ -31,7 +31,7 @@ jobs:
     # Step 3 - Have GitHub Actions build Maven project
     - name: Build with Maven
       run: |
-        mvn -B package --file pom.xml
+        mvn clean compile assembly:single --file pom.xml
         mkdir staging && cp target/*.jar staging
       
       
