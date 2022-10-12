@@ -1,7 +1,7 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
 import edu.ilstu.Foodimizer.app.FoodimizerClientManager;
-import edu.ilstu.Foodimizer.lib.Recipe;
+import edu.ilstu.Foodimizer.app.db.models.Recipe;
 
 import javax.swing.*;
 import java.awt.*;

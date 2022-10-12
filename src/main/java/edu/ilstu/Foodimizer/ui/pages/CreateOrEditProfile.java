@@ -1,7 +1,6 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
-import edu.ilstu.Foodimizer.lib.Profile;
-import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
+import edu.ilstu.Foodimizer.app.db.models.Profile;
 
 import javax.swing.*;
 

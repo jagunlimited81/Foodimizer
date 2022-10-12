@@ -1,6 +1,6 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
-import edu.ilstu.Foodimizer.lib.Recipe;
+import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.ui.jcomponents.RecipeActionPane;
 
 import javax.swing.*;
@@ -159,6 +159,7 @@ public class RecipePage extends JPanel {
         this.setLayout(new BorderLayout());
         add(new JScrollPane(contentPane), BorderLayout.CENTER);
     }
+
 
     public static RecipePage getInstance() {
         if (instance == null)

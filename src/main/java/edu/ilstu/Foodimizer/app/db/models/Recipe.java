@@ -1,9 +1,10 @@
-package edu.ilstu.Foodimizer.lib;
+package edu.ilstu.Foodimizer.app.db.models;
 
+import javax.persistence.Entity;
 import java.util.Dictionary;
 import java.util.Hashtable;
-import javax.persistence.*;
 
+@Entity
 public class Recipe {
 
     private String uniqueId;

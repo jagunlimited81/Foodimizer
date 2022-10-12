@@ -1,7 +1,8 @@
 package edu.ilstu.Foodimizer.app;
 
-import edu.ilstu.Foodimizer.lib.Profile;
-import edu.ilstu.Foodimizer.lib.Recipe;
+import edu.ilstu.Foodimizer.app.db.models.Ingredient;
+import edu.ilstu.Foodimizer.app.db.models.Profile;
+import edu.ilstu.Foodimizer.app.db.models.Recipe;
 
 import java.util.ArrayList;
 
@@ -12,28 +13,76 @@ import java.util.ArrayList;
  * <p>
  * The FoodimizerClient should have no idea what the frontend is doing
  * It should act as the "glue" that anything and everything can talk to.
- *
  */
 public interface FoodimizerClient {
+    /* ----- Profiles ----- */
+
     /**
      * @param p
      */
     void createProfile(Profile p);
 
     /**
-     * @param recipe
+     *
      */
-    void addToPantry(Recipe recipe);
+    void updateProfile();
 
     /**
-     * @param recipe
+     *
      */
-    void addToGroceryList(Recipe recipe);
+    void removeProfile();
 
     /**
      * @return
      */
     ArrayList<Profile> getAllProfiles();
+
+
+    /**
+     * Sets the user profile.
+     *
+     * @param profile
+     */
+    void setActiveProfile(Profile profile);
+
+
+    /* ----- Pantry ----- */
+
+    /**
+     * @param ingredient
+     */
+    void addToPantry(Ingredient ingredient);
+
+    /**
+     * @param ingredient
+     */
+    void removeIngredientFromPantry(Ingredient ingredient);
+
+    /**
+     * @return
+     */
+    ArrayList<Ingredient> getPantry();
+
+
+    /* ----- Grocery List ----- */
+
+    /**
+     * @param recipe
+     */
+    void addMissingIngredientsToGroceryList(Recipe recipe);
+
+    /**
+     * @param ingredient
+     */
+    void addIngredientToGroceryList(Ingredient ingredient);
+
+    /**
+     * @param ingredient
+     */
+    void removeIngredientFromGroceryList(Ingredient ingredient);
+
+
+    /* ----- Recipes ----- */
 
     /**
      * @return
@@ -41,8 +90,9 @@ public interface FoodimizerClient {
     ArrayList<Recipe> getAllRecipes();
 
     /**
-     * Sets the user profile.
-     * @param profile
+     * @param ingredients
+     * @return
      */
-    void setActiveProfile(Profile profile);
+    Recipe getRecipesFromIngredients(ArrayList<Ingredient> ingredients);
+
 }
