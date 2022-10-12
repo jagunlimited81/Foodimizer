@@ -45,6 +45,10 @@ This is a project for IT 386 Principles of Software Engineering
 A: Java version 19
 #### Q: How are dependencies managed?
 A: Dependencies are managed through the ```pom.xml``` file. The ```pom.xml``` file is required for maven
+#### Q: What is the build schedule?
+A: Builds are created on every commit to the main branch. They are stored in github actions.
+#### Q: Do I have to use IntelliJ? I want to use Eclipse... etc.
+A: IntelliJ is not required. This project uses maven, so any IDE that can interact with maven should be useable.
 
 ---
 
