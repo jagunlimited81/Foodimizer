@@ -38,7 +38,7 @@ jobs:
       
     # Step 4 - Set up a cache for Maven
     - name: cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -46,7 +46,7 @@ jobs:
         
     # Step 5 - Persist workflow data as artifacts
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with: 
         name: Foodimizer
         path: staging
