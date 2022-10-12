@@ -1,0 +1,6 @@
+uniqueId	Name	description	mealtype	cooktime	waittime	preptime	servingSize	direcitons	ingredients
+1	Chicken parm	delicious	DInner	25	10	25	2	slap it hard	
+2	Bacon Ommellete	yum yum	Breakfast	6	0	5	1	slap it harder	
+3	green bean casserole	ok this is ok	Dinner	10	0	5	4	slap it super hard	
+4	Blooming onion	only at texax roadhouse	"Lunch,Dinner"	9	5	8	4	slap it until exploded	
+5	cheeseburger	anywhere in america	"Lunch,Dinner"	14	0	5	1	move your hand onto the grill	

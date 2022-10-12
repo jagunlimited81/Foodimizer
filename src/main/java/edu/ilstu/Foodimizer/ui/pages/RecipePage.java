@@ -6,6 +6,7 @@ import edu.ilstu.Foodimizer.ui.jcomponents.RecipeActionPane;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.Hashtable;
 
 public class RecipePage extends JPanel {
     public RecipePage() {
@@ -13,6 +14,25 @@ public class RecipePage extends JPanel {
     }
 
     private void init() {
+        Recipe recipe = new Recipe("1234", "Boiled Chicken Heads and Jam", "Mouth watering cookies filled with delicious chocolate chunks and the crackling bite of pecans, these cookies are the perfect accompaniment of nice cup of coffee or just an evening snack.", 1234, 1234, 1234, "Brunch", 4, "1. Preheat the oven to 375 degrees.\n" +
+                "\n" +
+                "2. Place the butter in the bowl of an electric mixer and beat until creamy.\n" +
+                "\n" +
+                "3. Add the sugars and beat until light and fluffy.\n" +
+                "\n" +
+                "4. Add the egg and vanilla and beat well to combine.\n" +
+                "\n" +
+                "5. Sift together the dry ingredients and add to the batter, mixing well.\n" +
+                "\n" +
+                "6. Remove bowl from mixer (be sure to scrape the beater) and stir in the nuts and chocolate chunks by hand.\n" +
+                "\n" +
+                "7. Drop by teaspoons onto greased cookie sheets and bake 8 to 10 minutes until lightly browned.\n" +
+                "\n" +
+                "8. Cool 5 minutes on sheets then remove cookies with a spatula to racks to cool.\n", new Hashtable<String, Integer>());
+        setRecipe(recipe);
+    }
+
+    public void setRecipe(Recipe recipe) {
         contentPane = new JPanel();
 
         leftColumn = new JPanel();
@@ -54,22 +74,22 @@ public class RecipePage extends JPanel {
 
             recipeInfo.setLayout(new BoxLayout(recipeInfo, BoxLayout.Y_AXIS));
 
-            mealType.setText("Meal Type: Dinner");
+            mealType.setText("Meal Type: " + recipe.getMealType());
             recipeInfo.add(mealType);
 
-            servingSize.setText("Serving Size: 4");
+            servingSize.setText("Serving Size: " + recipe.getServingSize());
             recipeInfo.add(servingSize);
 
-            cookMethod.setText("Cook Method: Stove");
+            cookMethod.setText("Cook Method: " + recipe.getCookMethod());
             recipeInfo.add(cookMethod);
 
-            cookTime.setText("Cook Time: 0 min");
+            cookTime.setText("Cook Time: " + recipe.getCookTime());
             recipeInfo.add(cookTime);
 
-            waitTime.setText("Wait Time: 0 min");
+            waitTime.setText("Wait Time: " + recipe.getWaitTime() + "min");
             recipeInfo.add(waitTime);
 
-            prepTime.setText("Prep Time: 0 min");
+            prepTime.setText("Prep Time: " + recipe.getPrepTime() + " min");
             recipeInfo.add(prepTime);
 
             //recipeInfo.setBorder(BorderFactory.createLineBorder(Color.red));
@@ -85,11 +105,11 @@ public class RecipePage extends JPanel {
             centerColumn.setLayout(new BorderLayout());
 
             recipeHeader.setLayout(new BorderLayout());
-            recipeNameHeader.setText("Boiled eggplant chicken parmesan");
+            recipeNameHeader.setText(recipe.getName());
             recipeNameHeader.setFont(new Font("Verdana", Font.PLAIN, 22));
             recipeHeader.add(recipeNameHeader, BorderLayout.NORTH);
             //recipeHeader.setBorder(BorderFactory.createLineBorder(Color.red));
-            recipeDescription.setText("A delicious dish of misery and discomfort. My aunt used to make this for me when I was a young lad A delicious dish of misery and discomfort. My aunt used to make this for me when I was a young lad A delicious dish of misery and discomfort. My aunt used to make this for me when I was a young lad A delicious dish of misery and discomfort. My aunt used to make this for me when I was a young lad A delicious dish of misery and discomfort. My aunt used to make this for me when I was a young lad");
+            recipeDescription.setText(recipe.getDescription());
             recipeDescription.setLineWrap(true);
             recipeDescription.setEditable(false);
 
@@ -113,7 +133,7 @@ public class RecipePage extends JPanel {
             centerColumn.add(ingredientsListPanel, BorderLayout.WEST);
 
             JPanel space = new JPanel();
-            space.setPreferredSize(new Dimension(1,1));
+            space.setPreferredSize(new Dimension(1, 1));
 
             centerColumn.add(new RecipeActionPane(), BorderLayout.EAST);
 
@@ -123,7 +143,7 @@ public class RecipePage extends JPanel {
             directionsHeader.setFont(new Font("Verdana", Font.PLAIN, 21));
 
 
-            directionsTextPane.setText("1. eat the cow\n2. eat the chicken\n3. moo");
+            directionsTextPane.setText(recipe.getDirections());
             directionsTextPane.setEditable(false);
             directions.add(directionsHeader);
             directions.add(directionsTextPane);
@@ -138,10 +158,6 @@ public class RecipePage extends JPanel {
         contentPane.add(rightColumn);
         this.setLayout(new BorderLayout());
         add(new JScrollPane(contentPane), BorderLayout.CENTER);
-
-    }
-
-    public void setRecipe(Recipe recipe) {
     }
 
     public static RecipePage getInstance() {

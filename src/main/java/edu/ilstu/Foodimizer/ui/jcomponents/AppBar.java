@@ -27,6 +27,9 @@ public class AppBar extends JPanel {
         /* my grocery list */
         myGroceryList = new JMenu();
         myGroceryListGoTo = new JMenuItem();
+        /* profiles */
+        profiles = new JMenu();
+        profilesGoTo = new JMenuItem();
 
         description = new JLabel();
         /* this */
@@ -87,6 +90,15 @@ public class AppBar extends JPanel {
                 myGroceryList.add(myGroceryListGoTo);
             }
             menuBar1.add(myGroceryList);
+            /* Profiles */
+            {
+                profiles.setText("Profiles");
+
+                profilesGoTo.setText("Go To Profile Selector");
+                profilesGoTo.addActionListener(e -> goToPageActionPerformed("ProfileSelector"));
+                profiles.add(profilesGoTo);
+            }
+            menuBar1.add(profiles);
         }
 
 
@@ -113,6 +125,8 @@ public class AppBar extends JPanel {
     private JMenuItem myPantryGoToPantry;
     private JMenu myGroceryList;
     private JMenuItem myGroceryListGoTo;
+    private JMenu profiles;
+    private JMenuItem profilesGoTo;
 
 
     private JLabel title;

@@ -30,7 +30,7 @@ public class Main {
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
-            frame.setResizable(false);
+            //frame.setResizable(false);
         });
     }
 }
