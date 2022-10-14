@@ -5,6 +5,7 @@ import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * The FoodimizerClient stores all application state data, and
@@ -35,7 +36,7 @@ public interface FoodimizerClient {
     /**
      * @return
      */
-    ArrayList<Profile> getAllProfiles();
+    Set<Profile> getAllProfiles();
 
 
     /**
@@ -61,7 +62,7 @@ public interface FoodimizerClient {
     /**
      * @return
      */
-    ArrayList<Ingredient> getPantry();
+    Set<Ingredient> getPantry();
 
 
     /* ----- Grocery List ----- */
@@ -87,7 +88,7 @@ public interface FoodimizerClient {
     /**
      * @return
      */
-    ArrayList<Recipe> getAllRecipes();
+    Set<Recipe> getAllRecipes();
 
     /**
      * @param ingredients

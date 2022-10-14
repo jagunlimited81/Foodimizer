@@ -6,6 +6,9 @@ import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.DatabaseProcessor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FoodimizerClientManager implements FoodimizerClient {
     private DatabaseProcessor recipeDB;
@@ -16,6 +19,9 @@ public class FoodimizerClientManager implements FoodimizerClient {
 
     private void init() {
         recipeDB = new DatabaseProcessor();
+        recipeDB.createProfiles();
+        recipeDB.createIngredients();
+        recipeDB.createRecipes();
     }
 
     public static FoodimizerClientManager getInstance() {
@@ -43,17 +49,14 @@ public class FoodimizerClientManager implements FoodimizerClient {
 
 
     @Override
-    public ArrayList<Profile> getAllProfiles() {
-        ArrayList<Profile> profiles = new ArrayList<>();
-        int numProfiles = 8;
-        for (int i = 0; i < numProfiles; i++) {
-            profiles.add(new Profile(i, "person" + i));
-        }
-        return profiles;
+    public Set<Profile> getAllProfiles() {
+        List<Profile> profiles = recipeDB.getAllProfilesFromDB();
+
+        return new HashSet<>(profiles);
     }
 
     @Override
-    public ArrayList<Recipe> getAllRecipes() {
+    public Set<Recipe> getAllRecipes() {
         return null;
     }
 
@@ -82,7 +85,7 @@ public class FoodimizerClientManager implements FoodimizerClient {
     }
 
     @Override
-    public ArrayList<Ingredient> getPantry() {
+    public Set<Ingredient> getPantry() {
         return null;
     }
 
