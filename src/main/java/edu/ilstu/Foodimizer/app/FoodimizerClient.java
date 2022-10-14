@@ -5,6 +5,7 @@ import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,19 +20,19 @@ public interface FoodimizerClient {
     /* ----- Profiles ----- */
 
     /**
-     * @param p
+     * @param profile
      */
-    void createProfile(Profile p);
+    void createProfile(Profile profile);
 
     /**
      *
      */
-    void updateProfile();
+    void updateProfile(Profile profile);
 
     /**
      *
      */
-    void removeProfile();
+    void removeProfile(Profile profile);
 
     /**
      * @return
@@ -55,9 +56,19 @@ public interface FoodimizerClient {
     void addToPantry(Ingredient ingredient);
 
     /**
+     * @param ingredients
+     */
+    void addToPantry(List<Ingredient> ingredients);
+
+    /**
      * @param ingredient
      */
     void removeIngredientFromPantry(Ingredient ingredient);
+
+    /**
+     * @param ingredients
+     */
+    void removeIngredientsFromPantry(List<Ingredient> ingredients);
 
     /**
      * @return
@@ -78,6 +89,11 @@ public interface FoodimizerClient {
     void addIngredientToGroceryList(Ingredient ingredient);
 
     /**
+     * @param ingredients
+     */
+    void addIngredientsToGroceryList(List<Ingredient> ingredients);
+
+    /**
      * @param ingredient
      */
     void removeIngredientFromGroceryList(Ingredient ingredient);
@@ -94,6 +110,6 @@ public interface FoodimizerClient {
      * @param ingredients
      * @return
      */
-    Recipe getRecipesFromIngredients(ArrayList<Ingredient> ingredients);
+    Set<Recipe> getRecipesFromIngredients(List<Ingredient> ingredients);
 
 }

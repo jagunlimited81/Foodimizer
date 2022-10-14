@@ -33,17 +33,17 @@ public class FoodimizerClientManager implements FoodimizerClient {
     private static FoodimizerClientManager instance = null;
 
     @Override
-    public void createProfile(Profile p) {
+    public void createProfile(Profile profile) {
 
     }
 
     @Override
-    public void updateProfile() {
+    public void updateProfile(Profile profile) {
 
     }
 
     @Override
-    public void removeProfile() {
+    public void removeProfile(Profile profile) {
 
     }
 
@@ -57,18 +57,17 @@ public class FoodimizerClientManager implements FoodimizerClient {
 
     @Override
     public Set<Recipe> getAllRecipes() {
-        return null;
+        List<Recipe> Recipe = recipeDB.getAllRecipesFromDB();
+
+        return new HashSet<>(Recipe);
     }
 
     @Override
-    public Recipe getRecipesFromIngredients(ArrayList<Ingredient> ingredients) {
+    public Set<Recipe> getRecipesFromIngredients(List<Ingredient> ingredients) {
         return null;
     }
 
-    /**
-     * @param profile
-     * @inheritDoc
-     */
+
     @Override
     public void setActiveProfile(Profile profile) {
 
@@ -80,7 +79,17 @@ public class FoodimizerClientManager implements FoodimizerClient {
     }
 
     @Override
+    public void addToPantry(List<Ingredient> ingredients) {
+
+    }
+
+    @Override
     public void removeIngredientFromPantry(Ingredient ingredient) {
+
+    }
+
+    @Override
+    public void removeIngredientsFromPantry(List<Ingredient> ingredients) {
 
     }
 
@@ -96,6 +105,11 @@ public class FoodimizerClientManager implements FoodimizerClient {
 
     @Override
     public void addIngredientToGroceryList(Ingredient ingredient) {
+
+    }
+
+    @Override
+    public void addIngredientsToGroceryList(List<Ingredient> ingredients) {
 
     }
 

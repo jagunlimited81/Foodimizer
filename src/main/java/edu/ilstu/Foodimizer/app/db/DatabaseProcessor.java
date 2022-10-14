@@ -61,4 +61,16 @@ public class DatabaseProcessor {
         tx.commit();
         return profiles;
     }
+    public List<Ingredient> getAllIngredientsFromDB() {
+        tx.begin();
+        List<Ingredient> ingredients = em.createQuery("from Ingredient", Ingredient.class).getResultList();
+        tx.commit();
+        return ingredients;
+    }
+    public List<Recipe> getAllRecipesFromDB() {
+        tx.begin();
+        List<Recipe> Recipe = em.createQuery("from Recipe", Recipe.class).getResultList();
+        tx.commit();
+        return Recipe;
+    }
 }

@@ -1,11 +1,13 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
+import edu.ilstu.Foodimizer.app.FoodimizerClientManager;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.ui.jcomponents.RecipeActionPane;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.Set;
 
 public class RecipePage extends JPanel {
     public RecipePage() {
@@ -13,7 +15,9 @@ public class RecipePage extends JPanel {
     }
 
     private void init() {
-        Recipe recipe = new Recipe();
+        fcm = FoodimizerClientManager.getInstance();
+        Set<Recipe> recipes = fcm.getAllRecipes();
+        Recipe recipe = recipes.iterator().next();
         setRecipe(recipe);
     }
 
@@ -153,6 +157,7 @@ public class RecipePage extends JPanel {
     }
 
     private static RecipePage instance = null;
+    private FoodimizerClientManager fcm;
     private JPanel contentPane;
     private JPanel leftColumn;
     private JPanel recipeInfo;
