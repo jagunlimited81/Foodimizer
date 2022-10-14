@@ -1,19 +1,34 @@
 package edu.ilstu.Foodimizer.app.db.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "INGREDIENTS")
 public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
-    @Column(name = "name", length = 100, nullable = false, unique = true)
-    private String name;
+    @Column(name = "ingredientId")
+    long ingredientId;
+    @Column(name = "name", nullable = false, unique = true)
+    String name;
+
+    @ManyToMany(mappedBy = "recipeIngredients")
+    Set<Recipe> recipeSet;
+
+    @ManyToMany(mappedBy = "dislikes")
+    Set<Profile> disliked_ingredients;
+
+    @ManyToMany(mappedBy = "shoppingList")
+    Set<Profile> shoppingListIngredients;
+
+    @ManyToMany(mappedBy = "pantry")
+    Set<Profile> pantryIngredients;
+
 
     public long getId() {
-        return id;
+        return ingredientId;
     }
 
     public String getName() {
@@ -24,7 +39,7 @@ public class Ingredient {
         this.name = name;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setId(long ingredientId) {
+        this.ingredientId = ingredientId;
     }
 }

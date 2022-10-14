@@ -6,6 +6,9 @@ import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.DatabaseProcessor;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class FoodimizerClientManager implements FoodimizerClient {
     private DatabaseProcessor recipeDB;
@@ -16,6 +19,9 @@ public class FoodimizerClientManager implements FoodimizerClient {
 
     private void init() {
         recipeDB = new DatabaseProcessor();
+        recipeDB.createProfiles();
+        recipeDB.createIngredients();
+        recipeDB.createRecipes();
     }
 
     public static FoodimizerClientManager getInstance() {
@@ -27,45 +33,41 @@ public class FoodimizerClientManager implements FoodimizerClient {
     private static FoodimizerClientManager instance = null;
 
     @Override
-    public void createProfile(Profile p) {
+    public void createProfile(Profile profile) {
 
     }
 
     @Override
-    public void updateProfile() {
+    public void updateProfile(Profile profile) {
 
     }
 
     @Override
-    public void removeProfile() {
+    public void removeProfile(Profile profile) {
 
     }
 
 
     @Override
-    public ArrayList<Profile> getAllProfiles() {
-        ArrayList<Profile> profiles = new ArrayList<>();
-        int numProfiles = 8;
-        for (int i = 0; i < numProfiles; i++) {
-            profiles.add(new Profile(i, "person" + i));
-        }
-        return profiles;
+    public Set<Profile> getAllProfiles() {
+        List<Profile> profiles = recipeDB.getAllProfilesFromDB();
+
+        return new HashSet<>(profiles);
     }
 
     @Override
-    public ArrayList<Recipe> getAllRecipes() {
+    public Set<Recipe> getAllRecipes() {
+        List<Recipe> Recipe = recipeDB.getAllRecipesFromDB();
+
+        return new HashSet<>(Recipe);
+    }
+
+    @Override
+    public Set<Recipe> getRecipesFromIngredients(List<Ingredient> ingredients) {
         return null;
     }
 
-    @Override
-    public Recipe getRecipesFromIngredients(ArrayList<Ingredient> ingredients) {
-        return null;
-    }
 
-    /**
-     * @param profile
-     * @inheritDoc
-     */
     @Override
     public void setActiveProfile(Profile profile) {
 
@@ -77,12 +79,22 @@ public class FoodimizerClientManager implements FoodimizerClient {
     }
 
     @Override
+    public void addToPantry(List<Ingredient> ingredients) {
+
+    }
+
+    @Override
     public void removeIngredientFromPantry(Ingredient ingredient) {
 
     }
 
     @Override
-    public ArrayList<Ingredient> getPantry() {
+    public void removeIngredientsFromPantry(List<Ingredient> ingredients) {
+
+    }
+
+    @Override
+    public Set<Ingredient> getPantry() {
         return null;
     }
 
@@ -93,6 +105,11 @@ public class FoodimizerClientManager implements FoodimizerClient {
 
     @Override
     public void addIngredientToGroceryList(Ingredient ingredient) {
+
+    }
+
+    @Override
+    public void addIngredientsToGroceryList(List<Ingredient> ingredients) {
 
     }
 
