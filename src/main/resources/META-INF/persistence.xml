@@ -23,7 +23,7 @@
             <!-- Use embedded Apache Derby driver -->
             <property name="jakarta.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
             <!-- Set RUL to Apache Derby -->
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:derby:${user.home}/DB_NAME;create=true" />
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:derby:${user.home}/FoodimizerDB;create=true" />
             <!-- User and Passwod should be blank? -->
             <property name="jakarta.persistence.jdbc.user" value="" />
             <property name="jakarta.persistence.jdbc.password" value="" />

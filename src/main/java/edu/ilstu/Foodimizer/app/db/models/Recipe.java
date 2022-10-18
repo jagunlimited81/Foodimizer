@@ -3,12 +3,13 @@ package edu.ilstu.Foodimizer.app.db.models;
 
 import jakarta.persistence.*;
 
-import java.awt.*;
-import java.util.Dictionary;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Set;
 
+/**
+ * The Recipe class holds recipe data such as name, directions, and ingredients.
+ * It does not interact with the database, so be sure to save the entities.
+ */
 @Entity
 @Table(name = "RECIPES")
 public class Recipe {
@@ -16,16 +17,16 @@ public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "recipeId")
-    long recipeId;
+    private long recipeId;
 
     @Column(name = "name")
-    String name;
+    private String name;
 
     @Column(name = "description")
-    String description;
+    private String description;
 
     @Column(name = "directions")
-    String directions;
+    private String directions;
 
     @ManyToMany
     @JoinTable(
@@ -33,29 +34,37 @@ public class Recipe {
             joinColumns = @JoinColumn(name = "recipeId"),
             inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
-    Set<Ingredient> recipeIngredients;
+    private final Set<Ingredient> recipeIngredients;
 
     @Column(name = "mealType")
-    String mealType;
+    private String mealType;
 
     @Column(name = "servingSize")
-    int servingSize;
+    private int servingSize;
 
     @Column(name = "cookMethod")
-    String cookMethod;
+    private String cookMethod;
 
     @Column(name = "cookTime")
-    long cookTime;
+    private long cookTime;
 
     @Column(name = "waitTime")
-    long waitTime;
+    private long waitTime;
 
     @Column(name = "prepTime")
-    long prepTime;
+    private long prepTime;
 
     @Lob
     @Column(name = "thumbnail")
-    byte[] thumbnail;
+    private byte[] thumbnail;
+
+    @ManyToMany(mappedBy = "favoriteRecipes")
+    private Set<Profile> profilesThatFavoriteThisRecipe;
+
+    public Recipe() {
+        this.recipeIngredients = new HashSet<>();
+        this.profilesThatFavoriteThisRecipe = new HashSet<>();
+    }
 
     public String getName() {
         return name;
@@ -85,8 +94,14 @@ public class Recipe {
         return recipeIngredients;
     }
 
-    public void setRecipeIngredients(Set<Ingredient> recipeIngredients) {
-        this.recipeIngredients = recipeIngredients;
+    public void addIngredient(Ingredient ingredient) {
+        this.recipeIngredients.add(ingredient);
+        ingredient.getRecipesThatContainThisIngredient().add(this);
+    }
+
+    public void removeIngredient(Ingredient ingredient) {
+        this.recipeIngredients.remove(ingredient);
+        ingredient.getRecipesThatContainThisIngredient().remove(this);
     }
 
     public String getMealType() {
@@ -145,4 +160,19 @@ public class Recipe {
         this.thumbnail = thumbnail;
     }
 
+    public String toString() {
+        StringBuilder returnStr = new StringBuilder(this.name + " : {");
+        for (Ingredient i : recipeIngredients) {
+            returnStr.append(i.getName()).append(", ");
+        }
+        return returnStr + "}";
+    }
+
+    public Set<Profile> getProfilesThatFavoriteThisRecipe() {
+        return profilesThatFavoriteThisRecipe;
+    }
+
+    public long getRecipeId() {
+        return recipeId;
+    }
 }
