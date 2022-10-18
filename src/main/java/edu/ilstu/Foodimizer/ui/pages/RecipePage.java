@@ -1,12 +1,15 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
-import edu.ilstu.Foodimizer.app.FoodimizerClientManager;
+import edu.ilstu.Foodimizer.app.StateManager;
+import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
+import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.ui.jcomponents.RecipeActionPane;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.HashSet;
 import java.util.Set;
 
 public class RecipePage extends JPanel {
@@ -15,13 +18,10 @@ public class RecipePage extends JPanel {
     }
 
     private void init() {
-        fcm = FoodimizerClientManager.getInstance();
-        Set<Recipe> recipes = fcm.getAllRecipes();
-        Recipe recipe = recipes.iterator().next();
-        setRecipe(recipe);
     }
 
     public void setRecipe(Recipe recipe) {
+        activeRecipe = recipe;
         contentPane = new JPanel();
 
         leftColumn = new JPanel();
@@ -111,8 +111,8 @@ public class RecipePage extends JPanel {
             ingredientsList.setBorder(ingredientsBox);
             ingredientsList.setLayout(new BoxLayout(ingredientsList, BoxLayout.Y_AXIS));
             //JCheckBox[] jt = new JCheckBox("IngredientName");
-            for (int i = 0; i < 10; i++) {
-                JCheckBox jt = new JCheckBox("IngredientName");
+            for (Ingredient i : recipe.getRecipeIngredients()) {
+                JCheckBox jt = new JCheckBox(i.getName());
                 ingredientsList.add(jt);
             }
 
@@ -157,7 +157,18 @@ public class RecipePage extends JPanel {
     }
 
     private static RecipePage instance = null;
-    private FoodimizerClientManager fcm;
+
+    public Recipe getActiveRecipe() {
+        return activeRecipe;
+    }
+
+    public void setActiveRecipe(Recipe activeRecipe) {
+        this.activeRecipe = activeRecipe;
+        setRecipe(activeRecipe);
+    }
+
+    private Recipe activeRecipe;
+    private StateManager fcm;
     private JPanel contentPane;
     private JPanel leftColumn;
     private JPanel recipeInfo;

@@ -1,7 +1,8 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
-import edu.ilstu.Foodimizer.app.FoodimizerClientManager;
+import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
+import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.ui.jcomponents.ProfileCard;
 
 import javax.swing.*;
@@ -13,7 +14,7 @@ public class ProfileSelector extends JPanel {
     }
 
     private void init() {
-        fcm = FoodimizerClientManager.getInstance();
+        sm = StateManager.getInstance();
         contentPane = new JPanel();
         profileSelectPanel = new JPanel();
         contentScrollPanel = new JScrollPane();
@@ -26,7 +27,8 @@ public class ProfileSelector extends JPanel {
         profileSelectPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         // for each user, add to profileSelectPanel
         //profileSelectPanel.add(Box.createHorizontalGlue());
-        for (Profile p : fcm.getAllProfiles()){
+        ProfileService profileService = new ProfileService();
+        for (Profile p : profileService.getAll()){
         //for (int i = 0; i < 3; i++) {
             ProfileCard pc = new ProfileCard(p);
             pc.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -46,5 +48,5 @@ public class ProfileSelector extends JPanel {
     JPanel contentPane;
     JPanel profileSelectPanel;
     JScrollPane contentScrollPanel;
-    FoodimizerClientManager fcm;
+    StateManager sm;
 }
