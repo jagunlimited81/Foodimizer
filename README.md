@@ -4,7 +4,7 @@
 
 ## About
 
-This is a project for IT 386 Principles of Software Engineering
+This is a project for IT 386 Principles of Software Engineering at ISU
 
 ---
 
