@@ -30,6 +30,9 @@ public class AppBar extends JPanel {
         /* profiles */
         profiles = new JMenu();
         profilesGoTo = new JMenuItem();
+        /* Debug */
+        debug = new JMenu();
+        databaseDebugGoTo = new JMenuItem();
 
         description = new JLabel();
         /* this */
@@ -99,6 +102,15 @@ public class AppBar extends JPanel {
                 profiles.add(profilesGoTo);
             }
             menuBar1.add(profiles);
+            /* Debug */
+            {
+                debug.setText("Debug/Test");
+
+                databaseDebugGoTo.setText("Database Test Page");
+                databaseDebugGoTo.addActionListener(e -> goToPageActionPerformed("DatabaseDebugAndTest"));
+                debug.add(databaseDebugGoTo);
+            }
+            menuBar1.add(debug);
         }
 
 
@@ -125,8 +137,12 @@ public class AppBar extends JPanel {
     private JMenuItem myPantryGoToPantry;
     private JMenu myGroceryList;
     private JMenuItem myGroceryListGoTo;
+    /* Profiles */
     private JMenu profiles;
     private JMenuItem profilesGoTo;
+    /* Debug/Test */
+    private JMenu debug;
+    private JMenuItem databaseDebugGoTo;
 
 
     private JLabel title;

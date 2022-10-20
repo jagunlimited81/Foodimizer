@@ -1,13 +1,13 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
-import edu.ilstu.Foodimizer.app.FoodimizerClientManager;
+import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class FindRecipesByAZ extends JPanel {
-    private FoodimizerClientManager fcm;
+    private StateManager sm;
     private Recipe recipes;
     public FindRecipesByAZ() {
         init();
@@ -17,7 +17,7 @@ public class FindRecipesByAZ extends JPanel {
         contentPane = new JPanel();
         recipesPane = new JPanel();
         setBackground(Color.WHITE);
-        fcm = FoodimizerClientManager.getInstance();
+        sm = StateManager.getInstance();
 
         /*recipes = fcm.getAllRecipes();
         for (Recipe recipe : recipes) {

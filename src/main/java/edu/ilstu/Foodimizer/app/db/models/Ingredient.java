@@ -2,34 +2,70 @@ package edu.ilstu.Foodimizer.app.db.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The Ingredient class is simple but vital to the operation of Foodimizer.
+ * <p>
+ * The ingredients are keyed by ingredientId, not name.
+ * The class is always on the subordinate side of a relationship.
+ * It does not interact with the database, so be sure to save the entities.
+ */
 @Entity
 @Table(name = "INGREDIENTS")
 public class Ingredient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ingredientId")
+    @Column(name = "ingredientId", nullable = false, unique = true)
     long ingredientId;
     @Column(name = "name", nullable = false, unique = true)
     String name;
 
     @ManyToMany(mappedBy = "recipeIngredients")
-    Set<Recipe> recipeSet;
+    private Set<Recipe> recipesThatContainThisIngredient;
 
-    @ManyToMany(mappedBy = "dislikes")
-    Set<Profile> disliked_ingredients;
+    @ManyToMany(mappedBy = "dislikedIngredients")
+    private Set<Profile> profilesThatDislikeThisIngredient;
 
     @ManyToMany(mappedBy = "shoppingList")
-    Set<Profile> shoppingListIngredients;
+    private Set<Profile> profilesShoppingListsThatContainThisIngredient;
 
     @ManyToMany(mappedBy = "pantry")
-    Set<Profile> pantryIngredients;
+    private Set<Profile> profilesPantriesThatContainThisIngredient;
 
+    public Ingredient() {
+        this.recipesThatContainThisIngredient = new HashSet<>();
+        this.profilesThatDislikeThisIngredient = new HashSet<>();
+        this.profilesPantriesThatContainThisIngredient = new HashSet<>();
+        this.profilesShoppingListsThatContainThisIngredient = new HashSet<>();
+    }
 
-    public long getId() {
+    public long getIngredientId() {
         return ingredientId;
     }
+
+    public Set<Recipe> getRecipesThatContainThisIngredient() {
+        return recipesThatContainThisIngredient;
+    }
+
+    public void setRecipesThatContainThisIngredient(Set<Recipe> recipeSet) {
+        this.recipesThatContainThisIngredient = recipeSet;
+    }
+
+    public Set<Profile> getProfilesThatDislikeThisIngredient() {
+        return profilesThatDislikeThisIngredient;
+    }
+
+    public Set<Profile> getProfilesShoppingListsThatContainThisIngredient() {
+        return profilesShoppingListsThatContainThisIngredient;
+    }
+
+    public Set<Profile> getProfilesPantriesThatContainThisIngredient() {
+        return profilesPantriesThatContainThisIngredient;
+    }
+
 
     public String getName() {
         return name;
@@ -39,7 +75,8 @@ public class Ingredient {
         this.name = name;
     }
 
-    public void setId(long ingredientId) {
-        this.ingredientId = ingredientId;
+    public String toString() {
+        return this.name;
     }
+
 }

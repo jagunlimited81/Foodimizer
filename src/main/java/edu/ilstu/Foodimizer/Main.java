@@ -1,6 +1,7 @@
 package edu.ilstu.Foodimizer;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import edu.ilstu.Foodimizer.app.DatabaseFiller;
 import edu.ilstu.Foodimizer.ui.MainWindow;
 
 import javax.swing.*;
@@ -17,9 +18,14 @@ public class Main {
         /* Start the JFrame Application */
         try {
             FlatLightLaf.setup();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("failed to FlatLaf");
         }
+
+        DatabaseFiller dbf = new DatabaseFiller();
+        dbf.createTestProfiles();
+        dbf.createTestIngredients();
+        dbf.createTestRecipes();
 
         System.out.println("Starting JFrame...");
         /* TODO: Explain why we use invokeLater*/
