@@ -1,12 +1,16 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
+import edu.ilstu.Foodimizer.app.StateManager;
+import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
+import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.ui.jcomponents.RecipeActionPane;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.Hashtable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class RecipePage extends JPanel {
     public RecipePage() {
@@ -14,25 +18,10 @@ public class RecipePage extends JPanel {
     }
 
     private void init() {
-        Recipe recipe = new Recipe("1234", "Boiled Chicken Heads and Jam", "Mouth watering cookies filled with delicious chocolate chunks and the crackling bite of pecans, these cookies are the perfect accompaniment of nice cup of coffee or just an evening snack.", 1234, 1234, 1234, "Brunch", 4, "1. Preheat the oven to 375 degrees.\n" +
-                "\n" +
-                "2. Place the butter in the bowl of an electric mixer and beat until creamy.\n" +
-                "\n" +
-                "3. Add the sugars and beat until light and fluffy.\n" +
-                "\n" +
-                "4. Add the egg and vanilla and beat well to combine.\n" +
-                "\n" +
-                "5. Sift together the dry ingredients and add to the batter, mixing well.\n" +
-                "\n" +
-                "6. Remove bowl from mixer (be sure to scrape the beater) and stir in the nuts and chocolate chunks by hand.\n" +
-                "\n" +
-                "7. Drop by teaspoons onto greased cookie sheets and bake 8 to 10 minutes until lightly browned.\n" +
-                "\n" +
-                "8. Cool 5 minutes on sheets then remove cookies with a spatula to racks to cool.\n", new Hashtable<String, Integer>());
-        setRecipe(recipe);
     }
 
     public void setRecipe(Recipe recipe) {
+        activeRecipe = recipe;
         contentPane = new JPanel();
 
         leftColumn = new JPanel();
@@ -122,8 +111,8 @@ public class RecipePage extends JPanel {
             ingredientsList.setBorder(ingredientsBox);
             ingredientsList.setLayout(new BoxLayout(ingredientsList, BoxLayout.Y_AXIS));
             //JCheckBox[] jt = new JCheckBox("IngredientName");
-            for (int i = 0; i < 10; i++) {
-                JCheckBox jt = new JCheckBox("IngredientName");
+            for (Ingredient i : recipe.getRecipeIngredients()) {
+                JCheckBox jt = new JCheckBox(i.getName());
                 ingredientsList.add(jt);
             }
 
@@ -168,6 +157,18 @@ public class RecipePage extends JPanel {
     }
 
     private static RecipePage instance = null;
+
+    public Recipe getActiveRecipe() {
+        return activeRecipe;
+    }
+
+    public void setActiveRecipe(Recipe activeRecipe) {
+        this.activeRecipe = activeRecipe;
+        setRecipe(activeRecipe);
+    }
+
+    private Recipe activeRecipe;
+    private StateManager fcm;
     private JPanel contentPane;
     private JPanel leftColumn;
     private JPanel recipeInfo;

@@ -1,88 +1,178 @@
 package edu.ilstu.Foodimizer.app.db.models;
 
-import javax.persistence.Entity;
-import java.util.Dictionary;
-import java.util.Hashtable;
 
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * The Recipe class holds recipe data such as name, directions, and ingredients.
+ * It does not interact with the database, so be sure to save the entities.
+ */
 @Entity
+@Table(name = "RECIPES")
 public class Recipe {
 
-    private String uniqueId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "recipeId")
+    private long recipeId;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
     private String description;
-    private Dictionary ingredients; // Ingredient, Quantity
-    private float cookTime;
-    private float waitTime;
-    private float prepTime;
-    private String mealType;
-    private int servingSize;
+
+    @Column(name = "directions")
     private String directions;
+
+    @ManyToMany
+    @JoinTable(
+            name = "made_of",
+            joinColumns = @JoinColumn(name = "recipeId"),
+            inverseJoinColumns = @JoinColumn(name = "ingredientId")
+    )
+    private final Set<Ingredient> recipeIngredients;
+
+    @Column(name = "mealType")
+    private String mealType;
+
+    @Column(name = "servingSize")
+    private int servingSize;
+
+    @Column(name = "cookMethod")
     private String cookMethod;
 
-    public Recipe(String uniqueId,
-                  String name,
-                  String description,
-                  float cookTime,
-                  float waitTime,
-                  float prepTime,
-                  String mealType,
-                  int servingSize,
-                  String directions,
-                  Dictionary ingredients) {
-        this.uniqueId = uniqueId;
-        this.name = name;
-        this.description = description;
-        this.cookTime = cookTime;
-        this.waitTime = waitTime;
-        this.prepTime = prepTime;
-        this.mealType = mealType;
-        this.servingSize = servingSize;
-        this.directions = directions;
-        this.cookMethod = cookMethod;
-        this.ingredients = new Hashtable();
+    @Column(name = "cookTime")
+    private long cookTime;
 
+    @Column(name = "waitTime")
+    private long waitTime;
 
+    @Column(name = "prepTime")
+    private long prepTime;
 
+    @Lob
+    @Column(name = "thumbnail")
+    private byte[] thumbnail;
+
+    @ManyToMany(mappedBy = "favoriteRecipes")
+    private Set<Profile> profilesThatFavoriteThisRecipe;
+
+    public Recipe() {
+        this.recipeIngredients = new HashSet<>();
+        this.profilesThatFavoriteThisRecipe = new HashSet<>();
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public String getCookTime() {
-        return "" + cookTime;
-    }
-
-    public String getWaitTime() {
-        return "" + waitTime;
-    }
-
-    public String getPrepTime() {
-        return "" + prepTime;
-    }
-
-    public String getMealType() {
-        return "" + mealType;
-    }
-
-    public String getServingSize() {
-        return "" + servingSize;
-    }
-
-    public String getCookMethod() {
-        return "" + cookMethod;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDirections() {
-        return "" + directions;
+        return directions;
     }
 
-    public String[] getIngredients() {
-        String[] strings = {};
-        return strings;
+    public void setDirections(String directions) {
+        this.directions = directions;
+    }
+
+    public Set<Ingredient> getRecipeIngredients() {
+        return recipeIngredients;
+    }
+
+    public void addIngredient(Ingredient ingredient) {
+        this.recipeIngredients.add(ingredient);
+        ingredient.getRecipesThatContainThisIngredient().add(this);
+    }
+
+    public void removeIngredient(Ingredient ingredient) {
+        this.recipeIngredients.remove(ingredient);
+        ingredient.getRecipesThatContainThisIngredient().remove(this);
+    }
+
+    public String getMealType() {
+        return mealType;
+    }
+
+    public void setMealType(String mealType) {
+        this.mealType = mealType;
+    }
+
+    public int getServingSize() {
+        return servingSize;
+    }
+
+    public void setServingSize(int servingSize) {
+        this.servingSize = servingSize;
+    }
+
+    public String getCookMethod() {
+        return cookMethod;
+    }
+
+    public void setCookMethod(String cookMethod) {
+        this.cookMethod = cookMethod;
+    }
+
+    public long getCookTime() {
+        return cookTime;
+    }
+
+    public void setCookTime(long cookTime) {
+        this.cookTime = cookTime;
+    }
+
+    public long getWaitTime() {
+        return waitTime;
+    }
+
+    public void setWaitTime(long waitTime) {
+        this.waitTime = waitTime;
+    }
+
+    public long getPrepTime() {
+        return prepTime;
+    }
+
+    public void setPrepTime(long prepTime) {
+        this.prepTime = prepTime;
+    }
+
+    public byte[] getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(byte[] thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String toString() {
+        StringBuilder returnStr = new StringBuilder(this.name + " : {");
+        for (Ingredient i : recipeIngredients) {
+            returnStr.append(i.getName()).append(", ");
+        }
+        return returnStr + "}";
+    }
+
+    public Set<Profile> getProfilesThatFavoriteThisRecipe() {
+        return profilesThatFavoriteThisRecipe;
+    }
+
+    public long getRecipeId() {
+        return recipeId;
     }
 }

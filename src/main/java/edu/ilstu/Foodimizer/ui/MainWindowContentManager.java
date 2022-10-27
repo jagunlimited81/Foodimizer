@@ -20,6 +20,7 @@ public class MainWindowContentManager extends JPanel {
         pages.add(new FindRecipesByAZ(), "FindRecipesByAZ");
         pages.add(new MyPantry(), "MyPantry");
         pages.add(new ProfileSelector(), "ProfileSelector");
+        pages.add(new DatabaseDebugAndTest(), "DatabaseDebugAndTest");
         pages.add(RecipePage.getInstance(), "RecipePage");
         pages.add(CreateOrEditProfile.getInstance(), "CreateOrEditProfile");
 
