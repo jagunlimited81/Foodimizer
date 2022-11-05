@@ -1,6 +1,7 @@
 package edu.ilstu.Foodimizer.ui.jcomponents;
 
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
+import edu.ilstu.Foodimizer.app.db.models.Profile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,7 @@ public class AppBar extends JPanel {
         contentManager = MainWindowContentManager.getInstance();
         titlePanel = new JPanel();
         title = new JLabel();
+        profileCornerMenu = new ProfileCornerMenu();
         /* menubar */
         menuBar1 = new JMenuBar();
         /* FindRecipesMenu */
@@ -48,6 +50,10 @@ public class AppBar extends JPanel {
 
             description.setText("Make recipes from nothing!");
             titlePanel.add(description, BorderLayout.CENTER);
+
+            /* This container houses the profile icon and menu */
+
+            titlePanel.add(profileCornerMenu, BorderLayout.EAST);
         }
         this.add(titlePanel, BorderLayout.NORTH);
 
@@ -122,11 +128,15 @@ public class AppBar extends JPanel {
         contentManager.goToPage(page);
     }
 
+    public ProfileCornerMenu getProfileCornerMenu() {
+        return profileCornerMenu;
+    }
 
     /* Declare variables here */
     private MainWindowContentManager contentManager;
     /* MenuBar */
     private JMenuBar menuBar1;
+
     /* FindRecipesMenu */
     private JMenu findRecipesMenu;
     private JMenuItem findRecipesByNameItem;
@@ -148,5 +158,5 @@ public class AppBar extends JPanel {
     private JLabel title;
     private JPanel titlePanel;
     private JLabel description;
-
+    private ProfileCornerMenu profileCornerMenu;
 }
