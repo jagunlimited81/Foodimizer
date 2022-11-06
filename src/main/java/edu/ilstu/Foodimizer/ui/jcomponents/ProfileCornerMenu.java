@@ -51,10 +51,13 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
         /*----popup menu----*/
         clickMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem("Profile Settings");
+        menuItem.addActionListener(e -> editProfileButtonPressed());
         clickMenu.add(menuItem);
         menuItem = new JMenuItem("Switch Profiles");
+        menuItem.addActionListener(e -> switchProfilesButtonPressed());
         clickMenu.add(menuItem);
         menuItem = new JMenuItem("Delete Profile");
+        menuItem.addActionListener(e -> deleteProfileButtonPressed());
         menuItem.setForeground(Color.RED);
         clickMenu.add(menuItem);
         add(clickMenu);
@@ -80,23 +83,22 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
 
 
     private void switchProfilesButtonPressed() {
-        System.out.println("Switching to profile " + profile.getName());
+        System.out.println("Switch profile button pressed");
         StateManager sm = StateManager.getInstance();
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
         sm.setActiveProfile(profile);
-        mwcm.goToPage("MyPantry");
+        mwcm.goToPage("ProfileSelector");
     }
 
     private void editProfileButtonPressed() {
-        System.out.println("editing profile " + profile.getName());
+        System.out.println("Edit profile button pressed");
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
         mwcm.goToPage("CreateOrEditProfile");
     }
 
     private void deleteProfileButtonPressed() {
-        System.out.println("editing profile " + profile.getName());
-        MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
-        mwcm.goToPage("CreateOrEditProfile");
+        System.out.println("Delete profile button pressed");
+
     }
 
     @Override
@@ -124,7 +126,6 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
 
     }
 
-    private MainWindowContentManager contentManager;
     private JPanel pfp;
     private JLabel pfpLabel;
     private JLabel name;
