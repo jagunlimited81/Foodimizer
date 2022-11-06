@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
         /* Create app bar and pass it to the StateManager */
         AppBar appBar1 = new AppBar();
         StateManager.getInstance().setAppBar(appBar1);
-        contentPane.add(new AppBar(), BorderLayout.NORTH);
+        contentPane.add(appBar1, BorderLayout.NORTH);
 
         contentPane.add(contentPanel, BorderLayout.CENTER);
     }
