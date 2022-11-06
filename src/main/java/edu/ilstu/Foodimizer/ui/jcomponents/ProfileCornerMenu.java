@@ -42,6 +42,7 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
         add(pfp);
         /*----pfpLabel----*/
         pfpLabel = new JLabel("Picture go here.");
+        pfp.add(pfpLabel);
         /*----name----*/
         name = new JLabel("Name go here.");
         name.setFont(new Font(name.getFont().toString(), Font.BOLD, 12));
@@ -61,16 +62,20 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
     }
 
     public void updateProfile(Profile profile) {
+        //set image
         System.out.println("Updating profile corner menu to display profile " + profile.getName());
         this.profile = profile;
         try {
+            //need to scale the image somehow
             BufferedImage profilePic = ByteTools.toBufferedImage(profile.getProfilePic());
             ImageIcon ii = new ImageIcon(profilePic);
             pfpLabel.setIcon(ii);
-            repaint();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        //set name
+        name.setText(this.profile.getName());
     }
 
 
