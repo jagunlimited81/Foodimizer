@@ -1,56 +1,52 @@
 package edu.ilstu.Foodimizer.app.db.service;
 
+import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
-import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Root;
+import org.hibernate.cfg.NotYetImplementedException;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 
-public class RecipeService implements Service<Recipe> {
-    private EntityManager em;
+public class RecipeService extends Service<Recipe> {
 
-    public RecipeService() {
-        em = ServicesEntityManager.getInstance().getEntityManager();
-    }
-
-    @Override
-    public Optional<Recipe> get(long id) {
-        return Optional.ofNullable(em.find(Recipe.class, id));
-    }
-
-    @Override
     public List<Recipe> getAll() {
-        return em.createQuery("FROM Recipe").getResultList();
+        return super.getAll(Recipe.class);
     }
 
-    @Override
-    public void save(Recipe recipe) {
-        executeInsideTransaction(em -> em.persist(recipe));
-    }
+    public List<Recipe> searchLikeString(String s) {
+        // TODO SQL INJECTION ATTACK MITIGATION
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Recipe> cq = cb.createQuery(Recipe.class);
 
-    @Override
-    public void update(Recipe recipe, String params) {
-        executeInsideTransaction(em -> em.merge(recipe));
-    }
+        // SELECT recipe FROM Recipe WHERE LOWER(recipe) LIKE LOWER('%s%')
+        Root<Recipe> rootEntity = cq.from(Recipe.class);
+        CriteriaQuery<Recipe> byNameQuery = cq.select(rootEntity).where(cb.like(cb.lower(rootEntity.get("name")), cb.lower(cb.literal("%" + s + "%"))));
 
-    @Override
-    public void delete(Recipe recipe) {
-        executeInsideTransaction(em -> em.remove(recipe));
+        TypedQuery<Recipe> byName = em.createQuery(byNameQuery);
+        return byName.getResultList();
     }
+    public List<Recipe> searchByIngredients(List<Ingredient> ingredientList) {
+        // search for recipes that have these ingredients
+        // and also recipes that have a subset of the given parameter
+        // TODO SQL INJECTION ATTACK MITIGATION
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Recipe> cq = cb.createQuery(Recipe.class);
 
-    private void executeInsideTransaction(Consumer<EntityManager> action) {
-        EntityTransaction tx = em.getTransaction();
-        try {
-            tx.begin();
-            action.accept(em);
-            tx.commit();
-        } catch (RuntimeException e) {
-            tx.rollback();
-            throw e;
+        // SELECT * FROM Recipe
+        Root<Recipe> rootRecipes = cq.from(Recipe.class);
+        Root<Ingredient> rootIngredients = cq.from(Ingredient.class);
+        CriteriaBuilder.In<Long> inClause = cb.in(rootIngredients.get("ingredientId"));
+        for (Ingredient i : ingredientList){
+            inClause.value(i.getIngredientId());
         }
+        CriteriaQuery<Recipe> byNameQuery = cq.select(rootRecipes);
+
+        TypedQuery<Recipe> byName = em.createQuery(byNameQuery);
+        return byName.getResultList();
     }
 }

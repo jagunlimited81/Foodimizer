@@ -124,6 +124,10 @@ public class Profile {
         ingredient.getProfilesShoppingListsThatContainThisIngredient().remove(this);
     }
 
+    public void clearShoppingList() {
+        this.getShoppingList().removeAll(this.getShoppingList());
+    }
+
     public Set<Ingredient> getPantry() {
         return pantry;
     }
