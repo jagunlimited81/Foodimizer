@@ -8,7 +8,7 @@ import edu.ilstu.Foodimizer.ui.jcomponents.ProfileCard;
 import javax.swing.*;
 import java.awt.*;
 
-public class ProfileSelector extends JPanel {
+public class ProfileSelector extends Page {
     public ProfileSelector() {
         init();
     }

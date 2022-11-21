@@ -89,7 +89,19 @@ public class DatabaseFiller {
 
         recipeName = "Bacon Cheeseburger";
         ingredients = new String[]{"bacon", "ground beef", "hamburger bun", "cheese", "lettuce", "tomato", "salt", "pepper", "pickles", "ketchup"};
-        recipe = createRecipeFromString(recipeName, ingredients);
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Ham and Cheese";
+        ingredients = new String[]{"ham", "cheese", "bread"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Beef Taco";
+        ingredients = new String[]{"ground beef", "tortilla", "lettuce", "sour cream", "tomato", "taco seasoning", "salt", "cumin", "lime"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Lime Margarita";
+        ingredients = new String[]{"lime", "tequila", "triple sec", "salt"};
+        createRecipeFromString(recipeName, ingredients);
 
     }
 
