@@ -3,16 +3,15 @@ package edu.ilstu.Foodimizer.ui.pages;
 import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
-import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.ui.jcomponents.RecipeActionPane;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
 
-public class RecipePage extends JPanel {
+
+
+public class RecipePage extends Page {
     public RecipePage() {
         init();
     }

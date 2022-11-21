@@ -6,7 +6,7 @@ import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import javax.swing.*;
 import java.awt.*;
 
-public class FindRecipesByAZ extends JPanel {
+public class FindRecipesByAZ extends Page {
     private StateManager sm;
     private Recipe recipes;
     public FindRecipesByAZ() {
