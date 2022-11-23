@@ -1,6 +1,7 @@
 package edu.ilstu.Foodimizer.app.db.service;
 
 import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
+import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
@@ -55,5 +56,21 @@ public abstract class Service<T> {
             tx.rollback();
             throw e;
         }
+    }
+    /**
+     * @param s the name of the thing to search by
+     * @return
+     */
+    public List<T> searchLikeString(String s, Class<T> t) {
+        // TODO SQL INJECTION ATTACK MITIGATION
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(t);
+
+        // SELECT recipe FROM Recipe WHERE LOWER(recipe) LIKE LOWER('%s%')
+        Root<T> rootEntity = cq.from(t);
+        CriteriaQuery<T> byNameQuery = cq.select(rootEntity).where(cb.like(cb.lower(rootEntity.get("name")), cb.lower(cb.literal("%" + s + "%"))));
+
+        TypedQuery<T> byName = em.createQuery(byNameQuery);
+        return byName.getResultList();
     }
 }

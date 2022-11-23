@@ -4,7 +4,7 @@ import edu.ilstu.Foodimizer.app.db.models.Profile;
 
 import javax.swing.*;
 
-public class CreateOrEditProfile extends JPanel{
+public class CreateOrEditProfile extends Page{
     public CreateOrEditProfile() {
         init();
     }

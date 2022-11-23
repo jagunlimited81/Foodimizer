@@ -7,11 +7,12 @@ import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
 
-public class DatabaseDebugAndTest extends JPanel {
+public class DatabaseDebugAndTest extends Page {
     public DatabaseDebugAndTest() {
         init();
     }
@@ -21,6 +22,7 @@ public class DatabaseDebugAndTest extends JPanel {
         ProfileService profileService = new ProfileService();
         RecipeService recipeService = new RecipeService();
         JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new FlowLayout());
 
         JButton jb = new JButton("Get All Recipes");
         jb.addActionListener(e -> printQuery(Collections.singletonList(recipeService.getAll())));
@@ -40,19 +42,43 @@ public class DatabaseDebugAndTest extends JPanel {
         searchPanel1.add(searchBox);
 
         jb = new JButton("search by name");
-        jb.addActionListener(e->printQuery(Collections.singletonList(recipeService.searchLikeString(searchBox.getText()))));
+        jb.addActionListener(e -> printQuery(Collections.singletonList(recipeService.searchLikeString(searchBox.getText(), Recipe.class))));
         searchPanel1.add(jb);
-
         contentPanel.add(searchPanel1);
 
+        TitledBorder b = new TitledBorder("ingredients");
+        JPanel searchPanelIngredients = new JPanel();
+        searchPanelIngredients.setLayout(new FlowLayout());
+        searchPanelIngredients.setBorder(b);
+        searchPanelIngredients.setPreferredSize(new Dimension(1200, 350));
+
+        IngredientService is = new IngredientService();
+        ht = new Hashtable<>();
+        for (Ingredient i : is.getAll()) {
+            JCheckBox jcbx = new JCheckBox(i.getName());
+            searchPanelIngredients.add(jcbx);
+            ht.put(jcbx, i);
+        }
         jb = new JButton("search by ingredients");
-        List<Recipe> rl = recipeService.searchLikeString("English Muffin");
-        Recipe r = rl.get(0);
-        jb.addActionListener(e->printQuery(Collections.singletonList(recipeService.searchByIngredients(new ArrayList<>(r.getRecipeIngredients())))));
-        contentPanel.add(jb);
+        jb.addActionListener(e -> printQuery(Collections.singletonList(recipeService.searchByIngredients(getActiveIngredients()))));
 
+        searchPanelIngredients.add(jb);
+        contentPanel.add(searchPanelIngredients);
 
-        this.add(contentPanel);
+        this.setLayout(new BorderLayout());
+        this.add(contentPanel, BorderLayout.CENTER);
+    }
+
+    private List<Ingredient> getActiveIngredients() {
+        ArrayList<Ingredient> returnIngredients = new ArrayList<>();
+        Enumeration<JCheckBox> e = ht.keys();
+        while (e.hasMoreElements()) {
+            JCheckBox jcb = e.nextElement();
+            if (jcb.isSelected()) {
+                returnIngredients.add(ht.get(jcb));
+            }
+        }
+        return returnIngredients;
     }
 
     private void printQuery(List<Object> lists) {
@@ -61,6 +87,6 @@ public class DatabaseDebugAndTest extends JPanel {
                 System.out.println(o);
             }
         }
-
     }
+    Hashtable<JCheckBox, Ingredient> ht;
 }

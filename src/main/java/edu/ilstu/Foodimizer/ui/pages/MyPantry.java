@@ -1,9 +1,9 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
-import javax.swing.*;
+
 import java.awt.*;
 
-public class MyPantry extends JPanel {
+public class MyPantry extends Page {
     public MyPantry() {
         init();
     }

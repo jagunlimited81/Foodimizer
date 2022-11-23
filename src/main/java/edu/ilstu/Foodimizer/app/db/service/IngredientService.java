@@ -1,7 +1,11 @@
 package edu.ilstu.Foodimizer.app.db.service;
 
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
+import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 
@@ -25,5 +29,7 @@ public class IngredientService extends Service<Ingredient> {
             return null;
         }
     }
+
+
 
 }
