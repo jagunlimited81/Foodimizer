@@ -8,26 +8,19 @@ import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import java.awt.print.PrinterGraphics;
 import java.util.List;
 
-public class PDFFormatter implements Printable {
+public class PDFFormatter extends Formatter implements Printable {
 
     private JPanel contentPanel;
 
     public PDFFormatter(Recipe recipe) {
-        contentPanel = new JPanel();
-
-        contentPanel.add(new JLabel("asdftesting"));
-        contentPanel.add(new JLabel("asdftesting"));
-        contentPanel.add(new JLabel("asdftesting"));
-        contentPanel.add(new JLabel("asdftesting"));
-        JPanel BIGREDBOX = new JPanel();
-        BIGREDBOX.setBackground(Color.RED);
-        BIGREDBOX.setPreferredSize(new Dimension(100, 100));
-        contentPanel.add(BIGREDBOX);
+        formatRecipe(recipe);
     }
 
     public PDFFormatter(List<Ingredient> ingredients) {
+        formatShoppingList(ingredients);
     }
 
     /**
@@ -46,8 +39,8 @@ public class PDFFormatter implements Printable {
      * information.  If the {@code Printable} object
      * aborts the print job then it throws a {@link PrinterException}.
      *
-     * @param graphics   the context into which the page is drawn
-     * @param pageFormat the size and orientation of the page being drawn
+     * @param g   the context into which the page is drawn
+     * @param pf the size and orientation of the page being drawn
      * @param pageIndex  the zero based index of the page to be drawn
      * @return PAGE_EXISTS if the page is rendered successfully
      * or NO_SUCH_PAGE if {@code pageIndex} specifies a
@@ -71,5 +64,26 @@ public class PDFFormatter implements Printable {
 
         /* tell the caller that this page is part of the printed document */
         return PAGE_EXISTS;
+    }
+
+    @Override
+    public void formatRecipe(Recipe recipe)
+    {
+        contentPanel = new JPanel();
+
+        contentPanel.add(new JLabel("asdftesting"));
+        contentPanel.add(new JLabel("asdftesting"));
+        contentPanel.add(new JLabel("asdftesting"));
+        contentPanel.add(new JLabel("asdftesting"));
+        JPanel BIGREDBOX = new JPanel();
+        BIGREDBOX.setBackground(Color.RED);
+        BIGREDBOX.setPreferredSize(new Dimension(100, 100));
+        contentPanel.add(BIGREDBOX);
+    }
+
+    @Override
+    public void formatShoppingList(List<Ingredient> shoppingList)
+    {
+
     }
 }
