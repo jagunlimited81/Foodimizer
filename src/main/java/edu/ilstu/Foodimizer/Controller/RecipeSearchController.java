@@ -13,25 +13,19 @@ import java.util.List;
 public class RecipeSearchController implements ActionListener {
 
     JTextField searchText;
-    JComboBox comboBox;
-    JButton jButton;
 
-    public RecipeSearchController(JTextField jTextField, JButton jButton) {
+    public RecipeSearchController(JTextField jTextField) {
         searchText = jTextField;
-        this.jButton = jButton;
     }
 
     public RecipeSearchController(JComboBox jComboBox) {
-        comboBox = jComboBox;
+        searchText = new JTextField(String.valueOf(jComboBox.getSelectedItem()));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         List<Recipe> recipes = new RecipeService().getAll();
-        if (comboBox != null)
-            searchText = new JTextField(String.valueOf(comboBox.getSelectedItem()));
         String recipe_name = searchText.getText();
-        System.out.println(searchText.getText());
         boolean notFoundMessage = true;
         for (Recipe recipe: recipes) {
             if (recipe_name.equals(recipe.getName())) {
