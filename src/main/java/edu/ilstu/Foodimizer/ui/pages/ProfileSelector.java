@@ -10,6 +10,7 @@ import java.awt.*;
 
 public class ProfileSelector extends Page {
     public ProfileSelector() {
+        super();
         init();
     }
 
@@ -19,7 +20,6 @@ public class ProfileSelector extends Page {
         profileSelectPanel = new JPanel();
         contentScrollPanel = new JScrollPane();
 
-
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(Box.createVerticalGlue());
 
@@ -28,8 +28,8 @@ public class ProfileSelector extends Page {
         // for each user, add to profileSelectPanel
         //profileSelectPanel.add(Box.createHorizontalGlue());
         ProfileService profileService = new ProfileService();
-        for (Profile p : profileService.getAll()){
-        //for (int i = 0; i < 3; i++) {
+        for (Profile p : profileService.getAll()) {
+            //for (int i = 0; i < 3; i++) {
             ProfileCard pc = new ProfileCard(p);
             pc.setAlignmentX(Component.CENTER_ALIGNMENT);
             pc.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -43,6 +43,12 @@ public class ProfileSelector extends Page {
         contentPane.add(Box.createVerticalGlue());
         this.setLayout(new BorderLayout());
         this.add(contentPane, BorderLayout.CENTER);
+    }
+
+    public void refreshContent() {
+        this.remove(contentPane);
+
+        init();
     }
 
     JPanel contentPane;

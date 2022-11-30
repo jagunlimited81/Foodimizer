@@ -7,4 +7,7 @@ public abstract class Page extends JPanel {
     public Page() {
         setBackground(Color.WHITE);
     }
+    public void refreshContent() {
+
+    }
 }

@@ -30,6 +30,8 @@ public class AppBar extends JPanel {
         /* profiles */
         profiles = new JMenu();
         profilesGoTo = new JMenuItem();
+        createProfileGoTo = new JMenuItem();
+        editProfileGoTo = new JMenuItem();
         /* Debug */
         debug = new JMenu();
         databaseDebugGoTo = new JMenuItem();
@@ -100,6 +102,14 @@ public class AppBar extends JPanel {
                 profilesGoTo.setText("Go To Profile Selector");
                 profilesGoTo.addActionListener(e -> goToPageActionPerformed("ProfileSelector"));
                 profiles.add(profilesGoTo);
+
+                createProfileGoTo.setText("Create new Profile");
+                createProfileGoTo.addActionListener(e -> goToPageActionPerformed("CreateProfile"));
+                profiles.add(createProfileGoTo);
+
+                editProfileGoTo.setText("Edit current Profile");
+                editProfileGoTo.addActionListener(e -> goToPageActionPerformed("EditProfile"));
+                profiles.add(editProfileGoTo);
             }
             menuBar1.add(profiles);
             /* Debug */
@@ -140,6 +150,8 @@ public class AppBar extends JPanel {
     /* Profiles */
     private JMenu profiles;
     private JMenuItem profilesGoTo;
+    private JMenuItem createProfileGoTo;
+    private JMenuItem editProfileGoTo;
     /* Debug/Test */
     private JMenu debug;
     private JMenuItem databaseDebugGoTo;

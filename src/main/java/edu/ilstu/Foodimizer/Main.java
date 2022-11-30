@@ -25,7 +25,7 @@ public class Main {
         DatabaseFiller dbf = new DatabaseFiller();
         dbf.createTestIngredients();
         dbf.createTestRecipes();
-        dbf.createTestProfiles();
+        //dbf.createTestProfiles();
 
 
         System.out.println("Starting JFrame...");
