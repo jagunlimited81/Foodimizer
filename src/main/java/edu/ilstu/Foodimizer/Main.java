@@ -1,5 +1,6 @@
 package edu.ilstu.Foodimizer;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import edu.ilstu.Foodimizer.app.DatabaseFiller;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
@@ -17,7 +18,7 @@ public class Main {
     public static void main(String[] args) {
         /* Start the JFrame Application */
         try {
-            FlatLightLaf.setup();
+            FlatDarkLaf.setup();
         } catch (Exception e) {
             System.out.println("failed to FlatLaf");
         }

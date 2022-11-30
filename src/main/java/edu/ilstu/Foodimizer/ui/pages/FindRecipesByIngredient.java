@@ -7,7 +7,7 @@ public class FindRecipesByIngredient extends Page {
         init();
     }
 
-    private void init() {
+    protected void init() {
         setBackground(Color.gray);
     }
 }

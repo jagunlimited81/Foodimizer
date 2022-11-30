@@ -14,7 +14,7 @@ public class ProfileSelector extends Page {
         init();
     }
 
-    private void init() {
+    protected void init() {
         sm = StateManager.getInstance();
         contentPane = new JPanel();
         profileSelectPanel = new JPanel();
@@ -43,12 +43,6 @@ public class ProfileSelector extends Page {
         contentPane.add(Box.createVerticalGlue());
         this.setLayout(new BorderLayout());
         this.add(contentPane, BorderLayout.CENTER);
-    }
-
-    public void refreshContent() {
-        this.remove(contentPane);
-
-        init();
     }
 
     JPanel contentPane;

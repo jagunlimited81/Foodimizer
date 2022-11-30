@@ -13,7 +13,7 @@ public class FindRecipesByAZ extends Page {
         init();
     }
 
-    private void init() {
+    protected void init() {
         contentPane = new JPanel();
         recipesPane = new JPanel();
         setBackground(Color.WHITE);

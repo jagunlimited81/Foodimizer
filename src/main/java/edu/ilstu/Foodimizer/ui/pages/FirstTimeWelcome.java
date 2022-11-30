@@ -11,7 +11,8 @@ public class FirstTimeWelcome extends Page{
         init();
     }
 
-    private void init() {
+    @Override
+    protected void init() {
      JLabel motd = new JLabel("Welcome to Foodimizer!");
      JLabel instr = new JLabel("Click the button to get started.");
      this.add(motd);

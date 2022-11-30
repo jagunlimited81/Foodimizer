@@ -14,7 +14,7 @@ public class MyPantry extends Page {
         init();
     }
 
-    private void init() {
+    protected void init() {
         IngredientService is = new IngredientService();
         PantryItemsPanel = new JPanel();
         addItemsToMyPantry = new JButton("Add Items to My Pantry");
