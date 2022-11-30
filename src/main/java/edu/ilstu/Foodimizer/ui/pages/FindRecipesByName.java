@@ -1,13 +1,14 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
 import edu.ilstu.Foodimizer.Controller.RecipeSearchController;
+import edu.ilstu.Foodimizer.Controller.SearchFunction;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 import javax.swing.*;
 import java.awt.*;
 
-
 public class FindRecipesByName extends JPanel {
+
     public FindRecipesByName() {
         init();
     }
@@ -53,8 +54,9 @@ public class FindRecipesByName extends JPanel {
             searchButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
 
             // Declare an object of RecipeSearchController class to make the searchButton to go to the recipe page
-            RecipeSearchController r = new RecipeSearchController(searchText);
-            searchButton.addActionListener(r);
+            RecipeSearchController recipeSearchController = new RecipeSearchController(searchText, searchButton);
+            SearchFunction searchFunction = new SearchFunction(recipeSearchController);
+            searchFunction.searchRecipe(searchButton);
 
             search_panel.add(searchPrompt, BorderLayout.WEST);
             search_panel.add(searchText, BorderLayout.CENTER);
@@ -66,7 +68,6 @@ public class FindRecipesByName extends JPanel {
     }
 
     MainWindowContentManager contentManager;
-    RecipePage recipePage;
     JPanel contentPane;
     JPanel logo_panel;
     JPanel search_panel;

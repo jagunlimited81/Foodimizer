@@ -103,6 +103,13 @@ public class DatabaseFiller {
         ingredients = new String[]{"lime", "tequila", "triple sec", "salt"};
         createRecipeFromString(recipeName, ingredients);
 
+        recipeName = "Chicken Parmesan";
+        ingredients = new String[]{"chicken", "salt", "pepper", "egg", "bread crumbs", "parmesan cheese", "olive oil", "basil", "tomato sauce"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Spaghetti Bolognese";
+        ingredients = new String[]{"olive oil", "meat", "onion", "carrot", "celery sticks", "garlic cloves", "rosemary", "tomato sauce", "basil", "dried oregano", "fresh bay leaves"};
+        createRecipeFromString(recipeName, ingredients);
     }
 
     /**

@@ -1,16 +1,15 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
 import edu.ilstu.Foodimizer.Controller.IngredientSearchController;
-import edu.ilstu.Foodimizer.app.db.models.Recipe;
-import edu.ilstu.Foodimizer.app.db.service.RecipeService;
-import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
+import edu.ilstu.Foodimizer.Controller.SearchFunction;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+
 
 // Search for Recipe that have any ingredients in the pantry
 public class FindRecipesByIngredient extends JPanel {
+
     public FindRecipesByIngredient() {
         init();
     }
@@ -45,14 +44,16 @@ public class FindRecipesByIngredient extends JPanel {
 
             searchText = new JTextField(35);
             searchText.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
-            IngredientSearchController i = new IngredientSearchController(searchText);
+            IngredientSearchController ingredientSearchController = new IngredientSearchController(searchText);
 
             searchPrompt = new JLabel("Search Ingredient: ");
             searchPrompt.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
 
             searchButton = new JButton("Search");
             searchButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
-            searchButton.addActionListener(i);
+
+            SearchFunction searchFunction = new SearchFunction(ingredientSearchController);
+            searchFunction.searchIngredient(searchButton);
 
             search_panel.add(searchPrompt, BorderLayout.WEST);
             search_panel.add(searchText, BorderLayout.CENTER);
