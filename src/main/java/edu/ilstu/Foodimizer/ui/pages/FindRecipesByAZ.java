@@ -1,7 +1,6 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
 import edu.ilstu.Foodimizer.Controller.RecipeSearchController;
-import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
@@ -9,15 +8,11 @@ import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class FindRecipesByAZ extends Page {
-    private StateManager sm;
-    private Recipe recipes;
     public FindRecipesByAZ() {
         init();
     }
@@ -60,10 +55,11 @@ public class FindRecipesByAZ extends Page {
             List_Of_Recipe_JC = new JComboBox<>();
             List_Of_Recipe_JC.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
             List_Of_Recipe_JC.setModel(new DefaultComboBoxModel<>(recipe_list.toArray(new String[0])));
-            RecipeSearchController r = new RecipeSearchController(List_Of_Recipe_JC);
+            List_Of_Recipe_JC.setMaximumRowCount(5);
 
             searchButton = new JButton("Search");
             searchButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
+            RecipeSearchController r = new RecipeSearchController(List_Of_Recipe_JC);
             searchButton.addActionListener(r);
 
             combo_panel.add(List_Of_Recipe_JC);
@@ -72,16 +68,8 @@ public class FindRecipesByAZ extends Page {
         contentPane.add(combo_panel);
 
         add(contentPane);
-
     }
 
-    private void buttonPressed(Recipe r) {
-        contentManager = MainWindowContentManager.getInstance();
-        RecipePage.getInstance().setActiveRecipe(r);
-        contentManager.goToPage("RecipePage");
-    }
-
-    MainWindowContentManager contentManager;
     ImageIcon foodimizer_logo;
 
     JPanel logo_panel;
