@@ -16,28 +16,54 @@ import java.util.Iterator;
 import java.util.List;
 
 public class MyPantry extends JPanel {
+    private JList<Ingredient> activePantry;
+    private JPanel contentPane;
+    private JPanel panel;
+
+    JList<Ingredient> list = new JList<>();
+    DefaultListModel<Ingredient> model = new DefaultListModel<>();
+    JLabel label = new JLabel();
+    JSplitPane splitPane = new JSplitPane();
+    IngredientService is = new IngredientService();
+    JButton fireButton;
+
     public MyPantry() {
         init();
         //persistPantry();
+
     }
 
     private void init() {
-//        JButton jb = new JButton("testing");
-//        jb.addActionListener(e ->persistPantry());
-//        this.add(jb);
-        setBackground(Color.WHITE);
+        JButton jb = new JButton("Add");
+        jb.addActionListener(e ->persistPantry());
+        this.add(jb);
+//        setBackground(Color.WHITE);
         contentPane = new JPanel();
-//        ingredientsListPanel = new BorderLayout();
-//        ingredientsList = new JList(activePantry);
-//        ingredientsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-//        ingredientsList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-//        ingredientsList.setVisibleRowCount(-1);
-//        JScrollPane listScroller = new JScrollPane(ingredientsList);
-//        listScroller.setPreferredSize(new Dimension(250,80));
+        this.setLayout(new BorderLayout());
+
+
+
+        /* Pantry Items Panel */
+        contentPane.setBackground(Color.BLACK);
+        this.add(contentPane, BorderLayout.CENTER);
+
+        /* Pantry Search Bar */
+        panel = new JPanel();
+        panel.setBackground(Color.BLUE);
+        activePantry = new JList(is.getAll().toArray());
+        panel.add(activePantry);
+        activePantry.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        activePantry.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        activePantry.setVisibleRowCount(-1);
+//        JScrollPane listScroller = new JScrollPane(activePantry);
+//        listScroller.setPreferredSize(new Dimension(getPreferredSize()));
+        this.add(panel, BorderLayout.NORTH);
+        this.add(splitPane);
     }
+
     private void persistPantry(){
         Ingredient ingredient = new Ingredient();
-       // ingredient.setName("Food");
+//        ingredient.setName("Food");
 
         Profile profile = StateManager.getInstance().getActiveProfile();
 
@@ -48,25 +74,25 @@ public class MyPantry extends JPanel {
         iService.save(ingredient);
         pService.update(profile, "");
 
+        profile.getPantry().add(ingredient);
+
         List<Ingredient> pList = new ArrayList<>(profile.getPantry());
         this.add(new JLabel(pList.get(0).toString()));
     }
 
     private void valueChanged(ListSelectionEvent e){
-//        if(e.getValueIsAdjusting() == false){
-//            if (ingredientsList.getSelectedIndex() == -1){
-//                fireButton.setEnabled(false);
-//            } else {
-//                fireButton.setEnabled(true);
-//            }
-//        }
+        if(!e.getValueIsAdjusting() == false){
+            if (activePantry.getSelectedIndex() == -1){
+                fireButton.setEnabled(false);
+            } else {
+                fireButton.setEnabled(true);
+            }
+        }
     }
 
+    private void addToPantry(){
 
-    private Ingredient[] activePantry;
-    private JPanel contentPane;
-    private BorderLayout ingredientsListPanel;
+    }
 
-    private JList ingredientsList;
 
 }
