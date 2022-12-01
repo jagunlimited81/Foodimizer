@@ -4,7 +4,6 @@ import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
 
 import edu.ilstu.Foodimizer.app.StateManager;
-import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.service.IngredientService;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 
@@ -12,16 +11,17 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class MyPantry extends JPanel {
     private JList<Ingredient> activePantry;
-    private JPanel contentPane;
-    private JPanel panel;
+    private JPanel buttonPanel;
+    private JPanel ingredientsPanel;
+
+    DefaultListModel<Ingredient> model = new DefaultListModel<>();
 
     JList<Ingredient> list = new JList<>();
-    DefaultListModel<Ingredient> model = new DefaultListModel<>();
+
     JLabel label = new JLabel();
 //    JSplitPane splitPane = new JSplitPane();
     IngredientService is = new IngredientService();
@@ -41,31 +41,34 @@ public class MyPantry extends JPanel {
         rmvBtn.addActionListener(e ->persistPantry());
         this.add(rmvBtn);
 //        setBackground(Color.WHITE);
-        contentPane = new JPanel();
+        buttonPanel = new JPanel();
         this.setLayout(new BorderLayout());
 
 
 
         /* Pantry Items Panel */
-        contentPane.setBackground(Color.PINK);
+        buttonPanel.setBackground(Color.PINK);
+        //buttonPanel.setPreferredSize(getPreferredSize());
 //        this.add(contentPane, BorderLayout.CENTER);
-        contentPane.add(addBtn);
-        contentPane.add(rmvBtn);
+        buttonPanel.add(addBtn);
+        buttonPanel.add(rmvBtn);
 
         /* Pantry Search Bar */
-        panel = new JPanel();
-        panel.setBackground(Color.BLUE);
+        ingredientsPanel = new JPanel();
+        ingredientsPanel.setBackground(Color.BLUE);
         activePantry = new JList(is.getAll().toArray());
-        panel.add(activePantry);
+        ingredientsPanel.add(activePantry);
         activePantry.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         activePantry.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         activePantry.setVisibleRowCount(-1);
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,activePantry,contentPane);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,activePantry, buttonPanel);
 //        JScrollPane listScroller = new JScrollPane(activePantry);
 //        listScroller.setPreferredSize(new Dimension(getPreferredSize()));
-        this.add(panel, BorderLayout.EAST);
+        ;
+        this.add(ingredientsPanel, BorderLayout.EAST);
         splitPane.setLeftComponent(new JScrollPane(activePantry));
-        splitPane.setRightComponent(contentPane);
+        splitPane.setRightComponent(buttonPanel);
+        splitPane.setResizeWeight(0.5);
         this.add(splitPane);
     }
 
