@@ -10,8 +10,16 @@ public class ServicesEntityManager {
     private static ServicesEntityManager instance;
     private static EntityManager em;
 
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        ServicesEntityManager.em = em;
+    }
+
     private ServicesEntityManager() {
-        em = Persistence.createEntityManagerFactory("FoodimizerDB").createEntityManager();
+
     }
 
 
@@ -29,5 +37,9 @@ public class ServicesEntityManager {
         if (instance == null)
             instance = new ServicesEntityManager();
         return instance;
+    }
+
+    public void init(String persistenceUnitName) {
+        em = Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();
     }
 }
