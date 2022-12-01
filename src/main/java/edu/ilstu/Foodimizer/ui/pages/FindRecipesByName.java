@@ -13,7 +13,7 @@ public class FindRecipesByName extends Page {
         init();
     }
 
-    private void init() {
+    protected void init() {
         List<Recipe> recipes = new RecipeService().getAll();
         System.out.println(recipes);
         for (Recipe recipe : recipes) {

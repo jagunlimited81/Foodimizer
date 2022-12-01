@@ -56,7 +56,7 @@ public class ProfileCard extends JPanel implements MouseListener {
         editButton = new JButton("edit");
         editButton.addActionListener(e -> editProfileButtonPressed());
         editButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(editButton);
+        //add(editButton);
     }
 
     private void switchProfiles() {
@@ -70,7 +70,7 @@ public class ProfileCard extends JPanel implements MouseListener {
     private void editProfileButtonPressed() {
         System.out.println("editing profile " + profile.getName());
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
-        mwcm.goToPage("CreateOrEditProfile");
+        mwcm.goToPage("EditProfile");
 
     }
 

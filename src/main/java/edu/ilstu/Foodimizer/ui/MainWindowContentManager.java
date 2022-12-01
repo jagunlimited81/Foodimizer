@@ -1,5 +1,7 @@
 package edu.ilstu.Foodimizer.ui;
 
+import edu.ilstu.Foodimizer.app.StateManager;
+import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.ui.jcomponents.AppBar;
 import edu.ilstu.Foodimizer.ui.pages.*;
 
@@ -19,7 +21,7 @@ public class MainWindowContentManager extends JPanel {
         this.add(ab, BorderLayout.NORTH);
 
         /* pages */
-        pages = new JPanel(new CardLayout()); // Like cards in a deck, only one is vilible
+        pages = new JPanel(new CardLayout()); // Like cards in a deck, only one is visible
         pages.add(new ProfileSelector(), "ProfileSelector");
         contentPanelSwitcher = (CardLayout) pages.getLayout();
         pages.add(new FindRecipesByName(), "FindRecipesByName");
@@ -28,25 +30,40 @@ public class MainWindowContentManager extends JPanel {
         pages.add(new MyPantry(), "MyPantry");
         pages.add(new DatabaseDebugAndTest(), "DatabaseDebugAndTest");
         pages.add(RecipePage.getInstance(), "RecipePage");
-        pages.add(CreateOrEditProfile.getInstance(), "CreateOrEditProfile");
-
+        pages.add(new CreateProfile(), "CreateProfile");
+        pages.add(new EditProfile(), "EditProfile");
+        pages.add(new FirstTimeWelcome(), "FirstTimeWelcome");
 
         this.add(pages, BorderLayout.CENTER);
-        this.goToPage("ProfileSelector");
+        // if there's no profiles, show the welcome message.
+        ProfileService ps = new ProfileService();
+        if (ps.getAll().isEmpty())
+            this.goToPage("FirstTimeWelcome");
+        else
+            this.goToPage("ProfileSelector");
     }
 
-    public void goToPage(String page) {
-        System.out.println(page);
-        ab.setVisible(!page.equals("ProfileSelector"));
-        contentPanelSwitcher.show(pages, page);
-
+    public void goToPage(String pageStr) {
+        System.out.println(pageStr);
+        // only show the appbar if a profile is loaded.
+        ab.setVisible(StateManager.getInstance().getActiveProfile() != null);
+        contentPanelSwitcher.show(pages, pageStr);
+        // Call update function on Page
+        Page page;
+        for (Component comp : pages.getComponents()) {
+            if (comp.isVisible()) {
+                page = (Page) comp;
+                page.refreshContent();
+                break;
+            }
+        }
     }
 
     /**
      * Singleton Class architecture.
      * Allows the class to be used across multiple files in a Java project
      *
-     * @return
+     * @return Instance of MainWindowContentManager
      */
     public static MainWindowContentManager getInstance() {
         if (instance == null)

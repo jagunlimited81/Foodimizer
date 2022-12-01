@@ -16,7 +16,7 @@ public class RecipePage extends Page {
         init();
     }
 
-    private void init() {
+    protected void init() {
     }
 
     public void setRecipe(Recipe recipe) {
