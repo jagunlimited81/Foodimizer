@@ -10,6 +10,7 @@ import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,13 +44,11 @@ public class MyPantry extends JPanel {
 
         JButton rmvBtn = new JButton("Remove");
         rmvBtn.addActionListener(e ->persistPantry());
-        this.add(rmvBtn, BorderLayout.SOUTH);
+        this.add(rmvBtn);
 
 //        setBackground(Color.WHITE);
         buttonPanel = new JPanel();
         this.setLayout(new BorderLayout());
-
-
 
         /* Button Panel */
         buttonPanel.setBackground(Color.PINK);
@@ -66,7 +65,17 @@ public class MyPantry extends JPanel {
         activePantryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         activePantryList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         activePantryList.setVisibleRowCount(-1);
+//        activePantryList.setPreferredSize(new Dimension(500,500));
+        ingredientsPanel.setBorder(BorderFactory.createTitledBorder("Ingredients List"));
         this.add(ingredientsPanel, BorderLayout.WEST);
+
+
+        /* Active Pantry Panel */
+        activePantry = new JPanel();
+        activePantry.setBackground(Color.LIGHT_GRAY);
+        this.add(activePantry, BorderLayout.EAST);
+
+        /* Split Pane Panel */
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,activePantry, ingredientsPanel);
         JScrollPane listScroller = new JScrollPane(activePantry);
         listScroller.setPreferredSize(new Dimension(getPreferredSize()));
@@ -74,11 +83,6 @@ public class MyPantry extends JPanel {
         splitPane.setRightComponent(activePantry);
         splitPane.setResizeWeight(0.5);
         this.add(splitPane);
-
-        /* Active Pantry Panel */
-        activePantry = new JPanel();
-        activePantry.setBackground(Color.LIGHT_GRAY);
-        this.add(activePantry, BorderLayout.EAST);
     }
 
     private void persistPantry(){
@@ -110,8 +114,58 @@ public class MyPantry extends JPanel {
         }
     }
 
-    private void addToPantry(){
+//    private void addToPantry(){
+//
+//    }
 
+    public void removeFromPantry(ActionEvent e) {
+        int index = list.getSelectedIndex();
+        activePantryList.remove(index);
+
+        int size = activePantryList.getSelectedIndex();
+
+        if (size == 0) { //Nobody's left, disable firing.
+            fireButton.setEnabled(false);
+
+        } else { //Select an index.
+            if (index == activePantryList.getSelectedIndex()) {
+                //removed item in last position
+                index--;
+            }
+
+            list.setSelectedIndex(index);
+            list.ensureIndexIsVisible(index);
+        }
+    }
+
+    public void addToPantry(ActionEvent e) {
+        Ingredient ingredient = new Ingredient();
+        String name = ingredient.getName();
+
+        //User did not type in a unique name...
+        if (name.equals("") || alreadyInList(name)) {
+            Toolkit.getDefaultToolkit().beep();
+            activePantryList.requestFocusInWindow();
+            employeeName.selectAll();
+            return;
+        }
+
+        int index = list.getSelectedIndex(); //get selected index
+        if (index == -1) { //no selection, so insert at beginning
+            index = 0;
+        } else {           //add after the selected item
+            index++;
+        }
+
+        listModel.insertElementAt(employeeName.getText(), index);
+
+        //Reset the text field.
+        employeeName.requestFocusInWindow();
+        employeeName.setText("");
+
+        //Select the new item and make it visible.
+        list.setSelectedIndex(index);
+        list.ensureIndexIsVisible(index);
     }
 
 
