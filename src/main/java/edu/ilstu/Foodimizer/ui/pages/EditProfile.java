@@ -9,8 +9,10 @@ import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class EditProfile extends Page {
     public EditProfile() {
@@ -26,6 +28,7 @@ public class EditProfile extends Page {
         header = new JLabel("Editing profile " + sm.getActiveProfile().getName());
         nameInfoStr = new JLabel("Name:");
         name = new JTextField(sm.getActiveProfile().getName());
+        name.setPreferredSize(new Dimension(name.getWidth()+200, name.getHeight()));
         saveButton = new JButton("Save Profile");
         saveButton.addActionListener(e -> editProfile());
         deleteButton = new JButton("Delete Profile");
@@ -98,7 +101,7 @@ public class EditProfile extends Page {
         profile.setName(name.getText());
 
         try {
-            image = ImageIO.read(this.getClass().getResource("/images/nopfp" + pfpChoice.getSelectedIndex() + ".png"));
+            image = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/nopfp" + pfpChoice.getSelectedIndex() + ".png")));
             byte[] bytes = ByteTools.toByteArray(image, "png");
             profile.setProfilePic(bytes);
         } catch (IOException e) {

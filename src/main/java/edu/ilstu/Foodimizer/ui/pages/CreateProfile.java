@@ -8,6 +8,7 @@ import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -23,6 +24,7 @@ public class CreateProfile extends Page {
         JLabel header = new JLabel("Create a profile");
         nameInfoStr = new JLabel("Name:");
         name = new JTextField();
+        name.setPreferredSize(new Dimension(name.getWidth()+200, name.getHeight()));
         saveButton = new JButton("Create Profile");
         saveButton.addActionListener(e -> createProfile());
         pfpChoiceInfoStr = new JLabel("Profile Picture Color:");
