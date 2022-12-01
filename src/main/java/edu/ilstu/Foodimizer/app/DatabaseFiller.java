@@ -110,6 +110,33 @@ public class DatabaseFiller {
         recipeName = "Spaghetti Bolognese";
         ingredients = new String[]{"olive oil", "meat", "onion", "carrot", "celery sticks", "garlic cloves", "rosemary", "tomato sauce", "basil", "dried oregano", "fresh bay leaves"};
         createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Fried Rice";
+        ingredients = new String[]{"chilled rice", "egg", "carrot", "onion", "green onion", "peas", "garlic", "soy sauce", "oyster sauce", "toasted sesame oil", "butter" };
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Meat Pizza";
+        ingredients = new String[]{"water", "dry yeast", "granulated sugar", "all purpose flour", "salt", "pizza sauce", "mozzarella", "parmesan cheese", "bacon", "ham", "sausage", "ground black pepper", "pepperoni slices"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Pad Thai";
+        ingredients = new String[]{"flat rice noodles", "Tablespoons oil", "garlic", "egg", "bean sprout", "red bell pepper", "green onions", "peanut", "lime", "cilantro", "fish sauce", "soy sauce", "brown sugar", "rice vinegar", "sriracha hot sauce", "creamy peanut butter"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "PBJ";
+        ingredients = new String[]{"bread", "peanut butter", "grape jelly", "strawbelly jelly"};
+        recipe = createRecipeFromString(recipeName, ingredients);
+        recipe.setDirections("1. Spread the peanut butter on one piece of bread.\n2. Spread the jelly on the other side.\n3. Put the two pieces of bread together to form a sandwich.\n 4.Toddler adaptation: cut off crusts before serving.");
+        recipe.setMealType("Snack");
+        recipe.setPrepTime(0);
+        recipe.setCookTime(5);
+        recipe.setWaitTime(0);
+        recipeService.save(recipe);
+
+        recipeName = "Steak Quesadillas";
+        ingredients = new String[]{"tortillas", "cheese", "steak", "onion"};
+        createRecipeFromString(recipeName, ingredients);
+
     }
 
     /**
