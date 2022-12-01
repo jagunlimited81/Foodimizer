@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyPantry extends JPanel {
-    private JList<Ingredient> activePantry;
+    private JList<Ingredient> activePantryList;
     private JPanel buttonPanel;
     private JPanel ingredientsPanel;
+
+    private JPanel activePantry;
 
     DefaultListModel<Ingredient> model = new DefaultListModel<>();
 
@@ -34,42 +36,49 @@ public class MyPantry extends JPanel {
     }
 
     private void init() {
+        /* Button Implementation */
         JButton addBtn = new JButton("Add");
         addBtn.addActionListener(e ->persistPantry());
         this.add(addBtn);
+
         JButton rmvBtn = new JButton("Remove");
         rmvBtn.addActionListener(e ->persistPantry());
-        this.add(rmvBtn);
+        this.add(rmvBtn, BorderLayout.SOUTH);
+
 //        setBackground(Color.WHITE);
         buttonPanel = new JPanel();
         this.setLayout(new BorderLayout());
 
 
 
-        /* Pantry Items Panel */
+        /* Button Panel */
         buttonPanel.setBackground(Color.PINK);
-        //buttonPanel.setPreferredSize(getPreferredSize());
-//        this.add(contentPane, BorderLayout.CENTER);
+//        buttonPanel.setSize(500,500);
         buttonPanel.add(addBtn);
         buttonPanel.add(rmvBtn);
+        this.add(buttonPanel, BorderLayout.SOUTH);
 
         /* Pantry Search Bar */
         ingredientsPanel = new JPanel();
         ingredientsPanel.setBackground(Color.BLUE);
-        activePantry = new JList(is.getAll().toArray());
-        ingredientsPanel.add(activePantry);
-        activePantry.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        activePantry.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        activePantry.setVisibleRowCount(-1);
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,activePantry, buttonPanel);
-//        JScrollPane listScroller = new JScrollPane(activePantry);
-//        listScroller.setPreferredSize(new Dimension(getPreferredSize()));
-        ;
-        this.add(ingredientsPanel, BorderLayout.EAST);
-        splitPane.setLeftComponent(new JScrollPane(activePantry));
-        splitPane.setRightComponent(buttonPanel);
+        activePantryList = new JList(is.getAll().toArray());
+        ingredientsPanel.add(activePantryList);
+        activePantryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        activePantryList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        activePantryList.setVisibleRowCount(-1);
+        this.add(ingredientsPanel, BorderLayout.WEST);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,activePantry, ingredientsPanel);
+        JScrollPane listScroller = new JScrollPane(activePantry);
+        listScroller.setPreferredSize(new Dimension(getPreferredSize()));
+        splitPane.setLeftComponent(new JScrollPane(ingredientsPanel));
+        splitPane.setRightComponent(activePantry);
         splitPane.setResizeWeight(0.5);
         this.add(splitPane);
+
+        /* Active Pantry Panel */
+        activePantry = new JPanel();
+        activePantry.setBackground(Color.LIGHT_GRAY);
+        this.add(activePantry, BorderLayout.EAST);
     }
 
     private void persistPantry(){
@@ -93,7 +102,7 @@ public class MyPantry extends JPanel {
 
     private void valueChanged(ListSelectionEvent e){
         if(!e.getValueIsAdjusting() == false){
-            if (activePantry.getSelectedIndex() == -1){
+            if (activePantryList.getSelectedIndex() == -1){
                 fireButton.setEnabled(false);
             } else {
                 fireButton.setEnabled(true);
