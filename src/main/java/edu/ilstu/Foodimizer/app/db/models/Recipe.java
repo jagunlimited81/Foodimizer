@@ -54,6 +54,10 @@ public class Recipe {
     @ManyToMany(mappedBy = "favoriteRecipes")
     private Set<Profile> profilesThatFavoriteThisRecipe = new HashSet<>();
 
+    public Set<JoinProfileRateRecipe> getProfileRatings() {
+        return ProfileRatings;
+    }
+
     @OneToMany(mappedBy = "recipe")
     private Set<JoinProfileRateRecipe> ProfileRatings = new HashSet<>();
 
