@@ -14,6 +14,7 @@ import java.io.IOException;
 
 public class ProfileCornerMenu extends JPanel implements MouseListener {
     Profile profile;
+    Dimension pfpSize = new Dimension(50, 50);
 
     public ProfileCornerMenu() {
         System.out.println("Initializing corner menu");
@@ -22,7 +23,6 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
 
     private void init() {
 
-        Dimension pfpSize = new Dimension(50, 50);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.profile = StateManager.getInstance().getActiveProfile();
@@ -33,16 +33,14 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
 
         /* ----this---- */
         //setMaximumSize(size);
-        setBorder(BorderFactory.createLineBorder(Color.RED));
+        //setBorder(BorderFactory.createLineBorder(Color.RED));
         addMouseListener(this);
         /* ----pfp----*/
         pfp = new JPanel();
-        pfp.setPreferredSize(pfpSize);
-        pfp.setMaximumSize(pfpSize);
-        pfp.setBorder(BorderFactory.createLineBorder(Color.RED));
+        //pfp.setBorder(BorderFactory.createLineBorder(Color.RED));
         add(pfp);
         /*----pfpLabel----*/
-        pfpLabel = new JLabel("Picture go here.");
+        pfpLabel = new JLabel();
         pfp.add(pfpLabel);
         /*----name----*/
         name = new JLabel("Name go here.");
@@ -70,7 +68,14 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
         try {
             //need to scale the image somehow
             BufferedImage profilePic = ByteTools.toBufferedImage(profile.getProfilePic());
-            ImageIcon ii = new ImageIcon(profilePic);
+            Image temp = profilePic.getScaledInstance(pfpSize.width, pfpSize.height, Image.SCALE_SMOOTH);
+            BufferedImage scaled = new BufferedImage(pfpSize.width, pfpSize.height, profilePic.getType());
+
+            Graphics2D g2d = scaled.createGraphics();
+            g2d.drawImage(temp, 0, 0, null);
+            g2d.dispose();
+
+            ImageIcon ii = new ImageIcon(scaled);
             pfpLabel.setIcon(ii);
         } catch (IOException e) {
             throw new RuntimeException(e);
