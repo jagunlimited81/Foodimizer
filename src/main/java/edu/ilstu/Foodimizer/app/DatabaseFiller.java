@@ -7,6 +7,7 @@ import edu.ilstu.Foodimizer.app.db.service.IngredientService;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.lib.ByteTools;
+import org.apache.derby.iapi.store.access.conglomerate.ScanManager;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -136,6 +137,37 @@ public class DatabaseFiller {
         recipeName = "Steak Quesadillas";
         ingredients = new String[]{"tortillas", "cheese", "steak", "onion"};
         createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Jollof Rice";
+        ingredients = new String[]{"vegetable oil", "fresh plum", "red onions", "hot pepper", "tomato paste", "curry powder", "dried thyme", "dried bay leaves", "chicken stock", "unsalted butter", "rice", "salt", "black pepper", "white pepper", "tomatoes"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Chicken Taco";
+        ingredients = new String[]{"chicken", "tortilla", "lettuce", "sour cream", "tomato", "taco seasoning", "salt", "cumin", "lime"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Cambodia Pork Rice";
+        ingredients = new String[]{"garlic", "soy sauce", "palm sugar", "coconut milk", "fish sauce", "lime"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Orange Chicken";
+        ingredients = new String[]{"chicken", "egg", "cornstarch", "flour", "oil", "orange juice", "sugar", "rice vinegar", "soy sauce", "ginger", "garlic powder", "red chilli flakes", "orange zest"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Kung Pao Chicken";
+        ingredients = new String[]{"chicken", "chinese wine", "chinese black vinegar", "hoisin sauce", "dark soy sauce", "light soy sauce", "chicken broth"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Spaghetti Meatball";
+        ingredients = new String[]{"spaghetti", "ground beef", "bread crumbs", "parsley", "parmesan", "egg", "garlic", "red pepper flakes", "olive oil", "onion", "crush tomatoes", "bay leaf", "black pepper"};
+        createRecipeFromString(recipeName, ingredients);
+
+        recipeName = "Spaghetti Carbonara";
+        ingredients = new String[]{"spaghetti", "egg", "parmesan", "black pepper", "olive oil", "slab guanciate", "bacon"};
+        createRecipeFromString(recipeName, ingredients);
+
+
+
 
     }
 
