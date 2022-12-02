@@ -1,8 +1,11 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
+import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
+import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.ui.jcomponents.RecipeActionPane;
+import edu.ilstu.Foodimizer.ui.jcomponents.StarRating;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -135,14 +138,12 @@ public class RecipePage extends Page {
 
         /* centerColumn */
         {
-            //centerColumn.setLayout(new BoxLayout(centerColumn, BoxLayout.PAGE_AXIS));
             centerColumn.setLayout(new BorderLayout());
 
             recipeHeader.setLayout(new BorderLayout());
             recipeNameTitle.setText(recipe.getName());
             recipeNameTitle.setFont(new Font("Verdana", Font.PLAIN, 22));
             recipeHeader.add(recipeNameTitle, BorderLayout.NORTH);
-            //recipeHeader.setBorder(BorderFactory.createLineBorder(Color.red));
             recipeDescription.setText(recipe.getDescription());
             recipeDescription.setLineWrap(true);
             recipeDescription.setEditable(false);
@@ -156,8 +157,13 @@ public class RecipePage extends Page {
             ingredientsList.setBorder(ingredientsBox);
             ingredientsList.setLayout(new BoxLayout(ingredientsList, BoxLayout.Y_AXIS));
             //JCheckBox[] jt = new JCheckBox("IngredientName");
+            Profile profile = StateManager.getInstance().getActiveProfile();
             for (Ingredient i : recipe.getRecipeIngredients()) {
                 JCheckBox jt = new JCheckBox(i.getName());
+                if (profile.getPantry().contains(i)) {
+                    jt.setSelected(true);
+                }
+                jt.setEnabled(false);
                 ingredientsList.add(jt);
             }
 
@@ -178,10 +184,20 @@ public class RecipePage extends Page {
             directions.add(directionsTextPane);
             centerColumn.add(directions, BorderLayout.CENTER);
         }
-        contentPane.add(new JScrollPane(centerColumn), BorderLayout.CENTER);
+        JScrollPane centerScrollPane = new JScrollPane(centerColumn);
+        centerScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        centerScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        centerScrollPane.setPreferredSize(new Dimension(this.getWidth() / 2, this.getHeight()));
+
+        contentPane.add(centerScrollPane, BorderLayout.CENTER);
         /* rightColumn */
         {
-            rightColumn.add(new RecipeActionPane(), BorderLayout.EAST);
+            rightColumn.setLayout(new BoxLayout(rightColumn, BoxLayout.Y_AXIS));
+            rightColumn.setPreferredSize(new Dimension(250, getHeight()));
+            StarRating sr = new StarRating();
+            RecipeActionPane rap = new RecipeActionPane();
+            rightColumn.add(sr);
+            rightColumn.add(rap);
         }
         contentPane.add(rightColumn, BorderLayout.EAST);
         this.add(contentPane);

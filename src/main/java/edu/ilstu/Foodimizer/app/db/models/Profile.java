@@ -52,6 +52,10 @@ public class Profile {
     )
     private Set<Ingredient> pantry = new HashSet<>();
 
+    public Set<JoinProfileRateRecipe> getRecipeRatings() {
+        return RecipeRatings;
+    }
+
     @OneToMany(mappedBy = "profile")
     private Set<JoinProfileRateRecipe> RecipeRatings = new HashSet<>();
 
