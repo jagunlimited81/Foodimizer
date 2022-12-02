@@ -6,6 +6,8 @@ import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
+import edu.ilstu.Foodimizer.ui.jcomponents.RecipeActionPane;
+import edu.ilstu.Foodimizer.ui.jcomponents.RecipeSearchResult;
 import edu.ilstu.Foodimizer.ui.jcomponents.StarRating;
 
 import javax.swing.*;
@@ -17,6 +19,8 @@ import java.util.List;
 
 public class RecipeSearchResultsPage extends Page {
 
+    ArrayList<Recipe> recipesOnPage = new ArrayList<>();
+
     public RecipeSearchResultsPage() {
         init();
     }
@@ -27,6 +31,11 @@ public class RecipeSearchResultsPage extends Page {
         return instance;
     }
 
+    public void setActiveRecipes(List<Recipe> recipes) {
+        if (recipes != null)
+            recipesOnPage = new ArrayList<>(recipes);
+    }
+
     @Override
     protected void init() {
         if (StateManager.getInstance().getActiveProfile() == null)
@@ -34,46 +43,26 @@ public class RecipeSearchResultsPage extends Page {
 
         contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        JLabel title = new JLabel("Search Results");
+        title.setFont(new Font("Verdana", Font.PLAIN, 21));
+        title.setAlignmentX(Component.LEFT_ALIGNMENT);
+        contentPanel.add(title);
         RecipeService rs = new RecipeService();
 
-        ArrayList<Recipe> recipesOnPage = new ArrayList<>(
-                rs.searchByIngredients(
-                        new ArrayList<>(
-                                StateManager.getInstance().getActiveProfile().getPantry())));
         for (Recipe recipe : recipesOnPage) {
-            JPanel recipeResult = new JPanel();
-            recipeResult.setLayout(new BorderLayout());
-            recipeResult.setBorder(BorderFactory.createLineBorder(Color.gray));
-
-            JPanel recipeImage = new JPanel();
-            recipeImage.setBackground(Color.gray);
-            recipeImage.setMaximumSize(new Dimension(100, 100));
-            recipeImage.setPreferredSize(new Dimension(100, 100));
-            recipeImage.setMinimumSize(new Dimension(100, 100));
-            recipeResult.add(recipeImage, BorderLayout.LINE_START);
-
-            JPanel RecipeInfoPanel = new JPanel();
-            JLabel recipeName = new JLabel(recipe.getName());
-            recipeName.setFont(new Font("Verdana", Font.PLAIN, 18));
-            RecipeInfoPanel.add(recipeName, BorderLayout.NORTH);
-
-            JLabel recipeDesc = new JLabel(recipe.getDescription());
-            recipeName.setFont(new Font("Verdana", Font.PLAIN, 13));
-            RecipeInfoPanel.add(recipeDesc, BorderLayout.CENTER);
-            recipeResult.add(RecipeInfoPanel, BorderLayout.CENTER);
-
-            recipeResult.add(new StarRating(recipe), BorderLayout.SOUTH);
-
-            recipeResult.addMouseListener(new MouseAdapter() {
+            RecipeSearchResult result = new RecipeSearchResult(recipe);
+            result.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     RecipePage.getInstance().setRecipe(recipe);
                     MainWindowContentManager.getInstance().goToPage("RecipePage");
                 }
             });
-
-            contentPanel.add(recipeResult);
+            contentPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            contentPanel.add(result);
         }
-        this.add(contentPanel);
+        JScrollPane csp = new JScrollPane(contentPanel);
+        csp.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
+        this.add(csp);
     }
 
 

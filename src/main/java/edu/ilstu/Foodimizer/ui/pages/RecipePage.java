@@ -70,12 +70,10 @@ public class RecipePage extends Page {
             recipeImage.setMaximumSize(new Dimension(200, 200));
             recipeImage.setMinimumSize(new Dimension(200, 200));
             recipeImage.setBackground(Color.gray);
-            recipeImage.setBorder(BorderFactory.createLineBorder(Color.red));
             recipeImage.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftColumn.add(recipeImage);
 
             recipeCookInfoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            recipeCookInfoPanel.setBorder(BorderFactory.createLineBorder(Color.red));
             GroupLayout rcipLayout = new GroupLayout(recipeCookInfoPanel);
             recipeCookInfoPanel.setLayout(rcipLayout);
             rcipLayout.setAutoCreateGaps(true);
