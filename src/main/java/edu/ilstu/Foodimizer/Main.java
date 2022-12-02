@@ -1,7 +1,9 @@
 package edu.ilstu.Foodimizer;
 
+import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import edu.ilstu.Foodimizer.app.DatabaseFiller;
+import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 import javax.swing.*;
@@ -17,15 +19,18 @@ public class Main {
     public static void main(String[] args) {
         /* Start the JFrame Application */
         try {
-            FlatLightLaf.setup();
+            FlatDarkLaf.setup();
         } catch (Exception e) {
             System.out.println("failed to FlatLaf");
         }
+        /* Initialize Database to use prod DB */
+        ServicesEntityManager sem = ServicesEntityManager.getInstance();
+        sem.init("FoodimizerDB");
 
         DatabaseFiller dbf = new DatabaseFiller();
         dbf.createTestIngredients();
         dbf.createTestRecipes();
-        dbf.createTestProfiles();
+        //dbf.createTestProfiles();
 
 
         System.out.println("Starting JFrame...");

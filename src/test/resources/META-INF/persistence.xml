@@ -5,7 +5,7 @@
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
              version="2.1">
 
-    <persistence-unit name="FoodimizerDB">
+    <persistence-unit name="FoodimizerDB-TEST">
         <description>
             Foodimizer Database File
         </description>
@@ -22,7 +22,8 @@
             <!-- Use embedded Apache Derby driver -->
             <property name="jakarta.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
             <!-- Set RUL to Apache Derby -->
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:derby:${user.home}/FoodimizerDB;create=true"/>
+            <property name="jakarta.persistence.jdbc.url"
+                      value="jdbc:derby:${user.home}/FoodimizerDB-TEST;create=true"/>
             <!-- User and Password should be blank? -->
             <property name="jakarta.persistence.jdbc.user" value=""/>
             <property name="jakarta.persistence.jdbc.password" value=""/>

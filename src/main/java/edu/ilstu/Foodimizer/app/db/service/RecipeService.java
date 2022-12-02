@@ -1,6 +1,8 @@
 package edu.ilstu.Foodimizer.app.db.service;
 
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
+import edu.ilstu.Foodimizer.app.db.models.JoinProfileRateRecipe;
+import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;

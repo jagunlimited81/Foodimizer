@@ -28,13 +28,6 @@ public class Recipe {
     @Column(name = "directions")
     private String directions;
 
-    @ManyToMany
-    @JoinTable(
-            name = "made_of",
-            joinColumns = @JoinColumn(name = "recipeId"),
-            inverseJoinColumns = @JoinColumn(name = "ingredientId")
-    )
-    private final Set<Ingredient> recipeIngredients;
 
     @Column(name = "mealType")
     private String mealType;
@@ -59,11 +52,21 @@ public class Recipe {
     private byte[] thumbnail;
 
     @ManyToMany(mappedBy = "favoriteRecipes")
-    private Set<Profile> profilesThatFavoriteThisRecipe;
+    private Set<Profile> profilesThatFavoriteThisRecipe = new HashSet<>();
+
+    @OneToMany(mappedBy = "recipe")
+    private Set<JoinProfileRateRecipe> ProfileRatings = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "made_of",
+            joinColumns = @JoinColumn(name = "recipeId"),
+            inverseJoinColumns = @JoinColumn(name = "ingredientId")
+    )
+    private final Set<Ingredient> recipeIngredients = new HashSet<>();
 
     public Recipe() {
-        this.recipeIngredients = new HashSet<>();
-        this.profilesThatFavoriteThisRecipe = new HashSet<>();
+
     }
 
     public String getName() {

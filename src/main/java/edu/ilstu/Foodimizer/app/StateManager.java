@@ -1,14 +1,12 @@
 package edu.ilstu.Foodimizer.app;
 
 import edu.ilstu.Foodimizer.app.db.models.Profile;
-import edu.ilstu.Foodimizer.ui.jcomponents.AppBar;
 
 
 public class StateManager {
     private static StateManager instance = null;
     private Profile activeProfile;
-    /*components which update*/
-    private AppBar appBar;
+
 
     public StateManager() {
         init();
@@ -25,7 +23,6 @@ public class StateManager {
 
     public void setActiveProfile(Profile profile) {
         this.activeProfile = profile;
-        appBar.getProfileCornerMenu().updateProfile(profile);
     }
 
     /**
@@ -38,10 +35,5 @@ public class StateManager {
         return activeProfile;
     }
 
-    /*Pass components to the StateManager*/
-    /*So that StateManager can call their update methods later*/
-    public void setAppBar(AppBar ab)
-    {
-        appBar = ab;
-    }
+
 }
