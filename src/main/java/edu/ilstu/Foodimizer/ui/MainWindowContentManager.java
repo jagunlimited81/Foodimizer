@@ -47,6 +47,9 @@ public class MainWindowContentManager extends JPanel {
         System.out.println(pageStr);
         // only show the appbar if a profile is loaded.
         ab.setVisible(StateManager.getInstance().getActiveProfile() != null);
+        //refresh appbar content such as profile corner menu
+        ab.refreshContent();
+
         contentPanelSwitcher.show(pages, pageStr);
         // Call update function on Page
         Page page;

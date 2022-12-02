@@ -17,7 +17,9 @@ public class FirstTimeWelcome extends Page {
         contentPanel = new JPanel();
 
         JLabel motd = new JLabel("Welcome to Foodimizer!");
+        motd.setFont(new Font("Verdana", Font.PLAIN, 21));
         JLabel instr = new JLabel("Click the button to get started.");
+        instr.setFont(new Font("Verdana", Font.PLAIN, 18));
 
         JButton goToCreateProfilePage = new JButton("Create A Profile");
         goToCreateProfilePage.addActionListener(e -> goToCreateProfilePage());
@@ -30,7 +32,7 @@ public class FirstTimeWelcome extends Page {
 
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup()
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                                 .addComponent(motd)
                                 .addComponent(instr)
                                 .addComponent(goToCreateProfilePage))

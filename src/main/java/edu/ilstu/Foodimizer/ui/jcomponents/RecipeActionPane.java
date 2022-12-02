@@ -1,6 +1,7 @@
 package edu.ilstu.Foodimizer.ui.jcomponents;
 
 import edu.ilstu.Foodimizer.app.StateManager;
+import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
@@ -99,9 +100,37 @@ public class RecipeActionPane extends JPanel {
     }
 
     private void addMissingToGroceryList() {
+        Profile profile = StateManager.getInstance().getActiveProfile();
+        Recipe activeRecipe = RecipePage.getInstance().getActiveRecipe();
+
+        int numIngredientsAddedToShoppingList = 0;
+        for (Ingredient ingredient : activeRecipe.getRecipeIngredients()) {
+            if (!profile.getPantry().contains(ingredient)) {
+                numIngredientsAddedToShoppingList++;
+                profile.getShoppingList().add(ingredient);
+            }
+        }
+
+        ProfileService ps = new ProfileService();
+        ps.update(profile, "");
+        RecipePage.getInstance().refreshContent();
+        JOptionPane.showMessageDialog(new JPanel(),"Added " + numIngredientsAddedToShoppingList + " ingredients to the shopping list");
     }
 
     private void addAllToGroceryList() {
+        Profile profile = StateManager.getInstance().getActiveProfile();
+        Recipe activeRecipe = RecipePage.getInstance().getActiveRecipe();
+
+        int numIngredientsAddedToShoppingList = 0;
+        for (Ingredient ingredient : activeRecipe.getRecipeIngredients()) {
+            numIngredientsAddedToShoppingList++;
+            profile.getShoppingList().add(ingredient);
+        }
+
+        ProfileService ps = new ProfileService();
+        ps.update(profile, "");
+        RecipePage.getInstance().refreshContent();
+        JOptionPane.showMessageDialog(new JPanel(),"Added " + numIngredientsAddedToShoppingList + " ingredients to the shopping list");
     }
 
     private JPanel contentPanel;
