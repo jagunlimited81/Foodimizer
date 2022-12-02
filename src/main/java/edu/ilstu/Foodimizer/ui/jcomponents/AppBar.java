@@ -14,6 +14,7 @@ public class AppBar extends JPanel {
         contentManager = MainWindowContentManager.getInstance();
         titlePanel = new JPanel();
         title = new JLabel();
+        profileCornerMenu = new ProfileCornerMenu();
         /* menubar */
         menuBar1 = new JMenuBar();
         /* FindRecipesMenu */
@@ -50,6 +51,10 @@ public class AppBar extends JPanel {
 
             description.setText("Make recipes from nothing!");
             titlePanel.add(description, BorderLayout.CENTER);
+
+            /* This container houses the profile icon and menu */
+
+            titlePanel.add(profileCornerMenu, BorderLayout.EAST);
         }
         this.add(titlePanel, BorderLayout.NORTH);
 
@@ -128,6 +133,12 @@ public class AppBar extends JPanel {
 
     }
 
+    public void refreshContent() {
+        this.removeAll();
+        init();
+        this.revalidate();
+    }
+
     private void goToPageActionPerformed(String page) {
         contentManager.goToPage(page);
     }
@@ -160,5 +171,5 @@ public class AppBar extends JPanel {
     private JLabel title;
     private JPanel titlePanel;
     private JLabel description;
-
+    private ProfileCornerMenu profileCornerMenu;
 }
