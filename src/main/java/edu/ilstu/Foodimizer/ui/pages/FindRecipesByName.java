@@ -7,13 +7,13 @@ import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class FindRecipesByName extends JPanel {
+public class FindRecipesByName extends Page {
 
     public FindRecipesByName() {
         init();
     }
 
-    private void init() {
+    protected void init() {
         setBackground(Color.white);
 
         contentPane = new JPanel();

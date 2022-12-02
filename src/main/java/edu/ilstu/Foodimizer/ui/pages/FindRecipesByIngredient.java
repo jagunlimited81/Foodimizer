@@ -8,13 +8,13 @@ import java.awt.*;
 
 
 // Search for Recipe that have any ingredients in the pantry
-public class FindRecipesByIngredient extends JPanel {
+public class FindRecipesByIngredient extends Page {
 
     public FindRecipesByIngredient() {
         init();
     }
 
-    private void init() {
+    protected void init() {
         setBackground(Color.white);
 
         contentPane = new JPanel();
