@@ -1,5 +1,6 @@
 package edu.ilstu.Foodimizer.app.db.models;
 
+import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.lib.ByteTools;
 import junit.framework.TestCase;
@@ -14,6 +15,9 @@ public class ProfileTest extends TestCase {
     private ProfileService ps;
 
     public void setUp() throws Exception {
+        ServicesEntityManager sem = ServicesEntityManager.getInstance();
+        sem.init("FoodimizerDB-TEST");
+
         prof = new Profile();
         prof.setName("TestProfile");
         ps = new ProfileService();
