@@ -28,12 +28,12 @@ public class MainWindowContentManager extends JPanel {
         pages.add(new FindRecipesByIngredient(), "FindRecipesByIngredient");
         pages.add(new FindRecipesByAZ(), "FindRecipesByAZ");
         pages.add(new MyPantry(), "MyPantry");
+        pages.add(new ShoppingList(), "ShoppingList");
         pages.add(new DatabaseDebugAndTest(), "DatabaseDebugAndTest");
         pages.add(RecipePage.getInstance(), "RecipePage");
         pages.add(new CreateProfile(), "CreateProfile");
         pages.add(new EditProfile(), "EditProfile");
         pages.add(new FirstTimeWelcome(), "FirstTimeWelcome");
-
         this.add(pages, BorderLayout.CENTER);
         // if there's no profiles, show the welcome message.
         ProfileService ps = new ProfileService();
