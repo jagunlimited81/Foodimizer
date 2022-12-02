@@ -33,6 +33,7 @@ public class MainWindowContentManager extends JPanel {
         pages.add(new CreateProfile(), "CreateProfile");
         pages.add(new EditProfile(), "EditProfile");
         pages.add(new FirstTimeWelcome(), "FirstTimeWelcome");
+        pages.add(RecipeSearchResultsPage.getInstance(), "RecipeSearchResultsPage");
 
         this.add(pages, BorderLayout.CENTER);
         // if there's no profiles, show the welcome message.

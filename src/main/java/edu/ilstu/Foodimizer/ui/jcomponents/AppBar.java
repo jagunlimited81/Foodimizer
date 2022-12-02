@@ -22,6 +22,7 @@ public class AppBar extends JPanel {
         findRecipesMenu = new JMenu();
         findRecipesByNameItem = new JMenuItem();
         findRecipesByIngredientsItem = new JMenuItem();
+        findRecipesByIngredientsInPantryItem = new JMenuItem();
         findRecipesByAZItem = new JMenuItem();
         /* my pantry */
         myPantry = new JMenu();
@@ -75,6 +76,11 @@ public class AppBar extends JPanel {
                 findRecipesByIngredientsItem.setMnemonic('i');
                 findRecipesByIngredientsItem.addActionListener(e -> goToPageActionPerformed("FindRecipesByIngredient"));
                 findRecipesMenu.add(findRecipesByIngredientsItem);
+
+                findRecipesByIngredientsInPantryItem.setText("By Ingredients in Pantry");
+                findRecipesByIngredientsInPantryItem.setMnemonic('p');
+                findRecipesByIngredientsInPantryItem.addActionListener(e -> goToPageActionPerformed("RecipeSearchResultsPage"));
+                findRecipesMenu.add(findRecipesByIngredientsInPantryItem);
 
                 findRecipesByAZItem.setText("A to Z");
                 findRecipesByAZItem.setMnemonic('z');
@@ -157,6 +163,7 @@ public class AppBar extends JPanel {
     private JMenu findRecipesMenu;
     private JMenuItem findRecipesByNameItem;
     private JMenuItem findRecipesByIngredientsItem;
+    private JMenuItem findRecipesByIngredientsInPantryItem;
     private JMenuItem findRecipesByAZItem;
     /* My Pantry */
     private JMenu myPantry;

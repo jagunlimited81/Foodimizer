@@ -19,7 +19,15 @@ public class StarRating extends JPanel {
     byte rating = -1;
     final static byte starNum = 5;
 
+    Recipe recipe;
+
     public StarRating() {
+        recipe = RecipePage.getInstance().getActiveRecipe();
+        init();
+    }
+
+    public StarRating(Recipe recipe) {
+        this.recipe = recipe;
         init();
     }
 
@@ -27,7 +35,6 @@ public class StarRating extends JPanel {
         if (StateManager.getInstance().getActiveProfile() == null)
             return;
         // Create stars
-        Recipe recipe = RecipePage.getInstance().getActiveRecipe();
         Profile profile = StateManager.getInstance().getActiveProfile();
         RatingService rs = new RatingService();
         JoinProfileRateRecipe jprr = rs.getRatingObj(profile, recipe);
@@ -55,7 +62,6 @@ public class StarRating extends JPanel {
         for (int i = 0; i < starNum; i++) {
             stars.get(i).setSelected(i <= starSelection);
         }
-        Recipe recipe = RecipePage.getInstance().getActiveRecipe();
         Profile profile = StateManager.getInstance().getActiveProfile();
         RatingService rs = new RatingService();
         JoinProfileRateRecipe jprr = rs.getRatingObj(profile, recipe);
