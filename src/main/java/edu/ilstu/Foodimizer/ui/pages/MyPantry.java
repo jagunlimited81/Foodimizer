@@ -1,9 +1,8 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
+import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
-
-import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.service.IngredientService;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 
@@ -20,8 +19,10 @@ public class MyPantry extends JPanel {
     private JPanel buttonPanel;
     private JPanel ingredientsPanel;
     private JPanel emptyPantryPanel;
+    private JPanel searchBarPanel;
     private DefaultListModel<Ingredient> ingredientPantryModel;
     private DefaultListModel<Ingredient> emptyPantryModel;
+    private JTextField searchTextField;
 
     JList<Ingredient> list = new JList<>();
 
@@ -78,6 +79,17 @@ public class MyPantry extends JPanel {
         buttonPanel.add(addBtn);
         buttonPanel.add(rmvBtn);
         this.add(buttonPanel, BorderLayout.SOUTH);
+
+        /* Search Bar Panel */
+        searchBarPanel = new JPanel();
+        searchBarPanel.setBackground(Color.BLACK);
+//        buttonPanel.setSize(500,500);
+        JButton searchBtn = new JButton("Add");
+        searchTextField = new JTextField();
+        searchBarPanel.add(searchTextField);
+        searchBarPanel.add(searchBtn);
+        searchBtn.addActionListener(e -> addToPantry());
+        this.add(searchBarPanel, BorderLayout.NORTH);
 
         /* Ingredients List */
         ingredientPantryModel = new DefaultListModel<>();
@@ -143,6 +155,27 @@ public class MyPantry extends JPanel {
                 fireButton.setEnabled(true);
             }
         }
+    }
+
+    private void addToPantry()
+    {
+        String tempSearchText = searchTextField.getText();
+        Boolean doesIngredientExist = false;
+        Ingredient ingredientToAdd = new Ingredient();
+        IngredientService iService = new IngredientService();
+        Profile activeProfile = StateManager.getInstance().getActiveProfile();
+        List<Ingredient> searchIngredientsList = iService.getAll();
+
+        for(Ingredient ingredient: searchIngredientsList)
+        {
+            if(ingredient.getName().equals(tempSearchText))
+            {
+                ingredientToAdd = ingredient;
+                doesIngredientExist = Boolean.TRUE;
+            }
+        }
+        activeProfile.getShoppingList().add(ingredientToAdd);
+//        refreshContent();
     }
 
 //    private void addToPantry(){
