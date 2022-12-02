@@ -40,13 +40,13 @@ public class RecipeActionPane extends JPanel {
 
         addOrRemoveFromFavoritesButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         System.out.println("here");
-        if (StateManager.getInstance().getActiveProfile().getFavoriteRecipes().contains(RecipePage.getInstance().getActiveRecipe())) {
-            addOrRemoveFromFavoritesButton.addActionListener(e -> removeFromFavorites());
-            addOrRemoveFromFavoritesButton.setText("Remove from favorites list");
-        } else {
-            addOrRemoveFromFavoritesButton.addActionListener(e -> addToFavorites());
-            addOrRemoveFromFavoritesButton.setText("Add to favorites list");
-        }
+//        if (StateManager.getInstance().getActiveProfile().getFavoriteRecipes().contains(RecipePage.getInstance().getActiveRecipe())) {
+//            addOrRemoveFromFavoritesButton.addActionListener(e -> removeFromFavorites());
+//            addOrRemoveFromFavoritesButton.setText("Remove from favorites list");
+//        } else {
+//            addOrRemoveFromFavoritesButton.addActionListener(e -> addToFavorites());
+//            addOrRemoveFromFavoritesButton.setText("Add to favorites list");
+//        }
         printThisRecipeButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         printThisRecipeButton.addActionListener(e -> printThisRecipe());
         printThisRecipeButton.setMinimumSize(addOrRemoveFromFavoritesButton.getMaximumSize());

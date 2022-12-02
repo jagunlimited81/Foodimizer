@@ -1,6 +1,7 @@
 package edu.ilstu.Foodimizer.ui.jcomponents;
 
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
+import edu.ilstu.Foodimizer.app.db.models.Profile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -143,11 +144,15 @@ public class AppBar extends JPanel {
         contentManager.goToPage(page);
     }
 
+    public ProfileCornerMenu getProfileCornerMenu() {
+        return profileCornerMenu;
+    }
 
     /* Declare variables here */
     private MainWindowContentManager contentManager;
     /* MenuBar */
     private JMenuBar menuBar1;
+
     /* FindRecipesMenu */
     private JMenu findRecipesMenu;
     private JMenuItem findRecipesByNameItem;
