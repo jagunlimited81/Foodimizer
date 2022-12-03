@@ -1,6 +1,8 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
+import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
+import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.service.IngredientService;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
@@ -9,10 +11,12 @@ import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class DatabaseDebugAndTest extends Page {
+    Hashtable<JCheckBox, Ingredient> ht;
+
     public DatabaseDebugAndTest() {
         init();
     }
@@ -63,10 +67,22 @@ public class DatabaseDebugAndTest extends Page {
         jb.addActionListener(e -> printQuery(Collections.singletonList(recipeService.searchByIngredients(getActiveIngredients()))));
 
         searchPanelIngredients.add(jb);
+
+        jb = new JButton("Add to pantry");
+        jb.addActionListener(e -> addSelectedIngredientsToPantry(getActiveIngredients()));
+
+        searchPanelIngredients.add(jb);
         contentPanel.add(searchPanelIngredients);
 
         this.setLayout(new BorderLayout());
         this.add(contentPanel, BorderLayout.CENTER);
+    }
+
+    private void addSelectedIngredientsToPantry(List<Ingredient> activeIngredients) {
+        Profile p = StateManager.getInstance().getActiveProfile();
+        p.getPantry().addAll(activeIngredients);
+        ProfileService ps = new ProfileService();
+        ps.update(p, "");
     }
 
     private List<Ingredient> getActiveIngredients() {
@@ -88,5 +104,4 @@ public class DatabaseDebugAndTest extends Page {
             }
         }
     }
-    Hashtable<JCheckBox, Ingredient> ht;
 }

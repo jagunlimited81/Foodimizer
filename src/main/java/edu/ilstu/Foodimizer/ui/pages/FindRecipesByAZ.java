@@ -3,8 +3,6 @@ package edu.ilstu.Foodimizer.ui.pages;
 import edu.ilstu.Foodimizer.Controller.RecipeSearchController;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.service.RecipeService;
-import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
-
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +11,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class FindRecipesByAZ extends Page {
+    ImageIcon foodimizer_logo;
+    JPanel logo_panel;
+    JPanel combo_panel;
+    JLabel logo;
+    JComboBox<String> List_Of_Recipe_JC;
+    JButton searchButton;
+
     public FindRecipesByAZ() {
         init();
     }
@@ -22,22 +27,22 @@ public class FindRecipesByAZ extends Page {
         List<String> recipe_list = new ArrayList<>();
         // Get the Recipe in the Database
         List<Recipe> recipes = new RecipeService().getAll();
-        for (Recipe r: recipes)
+        for (Recipe r : recipes)
             recipe_list.add(r.getName());
         Collections.sort(recipe_list);
 
         setBackground(Color.white);
 
         JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(Box.createRigidArea(new Dimension(50, 50)));
-        contentPane.setPreferredSize(new Dimension(650,650));
+        contentPane.setPreferredSize(new Dimension(650, 650));
         contentPane.setBackground(Color.white);
 
         /* Logo */
         {
             logo_panel = new JPanel();
-            logo_panel.setPreferredSize(new Dimension(350,350));
+            logo_panel.setPreferredSize(new Dimension(350, 350));
             logo_panel.setBackground(Color.white);
 
             foodimizer_logo = new ImageIcon("logo.png");
@@ -49,7 +54,7 @@ public class FindRecipesByAZ extends Page {
         /* Combo Box and Search */
         {
             combo_panel = new JPanel();
-            combo_panel.setPreferredSize(new Dimension(300,300));
+            combo_panel.setPreferredSize(new Dimension(300, 300));
             combo_panel.setBackground(Color.white);
 
             List_Of_Recipe_JC = new JComboBox<>();
@@ -69,13 +74,4 @@ public class FindRecipesByAZ extends Page {
 
         add(contentPane);
     }
-
-    ImageIcon foodimizer_logo;
-
-    JPanel logo_panel;
-    JPanel combo_panel;
-
-    JLabel logo;
-    JComboBox<String> List_Of_Recipe_JC;
-    JButton searchButton;
 }

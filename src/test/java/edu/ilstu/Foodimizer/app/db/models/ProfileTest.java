@@ -3,7 +3,6 @@ package edu.ilstu.Foodimizer.app.db.models;
 import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.lib.ByteTools;
-import junit.framework.TestCase;
 import org.junit.*;
 
 import javax.imageio.ImageIO;

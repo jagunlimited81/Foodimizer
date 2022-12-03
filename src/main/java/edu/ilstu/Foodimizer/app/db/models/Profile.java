@@ -13,57 +13,51 @@ import java.util.Set;
 @Entity
 @Table(name = "PROFILES")
 public class Profile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "profileId", nullable = false, unique = true)
-    private long profileId;
-    @Column(name = "name", length = 100, nullable = false, unique = true)
-    private String name;
-
     @ManyToMany
     @JoinTable(
             name = "PROFILE_DISLIKES",
             joinColumns = @JoinColumn(name = "profileId"),
             inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
-    private Set<Ingredient> dislikedIngredients = new HashSet<>();
-
+    private final Set<Ingredient> dislikedIngredients = new HashSet<>();
     @ManyToMany
     @JoinTable(
             name = "PROFILE_FAVORITES",
             joinColumns = @JoinColumn(name = "profileId"),
             inverseJoinColumns = @JoinColumn(name = "recipeId")
     )
-    private Set<Recipe> favoriteRecipes = new HashSet<>();
-
+    private final Set<Recipe> favoriteRecipes = new HashSet<>();
     @ManyToMany
     @JoinTable(
             name = "PROFILE_SHOPPINGLIST",
             joinColumns = @JoinColumn(name = "profileId"),
             inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
-    private Set<Ingredient> shoppingList = new HashSet<>();
-
+    private final Set<Ingredient> shoppingList = new HashSet<>();
     @ManyToMany
     @JoinTable(
             name = "PROFILE_PANTRY",
             joinColumns = @JoinColumn(name = "profileId"),
             inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
-    private Set<Ingredient> pantry = new HashSet<>();
-
-    public Set<JoinProfileRateRecipe> getRecipeRatings() {
-        return RecipeRatings;
-    }
-
+    private final Set<Ingredient> pantry = new HashSet<>();
     @OneToMany(mappedBy = "profile")
-    private Set<JoinProfileRateRecipe> RecipeRatings = new HashSet<>();
-
+    private final Set<JoinProfileRateRecipe> RecipeRatings = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "profileId", nullable = false, unique = true)
+    private long profileId;
+    @Column(name = "name", length = 100, nullable = false, unique = true)
+    private String name;
     @Column(name = "profilePic", nullable = true)
     @Lob
     private byte[] profilePic;
 
     public Profile() {
+    }
+
+    public Set<JoinProfileRateRecipe> getRecipeRatings() {
+        return RecipeRatings;
     }
 
     public long getProfileId() {
@@ -204,8 +198,4 @@ public class Profile {
     public void setProfilePic(byte[] profilePic) {
         this.profilePic = profilePic;
     }
-
-    //public Set<JoinProfileRateRecipe> getRecipeRatings() {
-    //    return RecipeRatings;
-    //}
 }

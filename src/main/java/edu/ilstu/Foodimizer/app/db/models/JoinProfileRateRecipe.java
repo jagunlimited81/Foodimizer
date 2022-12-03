@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "JOINPROFILERATERECIPE")
 public class JoinProfileRateRecipe {
     @EmbeddedId
-    private JoinProfileRateRecipeId id = new JoinProfileRateRecipeId();
+    private final JoinProfileRateRecipeId id = new JoinProfileRateRecipeId();
 
     @ManyToOne
     @MapsId("profileId")
@@ -16,7 +16,7 @@ public class JoinProfileRateRecipe {
     @MapsId("recipeId")
     private Recipe recipe;
 
-    @Column(name="rating")
+    @Column(name = "rating")
     private byte rating;
 
     public Profile getProfile() {

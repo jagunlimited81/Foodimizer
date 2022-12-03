@@ -10,24 +10,8 @@ public class ServicesEntityManager {
     private static ServicesEntityManager instance;
     private static EntityManager em;
 
-    public EntityManager getEm() {
-        return em;
-    }
-
-    public void setEm(EntityManager em) {
-        ServicesEntityManager.em = em;
-    }
-
     private ServicesEntityManager() {
 
-    }
-
-
-    /**
-     * @return EntityManager
-     */
-    public EntityManager getEntityManager() {
-        return em;
     }
 
     /**
@@ -37,6 +21,21 @@ public class ServicesEntityManager {
         if (instance == null)
             instance = new ServicesEntityManager();
         return instance;
+    }
+
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        ServicesEntityManager.em = em;
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public EntityManager getEntityManager() {
+        return em;
     }
 
     public void init(String persistenceUnitName) {
