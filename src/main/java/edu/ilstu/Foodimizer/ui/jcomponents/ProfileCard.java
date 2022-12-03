@@ -39,6 +39,9 @@ public class ProfileCard extends JPanel implements MouseListener {
         try {
             BufferedImage profilePic = ByteTools.toBufferedImage(profile.getProfilePic());
             ImageIcon ii = new ImageIcon(profilePic);
+            Image image = ii.getImage();
+            image = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+            ii = new ImageIcon(image);
             pfp.add(new JLabel(ii));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -50,10 +53,10 @@ public class ProfileCard extends JPanel implements MouseListener {
         add(name);
 
         /* ----edit button----*/
-        editButton = new JButton("edit");
+        JButton editButton = new JButton("edit");
         editButton.addActionListener(e -> editProfileButtonPressed());
         editButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(editButton);
+        //add(editButton);
     }
 
     private void switchProfiles() {
@@ -67,7 +70,7 @@ public class ProfileCard extends JPanel implements MouseListener {
     private void editProfileButtonPressed() {
         System.out.println("editing profile " + profile.getName());
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
-        mwcm.goToPage("CreateOrEditProfile");
+        mwcm.goToPage("EditProfile");
 
     }
 
@@ -96,6 +99,4 @@ public class ProfileCard extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
-    private JButton editButton;
 }

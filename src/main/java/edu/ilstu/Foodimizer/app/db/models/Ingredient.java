@@ -16,24 +16,20 @@ import java.util.Set;
 @Table(name = "INGREDIENTS")
 public class Ingredient {
 
+    @ManyToMany(mappedBy = "dislikedIngredients")
+    private final Set<Profile> profilesThatDislikeThisIngredient;
+    @ManyToMany(mappedBy = "shoppingList")
+    private final Set<Profile> profilesShoppingListsThatContainThisIngredient;
+    @ManyToMany(mappedBy = "pantry")
+    private final Set<Profile> profilesPantriesThatContainThisIngredient;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredientId", nullable = false, unique = true)
     long ingredientId;
     @Column(name = "name", nullable = false, unique = true)
     String name;
-
     @ManyToMany(mappedBy = "recipeIngredients")
     private Set<Recipe> recipesThatContainThisIngredient;
-
-    @ManyToMany(mappedBy = "dislikedIngredients")
-    private Set<Profile> profilesThatDislikeThisIngredient;
-
-    @ManyToMany(mappedBy = "shoppingList")
-    private Set<Profile> profilesShoppingListsThatContainThisIngredient;
-
-    @ManyToMany(mappedBy = "pantry")
-    private Set<Profile> profilesPantriesThatContainThisIngredient;
 
     public Ingredient() {
         this.recipesThatContainThisIngredient = new HashSet<>();

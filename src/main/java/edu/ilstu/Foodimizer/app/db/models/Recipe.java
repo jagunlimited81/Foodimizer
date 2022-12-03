@@ -14,56 +14,49 @@ import java.util.Set;
 @Table(name = "RECIPES")
 public class Recipe {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "recipeId")
-    private long recipeId;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "directions")
-    private String directions;
-
     @ManyToMany
     @JoinTable(
             name = "made_of",
             joinColumns = @JoinColumn(name = "recipeId"),
             inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
-    private final Set<Ingredient> recipeIngredients;
-
+    private final Set<Ingredient> recipeIngredients = new HashSet<>();
+    @ManyToMany(mappedBy = "favoriteRecipes")
+    private final Set<Profile> profilesThatFavoriteThisRecipe = new HashSet<>();
+    @OneToMany(mappedBy = "recipe")
+    private final Set<JoinProfileRateRecipe> ProfileRatings = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "recipeId")
+    private long recipeId;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "directions")
+    private String directions;
     @Column(name = "mealType")
     private String mealType;
-
     @Column(name = "servingSize")
     private int servingSize;
-
     @Column(name = "cookMethod")
     private String cookMethod;
-
     @Column(name = "cookTime")
     private long cookTime;
-
     @Column(name = "waitTime")
     private long waitTime;
-
     @Column(name = "prepTime")
     private long prepTime;
-
     @Lob
     @Column(name = "thumbnail")
     private byte[] thumbnail;
 
-    @ManyToMany(mappedBy = "favoriteRecipes")
-    private Set<Profile> profilesThatFavoriteThisRecipe;
-
     public Recipe() {
-        this.recipeIngredients = new HashSet<>();
-        this.profilesThatFavoriteThisRecipe = new HashSet<>();
+
+    }
+
+    public Set<JoinProfileRateRecipe> getProfileRatings() {
+        return ProfileRatings;
     }
 
     public String getName() {

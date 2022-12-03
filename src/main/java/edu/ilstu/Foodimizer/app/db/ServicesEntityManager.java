@@ -11,15 +11,7 @@ public class ServicesEntityManager {
     private static EntityManager em;
 
     private ServicesEntityManager() {
-        em = Persistence.createEntityManagerFactory("FoodimizerDB").createEntityManager();
-    }
 
-
-    /**
-     * @return EntityManager
-     */
-    public EntityManager getEntityManager() {
-        return em;
     }
 
     /**
@@ -29,5 +21,24 @@ public class ServicesEntityManager {
         if (instance == null)
             instance = new ServicesEntityManager();
         return instance;
+    }
+
+    public EntityManager getEm() {
+        return em;
+    }
+
+    public void setEm(EntityManager em) {
+        ServicesEntityManager.em = em;
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public EntityManager getEntityManager() {
+        return em;
+    }
+
+    public void init(String persistenceUnitName) {
+        em = Persistence.createEntityManagerFactory(persistenceUnitName).createEntityManager();
     }
 }

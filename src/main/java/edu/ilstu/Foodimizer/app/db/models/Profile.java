@@ -2,7 +2,6 @@ package edu.ilstu.Foodimizer.app.db.models;
 
 import jakarta.persistence.*;
 
-import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,54 +13,51 @@ import java.util.Set;
 @Entity
 @Table(name = "PROFILES")
 public class Profile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "profileId", nullable = false, unique = true)
-    private long profileId;
-    @Column(name = "name", length = 100, nullable = false, unique = true)
-    private String name;
-
     @ManyToMany
     @JoinTable(
             name = "PROFILE_DISLIKES",
             joinColumns = @JoinColumn(name = "profileId"),
             inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
-    private Set<Ingredient> dislikedIngredients;
-
+    private final Set<Ingredient> dislikedIngredients = new HashSet<>();
     @ManyToMany
     @JoinTable(
             name = "PROFILE_FAVORITES",
             joinColumns = @JoinColumn(name = "profileId"),
             inverseJoinColumns = @JoinColumn(name = "recipeId")
     )
-    private Set<Recipe> favoriteRecipes;
-
+    private final Set<Recipe> favoriteRecipes = new HashSet<>();
     @ManyToMany
     @JoinTable(
             name = "PROFILE_SHOPPINGLIST",
             joinColumns = @JoinColumn(name = "profileId"),
             inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
-    private Set<Ingredient> shoppingList;
-
+    private final Set<Ingredient> shoppingList = new HashSet<>();
     @ManyToMany
     @JoinTable(
             name = "PROFILE_PANTRY",
             joinColumns = @JoinColumn(name = "profileId"),
             inverseJoinColumns = @JoinColumn(name = "ingredientId")
     )
-    private Set<Ingredient> pantry;
-
+    private final Set<Ingredient> pantry = new HashSet<>();
+    @OneToMany(mappedBy = "profile")
+    private final Set<JoinProfileRateRecipe> RecipeRatings = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "profileId", nullable = false, unique = true)
+    private long profileId;
+    @Column(name = "name", length = 100, nullable = false, unique = true)
+    private String name;
     @Column(name = "profilePic", nullable = true)
     @Lob
     private byte[] profilePic;
 
     public Profile() {
-        this.pantry = new HashSet<>();
-        this.shoppingList = new HashSet<>();
-        this.dislikedIngredients = new HashSet<>();
-        this.favoriteRecipes = new HashSet<>();
+    }
+
+    public Set<JoinProfileRateRecipe> getRecipeRatings() {
+        return RecipeRatings;
     }
 
     public long getProfileId() {
@@ -124,6 +120,10 @@ public class Profile {
         ingredient.getProfilesShoppingListsThatContainThisIngredient().remove(this);
     }
 
+    public void clearShoppingList() {
+        this.getShoppingList().removeAll(this.getShoppingList());
+    }
+
     public Set<Ingredient> getPantry() {
         return pantry;
     }
@@ -175,16 +175,16 @@ public class Profile {
     public String toString() {
         StringBuilder returnString = new StringBuilder(name + "\n\tFavoriteRecipes: [");
         for (Recipe r : favoriteRecipes)
-            returnString.append(r.getName() + ", ");
+            returnString.append(r.getName()).append(", ");
         returnString.append("]\n\tShopping List: [");
         for (Ingredient i : shoppingList)
-            returnString.append(i.getName() + ", ");
+            returnString.append(i.getName()).append(", ");
         returnString.append("]\n\tPantry: [");
         for (Ingredient i : pantry)
-            returnString.append(i.getName() + ", ");
+            returnString.append(i.getName()).append(", ");
         returnString.append("]\n\tDisliked: [");
         for (Ingredient i : dislikedIngredients)
-            returnString.append(i.getName() + ", ");
+            returnString.append(i.getName()).append(", ");
         returnString.append("]");
 
         return returnString.toString();

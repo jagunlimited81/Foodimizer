@@ -1,56 +1,35 @@
 package edu.ilstu.Foodimizer.app.db.service;
 
+import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
-import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 
-public class RecipeService implements Service<Recipe> {
-    private EntityManager em;
+public class RecipeService extends Service<Recipe> {
 
-    public RecipeService() {
-        em = ServicesEntityManager.getInstance().getEntityManager();
-    }
-
-    @Override
-    public Optional<Recipe> get(long id) {
-        return Optional.ofNullable(em.find(Recipe.class, id));
-    }
-
-    @Override
     public List<Recipe> getAll() {
-        return em.createQuery("FROM Recipe").getResultList();
+        return super.getAll(Recipe.class);
     }
 
-    @Override
-    public void save(Recipe recipe) {
-        executeInsideTransaction(em -> em.persist(recipe));
-    }
-
-    @Override
-    public void update(Recipe recipe, String params) {
-        executeInsideTransaction(em -> em.merge(recipe));
-    }
-
-    @Override
-    public void delete(Recipe recipe) {
-        executeInsideTransaction(em -> em.remove(recipe));
-    }
-
-    private void executeInsideTransaction(Consumer<EntityManager> action) {
-        EntityTransaction tx = em.getTransaction();
-        try {
-            tx.begin();
-            action.accept(em);
-            tx.commit();
-        } catch (RuntimeException e) {
-            tx.rollback();
-            throw e;
+    /**
+     * @param ingredientList a list of ingredients taken from the database.
+     * @return a list of recipes that are compatible with the given ingredients
+     */
+    public List<Recipe> searchByIngredients(List<Ingredient> ingredientList) {
+        ArrayList<Recipe> returnRecipes = new ArrayList<>();
+        for (Ingredient ing : ingredientList) {
+            ArrayList<Recipe> recipes = new ArrayList<>(ing.getRecipesThatContainThisIngredient());
+            for (Recipe r : recipes) {
+                if (new HashSet<>(ingredientList).containsAll(r.getRecipeIngredients())) {
+                    if (!returnRecipes.contains(r)) {
+                        returnRecipes.add(r);
+                    }
+                }
+            }
         }
+        return returnRecipes;
     }
 }

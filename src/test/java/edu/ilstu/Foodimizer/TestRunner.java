@@ -1,4 +1,5 @@
 package edu.ilstu.Foodimizer;
 
-public class test {
+public class TestRunner {
+
 }

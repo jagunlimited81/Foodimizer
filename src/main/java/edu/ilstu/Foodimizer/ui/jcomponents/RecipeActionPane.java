@@ -1,6 +1,7 @@
 package edu.ilstu.Foodimizer.ui.jcomponents;
 
 import edu.ilstu.Foodimizer.app.StateManager;
+import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
@@ -13,16 +14,18 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RecipeActionPane extends JPanel {
+    private JButton addOrRemoveFromFavoritesButton;
+
     public RecipeActionPane() {
         init();
     }
 
     public void init() {
-        contentPanel = new JPanel();
-        addAllToGroceryListButton = new JButton();
-        addMissingToGroceryListButton = new JButton();
+        JPanel contentPanel = new JPanel();
+        JButton addAllToGroceryListButton = new JButton();
+        JButton addMissingToGroceryListButton = new JButton();
         addOrRemoveFromFavoritesButton = new JButton();
-        printThisRecipeButton = new JButton();
+        JButton printThisRecipeButton = new JButton();
 
         /* this */
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -38,7 +41,6 @@ public class RecipeActionPane extends JPanel {
         addMissingToGroceryListButton.setText("Add missing to My Grocery List");
 
         addOrRemoveFromFavoritesButton.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        System.out.println("here");
         if (StateManager.getInstance().getActiveProfile().getFavoriteRecipes().contains(RecipePage.getInstance().getActiveRecipe())) {
             addOrRemoveFromFavoritesButton.addActionListener(e -> removeFromFavorites());
             addOrRemoveFromFavoritesButton.setText("Remove from favorites list");
@@ -60,7 +62,6 @@ public class RecipeActionPane extends JPanel {
         this.add(contentPanel);
 
     }
-
 
     private void printThisRecipe() {
         SysDialogPrinter.print("Recipe", new PDFFormatter(new Recipe()));
@@ -99,15 +100,36 @@ public class RecipeActionPane extends JPanel {
     }
 
     private void addMissingToGroceryList() {
+        Profile profile = StateManager.getInstance().getActiveProfile();
+        Recipe activeRecipe = RecipePage.getInstance().getActiveRecipe();
+
+        int numIngredientsAddedToShoppingList = 0;
+        for (Ingredient ingredient : activeRecipe.getRecipeIngredients()) {
+            if (!profile.getPantry().contains(ingredient)) {
+                numIngredientsAddedToShoppingList++;
+                profile.getShoppingList().add(ingredient);
+            }
+        }
+
+        ProfileService ps = new ProfileService();
+        ps.update(profile, "");
+        RecipePage.getInstance().refreshContent();
+        JOptionPane.showMessageDialog(new JPanel(), "Added " + numIngredientsAddedToShoppingList + " ingredients to the shopping list");
     }
 
     private void addAllToGroceryList() {
+        Profile profile = StateManager.getInstance().getActiveProfile();
+        Recipe activeRecipe = RecipePage.getInstance().getActiveRecipe();
+
+        int numIngredientsAddedToShoppingList = 0;
+        for (Ingredient ingredient : activeRecipe.getRecipeIngredients()) {
+            numIngredientsAddedToShoppingList++;
+            profile.getShoppingList().add(ingredient);
+        }
+
+        ProfileService ps = new ProfileService();
+        ps.update(profile, "");
+        RecipePage.getInstance().refreshContent();
+        JOptionPane.showMessageDialog(new JPanel(), "Added " + numIngredientsAddedToShoppingList + " ingredients to the shopping list");
     }
-
-    private JPanel contentPanel;
-    private JButton addAllToGroceryListButton;
-    private JButton addMissingToGroceryListButton;
-
-    private JButton addOrRemoveFromFavoritesButton;
-    private JButton printThisRecipeButton;
 }

@@ -1,8 +1,9 @@
 package edu.ilstu.Foodimizer;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
 import edu.ilstu.Foodimizer.app.DatabaseFiller;
-import edu.ilstu.Foodimizer.ui.MainWindow;
+import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
+import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,24 +18,32 @@ public class Main {
     public static void main(String[] args) {
         /* Start the JFrame Application */
         try {
-            FlatLightLaf.setup();
+            FlatDarkLaf.setup();
         } catch (Exception e) {
             System.out.println("failed to FlatLaf");
         }
+        /* Initialize Database to use prod DB */
+        ServicesEntityManager sem = ServicesEntityManager.getInstance();
+        sem.init("FoodimizerDB");
 
         DatabaseFiller dbf = new DatabaseFiller();
-        dbf.createTestProfiles();
         dbf.createTestIngredients();
         dbf.createTestRecipes();
+        dbf.createTestProfiles();
+
 
         System.out.println("Starting JFrame...");
         /* TODO: Explain why we use invokeLater*/
         SwingUtilities.invokeLater(() -> {
-            MainWindow frame = new MainWindow();
+            JFrame frame = new JFrame();
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JPanel mwcm = MainWindowContentManager.getInstance();
+            MainWindowContentManager.getInstance().init();
+            frame.setContentPane(mwcm);
             frame.setPreferredSize((new Dimension(1200, 675)));
-            //frame.setPreferredSize((new Dimension(200, 200)));
             frame.pack();
-            frame.setLocationRelativeTo(null);
+            frame.setLocationByPlatform(true);
+            //frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             //frame.setResizable(false);
         });
