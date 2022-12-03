@@ -53,8 +53,9 @@ public class StarRating extends JPanel {
 
         // Create a 5-star grid layout
         setLayout(new java.awt.GridLayout(1, 5));
-        setPreferredSize(new Dimension(140,30));
-        setMaximumSize(new Dimension(140,30));
+        setMinimumSize(new Dimension(130,30));
+        setPreferredSize(new Dimension(130,30));
+        setMaximumSize(new Dimension(130,30));
     }
 
     private void starActionPerformed(byte starSelection) {
