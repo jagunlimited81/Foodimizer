@@ -15,6 +15,9 @@ import java.io.IOException;
 public class ProfileCornerMenu extends JPanel implements MouseListener {
     Profile profile;
     Dimension pfpSize = new Dimension(50, 50);
+    private JLabel pfpLabel;
+    private JLabel name;
+    private JPopupMenu clickMenu;
 
     public ProfileCornerMenu() {
         System.out.println("Initializing corner menu");
@@ -36,7 +39,7 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
         //setBorder(BorderFactory.createLineBorder(Color.RED));
         addMouseListener(this);
         /* ----pfp----*/
-        pfp = new JPanel();
+        JPanel pfp = new JPanel();
         //pfp.setBorder(BorderFactory.createLineBorder(Color.RED));
         add(pfp);
         /*----pfpLabel----*/
@@ -85,7 +88,6 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
         name.setText(this.profile.getName());
     }
 
-
     private void switchProfilesButtonPressed() {
         System.out.println("Switch profile button pressed");
         StateManager sm = StateManager.getInstance();
@@ -99,7 +101,6 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
         mwcm.goToPage("EditProfile");
     }
-
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -125,11 +126,6 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
-    private JPanel pfp;
-    private JLabel pfpLabel;
-    private JLabel name;
-    private JPopupMenu clickMenu;
 
 
 }

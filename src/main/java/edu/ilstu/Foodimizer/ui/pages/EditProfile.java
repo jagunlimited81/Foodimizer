@@ -15,6 +15,16 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class EditProfile extends Page {
+    JPanel contentPanel;
+    JLabel header;
+    JLabel nameInfoStr;
+    JTextField name;
+    JButton saveButton;
+    JLabel pfpChoiceInfoStr;
+    JComboBox<String> pfpChoice;
+    JButton deleteButton;
+    String[] pfps = new String[]{"Black", "Blue", "Green", "Red"};
+
     public EditProfile() {
         super();
         init();
@@ -28,7 +38,7 @@ public class EditProfile extends Page {
         header = new JLabel("Editing profile " + sm.getActiveProfile().getName());
         nameInfoStr = new JLabel("Name:");
         name = new JTextField(sm.getActiveProfile().getName());
-        name.setPreferredSize(new Dimension(name.getWidth()+200, name.getHeight()));
+        name.setPreferredSize(new Dimension(name.getWidth() + 200, name.getHeight()));
         saveButton = new JButton("Save Profile");
         saveButton.addActionListener(e -> editProfile());
         deleteButton = new JButton("Delete Profile");
@@ -71,7 +81,7 @@ public class EditProfile extends Page {
     private void deleteProfile() {
         StateManager sm = StateManager.getInstance();
         Object[] options = {"Yes, delete " + sm.getActiveProfile().getName(), "Cancel"};
-        int choice = JOptionPane.showOptionDialog(new JPanel(), "Are you sure you want to delete " + sm.getActiveProfile().getName() + "?\n This action cannot be undone.", "Delete Profile " + sm.getActiveProfile().getName(),JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+        int choice = JOptionPane.showOptionDialog(new JPanel(), "Are you sure you want to delete " + sm.getActiveProfile().getName() + "?\n This action cannot be undone.", "Delete Profile " + sm.getActiveProfile().getName(), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
         if (choice == 1) { // cancel option
             return;
         }
@@ -80,8 +90,10 @@ public class EditProfile extends Page {
         ProfileService ps = new ProfileService();
 
         Profile profile = sm.getActiveProfile();
+
         ps.delete(profile);
         sm.setActiveProfile(null);
+
         if (ps.getAll().isEmpty())
             mwcm.goToPage("CreateProfile");
         else
@@ -90,8 +102,8 @@ public class EditProfile extends Page {
 
     private void editProfile() {
         StateManager sm = StateManager.getInstance();
-        if (!InputValidator.validateProfileName(name.getText())){
-            JOptionPane.showMessageDialog(new JPanel(),"Failed to update Profile.\nOnly alphanumeric characters and spaces are allowed.","Failed to update profile " + sm.getActiveProfile().getName(), JOptionPane.ERROR_MESSAGE);
+        if (!InputValidator.validateProfileName(name.getText())) {
+            JOptionPane.showMessageDialog(new JPanel(), "Failed to update Profile.\nOnly alphanumeric characters and spaces are allowed.", "Failed to update profile " + sm.getActiveProfile().getName(), JOptionPane.ERROR_MESSAGE);
             return;
         }
         ProfileService ps = new ProfileService();
@@ -112,16 +124,5 @@ public class EditProfile extends Page {
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
         mwcm.goToPage("ProfileSelector");
     }
-
-    JPanel contentPanel;
-    JLabel header;
-    JLabel nameInfoStr;
-    JTextField name;
-    JButton saveButton;
-    JLabel pfpChoiceInfoStr;
-    JComboBox<String> pfpChoice;
-    JButton deleteButton;
-
-    String[] pfps = new String[]{"Black", "Blue", "Green", "Red"};
 
 }

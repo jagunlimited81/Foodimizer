@@ -6,9 +6,13 @@ import edu.ilstu.Foodimizer.app.db.service.IngredientService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class MyPantry extends Page {
+    JPanel PantryItemsPanel;
+    JPanel searchPanel;
+    JButton addItemsToMyPantry;
+    JList<Ingredient> searchBox;
+
     public MyPantry() {
         super();
         init();
@@ -38,11 +42,5 @@ public class MyPantry extends Page {
     private void addItemsToPantry(List ingredientList) {
 
     }
-
-
-    JPanel PantryItemsPanel;
-    JPanel searchPanel;
-    JButton addItemsToMyPantry;
-    JList<Ingredient> searchBox;
 
 }

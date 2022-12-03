@@ -40,7 +40,7 @@ public class ProfileCard extends JPanel implements MouseListener {
             BufferedImage profilePic = ByteTools.toBufferedImage(profile.getProfilePic());
             ImageIcon ii = new ImageIcon(profilePic);
             Image image = ii.getImage();
-            image = image.getScaledInstance(200,200, Image.SCALE_SMOOTH);
+            image = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
             ii = new ImageIcon(image);
             pfp.add(new JLabel(ii));
         } catch (IOException e) {
@@ -53,7 +53,7 @@ public class ProfileCard extends JPanel implements MouseListener {
         add(name);
 
         /* ----edit button----*/
-        editButton = new JButton("edit");
+        JButton editButton = new JButton("edit");
         editButton.addActionListener(e -> editProfileButtonPressed());
         editButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         //add(editButton);
@@ -99,6 +99,4 @@ public class ProfileCard extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
-    private JButton editButton;
 }

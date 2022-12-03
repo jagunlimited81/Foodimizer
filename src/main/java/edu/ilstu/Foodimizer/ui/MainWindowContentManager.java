@@ -9,7 +9,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindowContentManager extends JPanel {
+    private static MainWindowContentManager instance = null;
+    CardLayout contentPanelSwitcher;
+    private JPanel pages;
+    private AppBar ab;
+
     public MainWindowContentManager() {
+    }
+
+    /**
+     * Singleton Class architecture.
+     * Allows the class to be used across multiple files in a Java project
+     *
+     * @return Instance of MainWindowContentManager
+     */
+    public static MainWindowContentManager getInstance() {
+        if (instance == null)
+            instance = new MainWindowContentManager();
+        return instance;
     }
 
     public void init() {
@@ -28,11 +45,13 @@ public class MainWindowContentManager extends JPanel {
         pages.add(new FindRecipesByIngredient(), "FindRecipesByIngredient");
         pages.add(new FindRecipesByAZ(), "FindRecipesByAZ");
         pages.add(new MyPantry(), "MyPantry");
+        pages.add(new ShoppingList(), "ShoppingList");
         pages.add(new DatabaseDebugAndTest(), "DatabaseDebugAndTest");
         pages.add(RecipePage.getInstance(), "RecipePage");
         pages.add(new CreateProfile(), "CreateProfile");
         pages.add(new EditProfile(), "EditProfile");
         pages.add(new FirstTimeWelcome(), "FirstTimeWelcome");
+        pages.add(RecipeSearchResultsPage.getInstance(), "RecipeSearchResultsPage");
 
         this.add(pages, BorderLayout.CENTER);
         // if there's no profiles, show the welcome message.
@@ -61,21 +80,4 @@ public class MainWindowContentManager extends JPanel {
             }
         }
     }
-
-    /**
-     * Singleton Class architecture.
-     * Allows the class to be used across multiple files in a Java project
-     *
-     * @return Instance of MainWindowContentManager
-     */
-    public static MainWindowContentManager getInstance() {
-        if (instance == null)
-            instance = new MainWindowContentManager();
-        return instance;
-    }
-
-    private static MainWindowContentManager instance = null;
-    private JPanel pages;
-    private AppBar ab;
-    CardLayout contentPanelSwitcher;
 }

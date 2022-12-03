@@ -13,6 +13,7 @@ public class SearchFunction {
     public SearchFunction(IngredientSearchController i) {
         this.ingredientSearchController = i;
     }
+
     public void searchRecipe(JButton jButton) {
         jButton.addActionListener(recipeSearchController);
     }

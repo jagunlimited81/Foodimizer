@@ -11,20 +11,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class CreateProfile extends Page {
+    JPanel contentPanel;
+    JPanel pfp;
+    JLabel nameInfoStr;
+    JTextField name;
+    JButton saveButton;
+    JLabel pfpChoiceInfoStr;
+    JComboBox<String> pfpChoice;
+    String[] pfps = new String[]{"Black", "Blue", "Green", "Red"};
+
     public CreateProfile() {
         super();
         init();
     }
-
 
     public void init() {
         contentPanel = new JPanel();
         JLabel header = new JLabel("Create a profile");
         nameInfoStr = new JLabel("Name:");
         name = new JTextField();
-        name.setPreferredSize(new Dimension(name.getWidth()+200, name.getHeight()));
+        name.setPreferredSize(new Dimension(name.getWidth() + 200, name.getHeight()));
         saveButton = new JButton("Create Profile");
         saveButton.addActionListener(e -> createProfile());
         pfpChoiceInfoStr = new JLabel("Profile Picture Color:");
@@ -61,8 +70,8 @@ public class CreateProfile extends Page {
     }
 
     private void createProfile() {
-        if (!InputValidator.validateProfileName(name.getText())){
-            JOptionPane.showMessageDialog(new JPanel(),"Failed to create Profile.\nOnly alphanumeric characters and spaces are allowed.","Failed to create profile " + name.getText(), JOptionPane.ERROR_MESSAGE);
+        if (!InputValidator.validateProfileName(name.getText())) {
+            JOptionPane.showMessageDialog(new JPanel(), "Failed to create Profile.\nOnly alphanumeric characters and spaces are allowed.", "Failed to create profile " + name.getText(), JOptionPane.ERROR_MESSAGE);
             return;
         }
         ProfileService ps = new ProfileService();
@@ -71,7 +80,7 @@ public class CreateProfile extends Page {
         profile.setName(name.getText());
 
         try {
-            image = ImageIO.read(this.getClass().getResource("/images/nopfp" + pfpChoice.getSelectedIndex() + ".png"));
+            image = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/nopfp" + pfpChoice.getSelectedIndex() + ".png")));
             byte[] bytes = ByteTools.toByteArray(image, "png");
             profile.setProfilePic(bytes);
         } catch (IOException e) {
@@ -82,15 +91,5 @@ public class CreateProfile extends Page {
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
         mwcm.goToPage("ProfileSelector");
     }
-
-    JPanel contentPanel;
-    JPanel pfp;
-    JLabel nameInfoStr;
-    JTextField name;
-    JButton saveButton;
-    JLabel pfpChoiceInfoStr;
-    JComboBox<String> pfpChoice;
-
-    String[] pfps = new String[]{"Black", "Blue", "Green", "Red"};
 
 }

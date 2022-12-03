@@ -1,44 +1,60 @@
 package edu.ilstu.Foodimizer.ui.jcomponents;
 
+import edu.ilstu.Foodimizer.app.StateManager;
+import edu.ilstu.Foodimizer.app.db.models.Recipe;
+import edu.ilstu.Foodimizer.app.db.service.RecipeService;
+import edu.ilstu.Foodimizer.lib.RecipeComparator;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
-import edu.ilstu.Foodimizer.app.db.models.Profile;
+import edu.ilstu.Foodimizer.ui.pages.RecipeSearchResultsPage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class AppBar extends JPanel {
+    /* Declare variables here */
+    private MainWindowContentManager contentManager;
+    private ProfileCornerMenu profileCornerMenu;
+
     public AppBar() {
         init();
     }
 
     private void init() {
         contentManager = MainWindowContentManager.getInstance();
-        titlePanel = new JPanel();
-        title = new JLabel();
+        JPanel titlePanel = new JPanel();
+        JLabel title = new JLabel();
         profileCornerMenu = new ProfileCornerMenu();
         /* menubar */
-        menuBar1 = new JMenuBar();
+        /* MenuBar */
+        JMenuBar menuBar1 = new JMenuBar();
         /* FindRecipesMenu */
-        findRecipesMenu = new JMenu();
-        findRecipesByNameItem = new JMenuItem();
-        findRecipesByIngredientsItem = new JMenuItem();
-        findRecipesByAZItem = new JMenuItem();
+        /* FindRecipesMenu */
+        JMenu findRecipesMenu = new JMenu();
+        JMenuItem findRecipesByNameItem = new JMenuItem();
+        JMenuItem findRecipesByIngredientsItem = new JMenuItem();
+        JMenuItem findRecipesByIngredientsInPantryItem = new JMenuItem();
+        JMenuItem findRecipesByAZItem = new JMenuItem();
         /* my pantry */
-        myPantry = new JMenu();
-        myPantryGoToPantry = new JMenuItem();
+        /* My Pantry */
+        JMenu myPantry = new JMenu();
+        JMenuItem myPantryGoToPantry = new JMenuItem();
         /* my grocery list */
-        myGroceryList = new JMenu();
-        myGroceryListGoTo = new JMenuItem();
+        JMenu myGroceryList = new JMenu();
+        JMenuItem myGroceryListGoTo = new JMenuItem();
+        myGroceryListGoTo.addActionListener(e -> goToPageActionPerformed("ShoppingList"));
         /* profiles */
-        profiles = new JMenu();
-        profilesGoTo = new JMenuItem();
-        createProfileGoTo = new JMenuItem();
-        editProfileGoTo = new JMenuItem();
+        /* Profiles */
+        JMenu profiles = new JMenu();
+        JMenuItem profilesGoTo = new JMenuItem();
+        JMenuItem createProfileGoTo = new JMenuItem();
+        JMenuItem editProfileGoTo = new JMenuItem();
         /* Debug */
-        debug = new JMenu();
-        databaseDebugGoTo = new JMenuItem();
+        /* Debug/Test */
+        JMenu debug = new JMenu();
+        JMenuItem databaseDebugGoTo = new JMenuItem();
 
-        description = new JLabel();
+        JLabel description = new JLabel();
         /* this */
         this.setLayout(new BorderLayout());
 
@@ -76,9 +92,14 @@ public class AppBar extends JPanel {
                 findRecipesByIngredientsItem.addActionListener(e -> goToPageActionPerformed("FindRecipesByIngredient"));
                 findRecipesMenu.add(findRecipesByIngredientsItem);
 
-                findRecipesByAZItem.setText("A to Z");
+                findRecipesByIngredientsInPantryItem.setText("Using ingredients in Pantry");
+                findRecipesByIngredientsInPantryItem.setMnemonic('p');
+                findRecipesByIngredientsInPantryItem.addActionListener(e -> pantryIngredientsActionPerformed());
+                findRecipesMenu.add(findRecipesByIngredientsInPantryItem);
+
+                findRecipesByAZItem.setText("Browse All Recipes");
                 findRecipesByAZItem.setMnemonic('z');
-                findRecipesByAZItem.addActionListener(e -> goToPageActionPerformed("FindRecipesByAZ"));
+                findRecipesByAZItem.addActionListener(e -> viewAllRecipesActionPerformed());
                 findRecipesMenu.add(findRecipesByAZItem);
 
             }
@@ -134,6 +155,21 @@ public class AppBar extends JPanel {
 
     }
 
+    private void viewAllRecipesActionPerformed() {
+        RecipeService rs = new RecipeService();
+        ArrayList<Recipe> sorted = new ArrayList<>(rs.getAll());
+        sorted.sort(RecipeComparator.getAZComparator());
+        RecipeSearchResultsPage.getInstance().setActiveRecipes(sorted);
+        MainWindowContentManager.getInstance().goToPage("RecipeSearchResultsPage");
+    }
+
+    private void pantryIngredientsActionPerformed() {
+        RecipeService rs = new RecipeService();
+        rs.searchByIngredients(new ArrayList<>(StateManager.getInstance().getActiveProfile().getPantry()));
+        RecipeSearchResultsPage.getInstance().setActiveRecipes(rs.searchByIngredients(new ArrayList<>(StateManager.getInstance().getActiveProfile().getPantry())));
+        MainWindowContentManager.getInstance().goToPage("RecipeSearchResultsPage");
+    }
+
     public void refreshContent() {
         this.removeAll();
         init();
@@ -147,34 +183,4 @@ public class AppBar extends JPanel {
     public ProfileCornerMenu getProfileCornerMenu() {
         return profileCornerMenu;
     }
-
-    /* Declare variables here */
-    private MainWindowContentManager contentManager;
-    /* MenuBar */
-    private JMenuBar menuBar1;
-
-    /* FindRecipesMenu */
-    private JMenu findRecipesMenu;
-    private JMenuItem findRecipesByNameItem;
-    private JMenuItem findRecipesByIngredientsItem;
-    private JMenuItem findRecipesByAZItem;
-    /* My Pantry */
-    private JMenu myPantry;
-    private JMenuItem myPantryGoToPantry;
-    private JMenu myGroceryList;
-    private JMenuItem myGroceryListGoTo;
-    /* Profiles */
-    private JMenu profiles;
-    private JMenuItem profilesGoTo;
-    private JMenuItem createProfileGoTo;
-    private JMenuItem editProfileGoTo;
-    /* Debug/Test */
-    private JMenu debug;
-    private JMenuItem databaseDebugGoTo;
-
-
-    private JLabel title;
-    private JPanel titlePanel;
-    private JLabel description;
-    private ProfileCornerMenu profileCornerMenu;
 }
