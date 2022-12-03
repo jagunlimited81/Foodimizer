@@ -10,6 +10,7 @@ public abstract class Page extends JPanel {
         this.removeAll();
         init();
         this.revalidate();
+        this.repaint();
     }
 
     abstract protected void init();
