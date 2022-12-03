@@ -1,21 +1,12 @@
 package edu.ilstu.Foodimizer.lib;
 
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLaf;
-import com.formdev.flatlaf.FlatLightLaf;
-import com.formdev.flatlaf.FlatPropertiesLaf;
-import edu.ilstu.Foodimizer.Main;
 import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.PanelUI;
-import javax.swing.plaf.basic.BasicPanelUI;
-import javax.swing.plaf.multi.MultiPanelUI;
 import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -23,7 +14,6 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterGraphics;
 import java.util.List;
 
-import edu.ilstu.Foodimizer.ui.jcomponents.Star;
 import edu.ilstu.Foodimizer.ui.jcomponents.StarRating;
 
 
@@ -32,19 +22,7 @@ public class PDFFormatter implements Printable {
     private JPanel contentPanel;
 
     public PDFFormatter(Recipe recipe) {
-
-        //use default look and feel
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.out.println("Failed to switch LaFs");
-            Main.initLookAndFeel();
-        }
-
         contentPanel = new JPanel();
-
-        //space
-        JPanel space = new JPanel();
 
         /* Left Column */
         JPanel leftColumn = new JPanel();
@@ -77,27 +55,23 @@ public class PDFFormatter implements Printable {
 
         /* contentPanel */
         //contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+        contentPanel.setLayout(new BorderLayout());
 
         /* leftColumn */
         {
             leftColumn.setLayout(new BoxLayout(leftColumn, BoxLayout.Y_AXIS));
-            recipeImage.setPreferredSize(new Dimension(100, 100));
-            recipeImage.setMaximumSize(new Dimension(100, 100));
-            recipeImage.setMinimumSize(new Dimension(100, 100));
+            leftColumn.setPreferredSize(new Dimension(250, contentPanel.getHeight()));
+
+            recipeImage.setPreferredSize(new Dimension(200, 200));
+            recipeImage.setMaximumSize(new Dimension(200, 200));
+            recipeImage.setMinimumSize(new Dimension(200, 200));
             recipeImage.setBackground(Color.gray);
-            recipeImage.setBorder(BorderFactory.createLineBorder(Color.gray));
-            recipeImage.setAlignmentX(Component.LEFT_ALIGNMENT);
+            recipeImage.setBorder(BorderFactory.createLineBorder(Color.red));
+            recipeImage.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftColumn.add(recipeImage);
 
-            //Space
-            space = new JPanel();
-            space.setPreferredSize(new Dimension(1, 5));
-            space.setAlignmentX(Component.LEFT_ALIGNMENT);
-            leftColumn.add(space);
-
-            recipeCookInfoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-            recipeCookInfoPanel.setBorder(BorderFactory.createLineBorder(Color.gray));
+            recipeCookInfoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            recipeCookInfoPanel.setBorder(BorderFactory.createLineBorder(Color.red));
             GroupLayout rcipLayout = new GroupLayout(recipeCookInfoPanel);
             recipeCookInfoPanel.setLayout(rcipLayout);
             rcipLayout.setAutoCreateGaps(true);
@@ -155,53 +129,46 @@ public class PDFFormatter implements Printable {
                                     .addComponent(prepTimeData))
             );
             leftColumn.add(recipeCookInfoPanel);
-
-            //Space
-            space = new JPanel();
-            space.setPreferredSize(new Dimension(1, 5));
-            space.setAlignmentX(Component.LEFT_ALIGNMENT);
-            leftColumn.add(space);
-
-            //Ingredients List
-            ingredientsList.setBorder(ingredientsBox);
-            ingredientsList.setLayout(new BoxLayout(ingredientsList, BoxLayout.Y_AXIS));
-            Profile profile = StateManager.getInstance().getActiveProfile();
-            for (Ingredient i : recipe.getRecipeIngredients()) {
-                JLabel jl = new JLabel(i.getName());
-                ingredientsList.add(jl);
-            }
-
-            ingredientsList.setAlignmentX(Component.LEFT_ALIGNMENT);
-            leftColumn.add(ingredientsList);
         }
-
-        //container to make left column appear at top
-        JPanel lColumnContainer = new JPanel();
-        lColumnContainer.setLayout(new BorderLayout());
-        lColumnContainer.add(leftColumn, BorderLayout.NORTH);
-        contentPanel.add(lColumnContainer);
+        contentPanel.add(leftColumn, BorderLayout.WEST);
 
         /* centerColumn */
         {
             centerColumn.setLayout(new BorderLayout());
-            centerColumn.setPreferredSize(new Dimension(200, contentPanel.getHeight()));
 
             recipeHeader.setLayout(new BorderLayout());
             recipeNameTitle.setText(recipe.getName());
             recipeNameTitle.setFont(new Font("Verdana", Font.PLAIN, 22));
             recipeHeader.add(recipeNameTitle, BorderLayout.NORTH);
-
             recipeDescription.setText(recipe.getDescription());
             recipeDescription.setLineWrap(true);
             recipeDescription.setEditable(false);
-            recipeHeader.add(recipeDescription, BorderLayout.SOUTH);
 
+            recipeHeader.add(recipeDescription, BorderLayout.SOUTH);
+            recipeHeader.setMaximumSize(recipeHeader.getMinimumSize());
             centerColumn.add(recipeHeader, BorderLayout.NORTH);
 
             sideBySideIngredientsActionPanel.setLayout(new BoxLayout(sideBySideIngredientsActionPanel, BoxLayout.LINE_AXIS));
 
+            ingredientsList.setBorder(ingredientsBox);
+            ingredientsList.setLayout(new BoxLayout(ingredientsList, BoxLayout.Y_AXIS));
+            //JCheckBox[] jt = new JCheckBox("IngredientName");
+            Profile profile = StateManager.getInstance().getActiveProfile();
+            for (Ingredient i : recipe.getRecipeIngredients()) {
+                JCheckBox jt = new JCheckBox(i.getName());
+                if (profile.getPantry().contains(i)) {
+                    jt.setSelected(true);
+                }
+                jt.setEnabled(false);
+                ingredientsList.add(jt);
+            }
 
-            space = new JPanel();
+            ingredientsList.setMaximumSize(ingredientsList.getMinimumSize());
+
+            ingredientsListPanel.add(ingredientsList);
+            centerColumn.add(ingredientsListPanel, BorderLayout.WEST);
+
+            JPanel space = new JPanel();
             space.setPreferredSize(new Dimension(1, 1));
             directions.setLayout(new BoxLayout(directions, BoxLayout.Y_AXIS));
             directionsHeader.setText("Directions:");
@@ -213,24 +180,21 @@ public class PDFFormatter implements Printable {
             directions.add(directionsTextPane);
             centerColumn.add(directions, BorderLayout.CENTER);
         }
+        JScrollPane centerScrollPane = new JScrollPane(centerColumn);
+        centerScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        centerScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        centerScrollPane.setPreferredSize(new Dimension(contentPanel.getWidth() / 2, contentPanel.getHeight()));
 
-
-
+        contentPanel.add(centerScrollPane, BorderLayout.CENTER);
         /* rightColumn */
         {
             rightColumn.setLayout(new BoxLayout(rightColumn, BoxLayout.Y_AXIS));
-            //rightColumn.setPreferredSize(new Dimension(350, contentPanel.getHeight()));
+            rightColumn.setPreferredSize(new Dimension(250, contentPanel.getHeight()));
 
-//            StarRating sr = new StarRating(recipe);
-//            rightColumn.add(sr);
+            StarRating sr = new StarRating(recipe);
+            rightColumn.add(sr);
         }
-        rightColumn.add(centerColumn);
-        contentPanel.add(rightColumn);
-
-
-
-        //re initialize program default LaF
-        Main.initLookAndFeel();
+        contentPanel.add(rightColumn, BorderLayout.EAST);
     }
 
 
@@ -278,13 +242,8 @@ public class PDFFormatter implements Printable {
         int h = (int)pf.getImageableHeight();
         contentPanel.setSize(new Dimension(w,h));
 
-        //contentPanel.updateUI();
-
-
         layoutComponent(contentPanel);
         contentPanel.printAll(g2d);
-
-
 
         /* tell the caller that this page is part of the printed document */
         return PAGE_EXISTS;
@@ -295,20 +254,14 @@ public class PDFFormatter implements Printable {
         synchronized (component.getTreeLock())
         {
             component.doLayout();
-            if (component instanceof JPanel)
-            {
-                ((JPanel)component).setBackground(Color.WHITE);
-            }
 
             if (component instanceof Container)
             {
                 for (Component child : ((Container)component).getComponents())
                 {
-                    layoutComponent(child);
+                    this.layoutComponent(child);
                 }
             }
         }
     }
-
-
 }
