@@ -4,11 +4,11 @@ import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.service.IngredientService;
+import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ShoppingList extends Page {
 
@@ -28,22 +28,21 @@ public class ShoppingList extends Page {
         layout.setAutoCreateContainerGaps(true);
 
         ArrayList<Ingredient> ingredients = new ArrayList<>(StateManager.getInstance().getActiveProfile().getShoppingList());
-        JList<Object> shoppingList = new JList<>( ingredients.toArray());
+        JList shoppingList = new JList<>(ingredients.toArray());
 
         JLabel title = new JLabel("My Shopping List");
         title.setFont(new Font("Verdana", Font.PLAIN, 22));
 
         //Create Buttons to be able to trigger the clearing of the list, and saving the List to PDF
-        JButton removeIngButton = new JButton("Remove Ingredient from the Shopping List");
+        JButton removeIngButton = new JButton("Remove selected Ingredient(s) from the Shopping List");
+        removeIngButton.addActionListener(e -> removeIngredientFromShoppingList(shoppingList));
         JButton clearListButton = new JButton("Clear the Shopping List");
-        clearListButton.addActionListener(e->clearShoppingList());
+        clearListButton.addActionListener(e -> clearShoppingList());
         JButton pdfButton = new JButton("Print Shopping List to PDF");
 //        pdfButton.addActionListener(e->saveToPDF());
         JButton addIngButton = new JButton("Add Ingredient");
         JTextField addIngText = new JTextField();
-        addIngButton.addActionListener(e->addIngredientToShoppingList(addIngText));
-
-
+        addIngButton.addActionListener(e -> addIngredientToShoppingList(addIngText.getText()));
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
@@ -76,34 +75,37 @@ public class ShoppingList extends Page {
     //JPanels
     JPanel contentPanel;
 
-    private void clearShoppingList()
-    {
+    private void clearShoppingList() {
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         activeProfile.getShoppingList().clear();
+        ProfileService ps = new ProfileService();
+        ps.update(activeProfile, "");
         refreshContent();
     }
 
 
-    private void addIngredientToShoppingList(JTextField ingText)
-    {
-        String tempIngText = ingText.getText();
-        Boolean doesIngExist = false;
-        Ingredient ingToAdd = new Ingredient();
-        IngredientService ingService = new IngredientService();
+    private void addIngredientToShoppingList(String ingText) {
+        IngredientService is = new IngredientService();
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
-        List<Ingredient> searchIngredientsList = ingService.getAll();
-
-        for(Ingredient ing: searchIngredientsList)
-        {
-            if(ing.getName().equals(tempIngText))
-            {
-                ingToAdd = ing;
-                doesIngExist = Boolean.TRUE;
-            }
+        Ingredient i = is.getFromName(ingText.toLowerCase());
+        if (i != null) {
+            activeProfile.getShoppingList().add(i);
         }
-        activeProfile.getShoppingList().add(ingToAdd);
+        ProfileService ps = new ProfileService();
+        ps.update(activeProfile, "");
         refreshContent();
+    }
 
+    private void removeIngredientFromShoppingList(JList list) {
+        IngredientService is = new IngredientService();
+        Profile activeProfile = StateManager.getInstance().getActiveProfile();
+        ProfileService ps = new ProfileService();
+        //list.getSelectedValuesList();
+        for (Object i : list.getSelectedValuesList()) {
+            activeProfile.getShoppingList().remove(i);
+        }
+        ps.update(activeProfile, "");
+        refreshContent();
     }
 
 }
