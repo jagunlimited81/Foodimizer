@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyPantry extends JPanel {
+public class MyPantry extends Page {
     private JList<Ingredient> ingredientPantryList;
     private JList<Ingredient> emptyPantryList;
     private JPanel buttonPanel;
@@ -23,24 +23,25 @@ public class MyPantry extends JPanel {
     private DefaultListModel<Ingredient> ingredientPantryModel;
     private DefaultListModel<Ingredient> emptyPantryModel;
     private JTextField searchTextField;
-
-    JList<Ingredient> list = new JList<>();
-
-    JLabel label = new JLabel();
-    //    JSplitPane splitPane = new JSplitPane();
+    private JLabel searchPrompt;
     IngredientService is = new IngredientService();
     JButton fireButton;
 
     public MyPantry() {
+        super();
         init();
         //persistPantry();
 
     }
 
-    private void init() {
+    @Override
+    protected void init() {
+        if (StateManager.getInstance().getActiveProfile() == null)
+            return;
+        this.setLayout(new BorderLayout());
+
         /* Button Implementation */
         JButton addBtn = new JButton("Add");
-//        addBtn.addActionListener(e ->persistPantry());
         //noinspection DuplicatedCode
         addBtn.addActionListener((ActionEvent arg0) -> {
             for (Ingredient selectedValue : ingredientPantryList.getSelectedValuesList()) {
@@ -55,7 +56,6 @@ public class MyPantry extends JPanel {
         this.add(addBtn);
 
         JButton rmvBtn = new JButton("Remove");
-//        rmvBtn.addActionListener(e ->persistPantry());
         //noinspection DuplicatedCode
         rmvBtn.addActionListener((ActionEvent arg0) -> {
             for (Ingredient selectedValue : emptyPantryList.getSelectedValuesList()) {
@@ -69,11 +69,8 @@ public class MyPantry extends JPanel {
         });
         this.add(rmvBtn);
 
-//        setBackground(Color.WHITE);
+        /* Buttons Panel */
         buttonPanel = new JPanel();
-        this.setLayout(new BorderLayout());
-
-        /* Button Panel */
         buttonPanel.setBackground(Color.PINK);
 //        buttonPanel.setSize(500,500);
         buttonPanel.add(addBtn);
@@ -82,13 +79,19 @@ public class MyPantry extends JPanel {
 
         /* Search Bar Panel */
         searchBarPanel = new JPanel();
-        searchBarPanel.setBackground(Color.BLACK);
+        searchBarPanel.setBackground(Color.WHITE);
 //        buttonPanel.setSize(500,500);
-        JButton searchBtn = new JButton("Add");
-        searchTextField = new JTextField();
+        JButton searchBtn = new JButton(" Quick Add");
+        searchTextField = new JTextField(35);
+        searchTextField.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
         searchBarPanel.add(searchTextField);
         searchBarPanel.add(searchBtn);
-        searchBtn.addActionListener(e -> addToPantry());
+        searchPrompt = new JLabel("Search Ingredient: ");
+        searchPrompt.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
+        searchBtn.addActionListener(e -> addToPantry(searchTextField));
+        searchBtn.addActionListener(e -> addToPantry(searchTextField.getText()));
+        searchBarPanel.add(searchPrompt);
+        this.add(searchPrompt, BorderLayout.EAST);
         this.add(searchBarPanel, BorderLayout.NORTH);
 
         /* Ingredients List */
@@ -96,6 +99,7 @@ public class MyPantry extends JPanel {
         ingredientPantryList = new JList<>(ingredientPantryModel);
         ingredientsPanel = new JPanel();
         ingredientsPanel.setBackground(Color.BLUE);
+//        ingredientPantryList = new JList(activeProfile.getPantry().toArray());
         ingredientPantryList = new JList(is.getAll().toArray());
         ingredientsPanel.add(ingredientPantryList);
         ingredientPantryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -120,8 +124,12 @@ public class MyPantry extends JPanel {
 
         /* Split Pane Panel */
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, emptyPantryPanel, ingredientsPanel);
+        //might need to change this to ingredientsPanel once main is pull OR
+        //create another listScroller for both lists.
         JScrollPane listScroller = new JScrollPane(emptyPantryPanel);
         listScroller.setPreferredSize(new Dimension(getPreferredSize()));
+        JScrollPane listScroller2 = new JScrollPane(ingredientsPanel);
+        listScroller2.setPreferredSize(new Dimension(getPreferredSize()));
         splitPane.setLeftComponent(new JScrollPane(ingredientsPanel));
         splitPane.setRightComponent(emptyPantryPanel);
         splitPane.setResizeWeight(0.5);
@@ -147,88 +155,58 @@ public class MyPantry extends JPanel {
         this.add(new JLabel(pList.get(0).toString()));
     }
 
-    private void valueChanged(ListSelectionEvent e){
-        if(!e.getValueIsAdjusting() == false){
-            if (ingredientPantryList.getSelectedIndex() == -1){
-                fireButton.setEnabled(false);
-            } else {
-                fireButton.setEnabled(true);
-            }
-        }
-    }
+//    private void valueChanged(ListSelectionEvent e){
+//        if(!e.getValueIsAdjusting() == false){
+//            if (ingredientPantryList.getSelectedIndex() == -1){
+//                fireButton.setEnabled(false);
+//            } else {
+//                fireButton.setEnabled(true);
+//            }
+//        }
+//    }
 
-    private void addToPantry()
+    private void addToPantry(String ingText){
+        IngredientService is = new IngredientService();
+        Profile activeProfile = StateManager.getInstance().getActiveProfile();
+        Ingredient i = is.getFromName(ingText.toLowerCase());
+        if (i != null) {
+            activeProfile.getPantry().add(i);
+        }
+        ProfileService ps = new ProfileService();
+        ps.update(activeProfile, "");
+        refreshContent();
+    }
+    private void addToPantry(JTextField ingText)
     {
-        String tempSearchText = searchTextField.getText();
+        String tempSearchText = ingText.getText();
         Boolean doesIngredientExist = false;
-        Ingredient ingredientToAdd = new Ingredient();
+        Ingredient ingredientToAdd;
         IngredientService iService = new IngredientService();
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         List<Ingredient> searchIngredientsList = iService.getAll();
+        ProfileService ps = new ProfileService();
 
-        for(Ingredient ingredient: searchIngredientsList)
-        {
-            if(ingredient.getName().equals(tempSearchText))
-            {
-                ingredientToAdd = ingredient;
-                doesIngredientExist = Boolean.TRUE;
-            }
+        ingredientToAdd = iService.getFromName(ingText.getText().toLowerCase());
+        if (ingredientToAdd == null){
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "No Ingredient Found In Pantry", "Dialog",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
         }
         activeProfile.getShoppingList().add(ingredientToAdd);
-//        refreshContent();
+        ps.update(activeProfile, "");
+        emptyPantryModel.addElement(ingredientToAdd);
+
+
+//        for(Ingredient ingredient: searchIngredientsList) {
+//                if(ingredient.getName().equals(tempSearchText))
+//                {
+//
+//                    ingredientToAdd = ingredient;
+//                    emptyPantryModel.addElement(ingredientToAdd);
+//                    doesIngredientExist = Boolean.TRUE;
+//                }
+//        }
+        refreshContent();
     }
-
-//    private void addToPantry(){
-//
-//    }
-
-//    public void removeFromPantry(ActionEvent e) {
-//        int index = list.getSelectedIndex();
-//        activePantryList.remove(index);
-//
-//        int size = activePantryList.getSelectedIndex();
-//
-//        if (size == 0) { //Nobody's left, disable firing.
-//            fireButton.setEnabled(false);
-//
-//        } else { //Select an index.
-//            if (index == activePantryList.getSelectedIndex()) {
-//                //removed item in last position
-//                index--;
-//            }
-//
-//            list.setSelectedIndex(index);
-//            list.ensureIndexIsVisible(index);
-//        }
-//    }
-//
-//    public void addToPantry(ActionEvent e) {
-//        Ingredient ingredient = new Ingredient();
-//        String name = ingredient.getName();
-//
-//        //User did not type in a unique name...
-//        if (name.equals("") || alreadyInList(name)) {
-//            Toolkit.getDefaultToolkit().beep();
-//            activePantryList.requestFocusInWindow();
-//            employeeName.selectAll();
-//            return;
-//        }
-//
-//        int index = list.getSelectedIndex(); //get selected index
-//        if (index == -1) { //no selection, so insert at beginning
-//            index = 0;
-//        } else {           //add after the selected item
-//            index++;
-//        }
-//
-//        listModel.insertElementAt(employeeName.getText(), index);
-//
-//        //Reset the text field.
-//        employeeName.requestFocusInWindow();
-//        employeeName.setText("");
-//
-//        //Select the new item and make it visible.
-//        list.setSelectedIndex(index);
-//        list.ensureIndexIsVisible(index);
-//    }
 }
