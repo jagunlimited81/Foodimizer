@@ -14,34 +14,33 @@ import java.io.IOException;
 
 public class ProfileCornerMenu extends JPanel implements MouseListener {
     Profile profile;
-
-    public ProfileCornerMenu(Profile profile) {
-        System.out.println("Initializing corner menu with profile " + profile.getName());
-        init();
-        updateProfile(profile);
-    }
+    Dimension pfpSize = new Dimension(50, 50);
 
     public ProfileCornerMenu() {
+        System.out.println("Initializing corner menu");
         init();
     }
 
     private void init() {
 
-        Dimension pfpSize = new Dimension(50, 50);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.profile = StateManager.getInstance().getActiveProfile();
+        if (profile == null) {
+            return;
+        }
+
 
         /* ----this---- */
         //setMaximumSize(size);
-        setBorder(BorderFactory.createLineBorder(Color.RED));
+        //setBorder(BorderFactory.createLineBorder(Color.RED));
         addMouseListener(this);
         /* ----pfp----*/
         pfp = new JPanel();
-        pfp.setPreferredSize(pfpSize);
-        pfp.setMaximumSize(pfpSize);
-        pfp.setBorder(BorderFactory.createLineBorder(Color.RED));
+        //pfp.setBorder(BorderFactory.createLineBorder(Color.RED));
         add(pfp);
         /*----pfpLabel----*/
-        pfpLabel = new JLabel("Picture go here.");
+        pfpLabel = new JLabel();
         pfp.add(pfpLabel);
         /*----name----*/
         name = new JLabel("Name go here.");
@@ -50,18 +49,16 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
         add(name);
         /*----popup menu----*/
         clickMenu = new JPopupMenu();
+
         JMenuItem menuItem = new JMenuItem("Profile Settings");
         menuItem.addActionListener(e -> editProfileButtonPressed());
         clickMenu.add(menuItem);
         menuItem = new JMenuItem("Switch Profiles");
         menuItem.addActionListener(e -> switchProfilesButtonPressed());
         clickMenu.add(menuItem);
-        menuItem = new JMenuItem("Delete Profile");
-        menuItem.addActionListener(e -> deleteProfileButtonPressed());
-        menuItem.setForeground(Color.RED);
-        clickMenu.add(menuItem);
         add(clickMenu);
 
+        updateProfile(profile);
     }
 
     public void updateProfile(Profile profile) {
@@ -71,7 +68,14 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
         try {
             //need to scale the image somehow
             BufferedImage profilePic = ByteTools.toBufferedImage(profile.getProfilePic());
-            ImageIcon ii = new ImageIcon(profilePic);
+            Image temp = profilePic.getScaledInstance(pfpSize.width, pfpSize.height, Image.SCALE_SMOOTH);
+            BufferedImage scaled = new BufferedImage(pfpSize.width, pfpSize.height, profilePic.getType());
+
+            Graphics2D g2d = scaled.createGraphics();
+            g2d.drawImage(temp, 0, 0, null);
+            g2d.dispose();
+
+            ImageIcon ii = new ImageIcon(scaled);
             pfpLabel.setIcon(ii);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -93,13 +97,9 @@ public class ProfileCornerMenu extends JPanel implements MouseListener {
     private void editProfileButtonPressed() {
         System.out.println("Edit profile button pressed");
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
-        mwcm.goToPage("CreateOrEditProfile");
+        mwcm.goToPage("EditProfile");
     }
 
-    private void deleteProfileButtonPressed() {
-        System.out.println("Delete profile button pressed");
-
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {

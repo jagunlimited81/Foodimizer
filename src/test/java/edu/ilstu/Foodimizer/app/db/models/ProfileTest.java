@@ -4,17 +4,20 @@ import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.lib.ByteTools;
 import junit.framework.TestCase;
+import org.junit.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
-public class ProfileTest extends TestCase {
-    private Profile prof;
-    private ProfileService ps;
+public class ProfileTest {
+    private static Profile prof;
+    private static ProfileService ps;
 
-    public void setUp() throws Exception {
+
+    @BeforeClass
+    public static void setUp() throws Exception {
         ServicesEntityManager sem = ServicesEntityManager.getInstance();
         sem.init("FoodimizerDB-TEST");
 
@@ -23,43 +26,48 @@ public class ProfileTest extends TestCase {
         ps = new ProfileService();
     }
 
+    @After
+    @Test
     public void tearDown() throws Exception {
         List<Profile> createdDuringTesting = ps.getAll();
-        for (Profile p : createdDuringTesting)
-        {
+        for (Profile p : createdDuringTesting) {
             ps.delete(p);
         }
     }
 
+    @Test
     public void testAddDislike() {
         Ingredient ing = new Ingredient();
         ing.setName("Ham");
 
         prof.addDislike(ing);
 
-        assertTrue(ing.getProfilesThatDislikeThisIngredient().contains(prof));
-        assertTrue(prof.getDislikedIngredients().contains(ing));
+        Assert.assertTrue(ing.getProfilesThatDislikeThisIngredient().contains(prof));
+        Assert.assertTrue(prof.getDislikedIngredients().contains(ing));
     }
 
+    @Test
     public void testRemoveDislike() {
         Ingredient ing = new Ingredient();
 
         prof.addDislike(ing);
 
         prof.removeDislike(ing);
-        assertFalse(ing.getProfilesThatDislikeThisIngredient().contains(prof));
-        assertFalse(prof.getDislikedIngredients().contains(ing));
+        Assert.assertFalse(ing.getProfilesThatDislikeThisIngredient().contains(prof));
+        Assert.assertFalse(prof.getDislikedIngredients().contains(ing));
     }
 
+    @Test
     public void testAddIngredientToShoppingList() {
         Ingredient ing = new Ingredient();
 
         prof.addIngredientToShoppingList(ing);
 
-        assertTrue(ing.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
-        assertTrue(prof.getShoppingList().contains(ing));
+        Assert.assertTrue(ing.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
+        Assert.assertTrue(prof.getShoppingList().contains(ing));
     }
 
+    @Test
     public void testRemoveIngredientFromShoppingList() {
         Ingredient ing = new Ingredient();
 
@@ -67,10 +75,12 @@ public class ProfileTest extends TestCase {
 
         prof.removeIngredientFromShoppingList(ing);
 
-        assertFalse(ing.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
-        assertFalse(prof.getShoppingList().contains(ing));
+        Assert.assertFalse(ing.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
+        Assert.assertFalse(prof.getShoppingList().contains(ing));
     }
 
+    @Test
+    @Ignore
     public void testClearShoppingList() {
         Ingredient ing1 = new Ingredient();
         ing1.setName("Coffee");
@@ -85,21 +95,23 @@ public class ProfileTest extends TestCase {
 
         prof.clearShoppingList();
 
-        assertTrue(prof.getShoppingList().isEmpty());
-        assertFalse(ing1.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
-        assertFalse(ing2.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
-        assertFalse(ing3.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
+        Assert.assertTrue(prof.getShoppingList().isEmpty());
+        Assert.assertFalse(ing1.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
+        Assert.assertFalse(ing2.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
+        Assert.assertFalse(ing3.getProfilesShoppingListsThatContainThisIngredient().contains(prof));
     }
 
+    @Test
     public void testAddIngredientToPantry() {
         Ingredient ing = new Ingredient();
 
         prof.addIngredientToPantry(ing);
 
-        assertTrue(prof.getPantry().contains(ing));
-        assertTrue(ing.getProfilesPantriesThatContainThisIngredient().contains(prof));
+        Assert.assertTrue(prof.getPantry().contains(ing));
+        Assert.assertTrue(ing.getProfilesPantriesThatContainThisIngredient().contains(prof));
     }
 
+    @Test
     public void testRemoveIngredientFromPantry() {
         Ingredient ing = new Ingredient();
 
@@ -107,19 +119,21 @@ public class ProfileTest extends TestCase {
 
         prof.removeIngredientFromPantry(ing);
 
-        assertFalse(prof.getPantry().contains(ing));
-        assertFalse(ing.getProfilesPantriesThatContainThisIngredient().contains(prof));
+        Assert.assertFalse(prof.getPantry().contains(ing));
+        Assert.assertFalse(ing.getProfilesPantriesThatContainThisIngredient().contains(prof));
     }
 
+    @Test
     public void testAddRecipeToFavorites() {
         Recipe rec = new Recipe();
 
         prof.addRecipeToFavorites(rec);
 
-        assertTrue(prof.getFavoriteRecipes().contains(rec));
-        assertTrue(rec.getProfilesThatFavoriteThisRecipe().contains(prof));
+        Assert.assertTrue(prof.getFavoriteRecipes().contains(rec));
+        Assert.assertTrue(rec.getProfilesThatFavoriteThisRecipe().contains(prof));
     }
 
+    @Test
     public void testRemoveRecipeFromFavorites() {
         Recipe rec = new Recipe();
 
@@ -127,13 +141,15 @@ public class ProfileTest extends TestCase {
 
         prof.removeRecipeFromFavorites(rec);
 
-        assertFalse(prof.getFavoriteRecipes().contains(rec));
-        assertFalse(rec.getProfilesThatFavoriteThisRecipe().contains(prof));
+        Assert.assertFalse(prof.getFavoriteRecipes().contains(rec));
+        Assert.assertFalse(rec.getProfilesThatFavoriteThisRecipe().contains(prof));
     }
 
+    @Test
     public void testTestToString() {
     }
 
+    @Test
     public void testSetProfilePic() {
         BufferedImage image;
         byte[] bytes;
@@ -146,7 +162,6 @@ public class ProfileTest extends TestCase {
             throw new RuntimeException(e);
         }
 
-        assertSame(bytes, prof.getProfilePic());
+        Assert.assertSame(bytes, prof.getProfilePic());
     }
-
 }

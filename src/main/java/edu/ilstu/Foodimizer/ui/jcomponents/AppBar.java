@@ -134,6 +134,12 @@ public class AppBar extends JPanel {
 
     }
 
+    public void refreshContent() {
+        this.removeAll();
+        init();
+        this.revalidate();
+    }
+
     private void goToPageActionPerformed(String page) {
         contentManager.goToPage(page);
     }
