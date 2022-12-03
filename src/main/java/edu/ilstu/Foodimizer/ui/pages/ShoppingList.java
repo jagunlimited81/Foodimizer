@@ -22,10 +22,11 @@ public class ShoppingList extends Page {
         if (StateManager.getInstance().getActiveProfile() == null)
             return;
         contentPanel = new JPanel();
+        //listAndButtonPanel = new JPanel();
         GroupLayout layout = new GroupLayout(contentPanel);
         contentPanel.setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
+//        layout.setAutoCreateGaps(true);
+//        layout.setAutoCreateContainerGaps(true);
 
         ArrayList<Ingredient> ingredients = new ArrayList<>(StateManager.getInstance().getActiveProfile().getShoppingList());
         JList shoppingList = new JList<>(ingredients.toArray());
@@ -59,8 +60,8 @@ public class ShoppingList extends Page {
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                                .addComponent(shoppingList)
                                 .addComponent(title))
+                        .addComponent(shoppingList)
                         .addComponent(addIngText)
                         .addComponent(addIngButton)
                         .addComponent(removeIngButton)
@@ -69,7 +70,6 @@ public class ShoppingList extends Page {
 
         );
         this.add(contentPanel);
-
     }
 
     //JPanels
