@@ -47,8 +47,8 @@ public class ShoppingList extends Page {
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                                .addComponent(shoppingList)
-                                .addComponent(title))
+                                .addComponent(title)
+                                .addComponent(shoppingList))
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(addIngText)
                                 .addComponent(addIngButton)
@@ -90,6 +90,17 @@ public class ShoppingList extends Page {
         Ingredient i = is.getFromName(ingText.toLowerCase());
         if (i != null) {
             activeProfile.getShoppingList().add(i);
+        }
+        if (i == null)
+        {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "No Ingredient Found!", "Dialog",JOptionPane.ERROR_MESSAGE);
+        }
+
+        if (activeProfile.getShoppingList().contains(i))
+        {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Ingredient is already in the Shopping List!", "Dialog",JOptionPane.ERROR_MESSAGE);
         }
         ProfileService ps = new ProfileService();
         ps.update(activeProfile, "");
