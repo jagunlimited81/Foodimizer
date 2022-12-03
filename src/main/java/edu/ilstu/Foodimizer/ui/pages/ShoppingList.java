@@ -40,7 +40,7 @@ public class ShoppingList extends Page {
         JButton clearListButton = new JButton("Clear the Shopping List");
         clearListButton.addActionListener(e -> clearShoppingList());
         JButton pdfButton = new JButton("Print Shopping List to PDF");
-//        pdfButton.addActionListener(e->saveToPDF());
+//      pdfButton.addActionListener(e->saveToPDF());
         JButton addIngButton = new JButton("Add Ingredient");
         JTextField addIngText = new JTextField();
         addIngButton.addActionListener(e -> addIngredientToShoppingList(addIngText.getText()));
@@ -48,13 +48,13 @@ public class ShoppingList extends Page {
                 layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                                 .addComponent(title)
-                                .addComponent(shoppingList))
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(addIngText)
                                 .addComponent(addIngButton)
                                 .addComponent(removeIngButton)
                                 .addComponent(clearListButton)
                                 .addComponent(pdfButton))
+                                .addComponent(shoppingList))
 
         );
         layout.setVerticalGroup(
@@ -72,7 +72,7 @@ public class ShoppingList extends Page {
         this.add(contentPanel);
     }
 
-    //JPanels
+    //JPanel
     JPanel contentPanel;
 
     private void clearShoppingList() {
@@ -89,19 +89,25 @@ public class ShoppingList extends Page {
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         Ingredient i = is.getFromName(ingText.toLowerCase());
         if (i != null) {
-            activeProfile.getShoppingList().add(i);
+            if (activeProfile.getShoppingList().contains(i))
+            {
+                JOptionPane.showMessageDialog(new JFrame(),
+                        "Ingredient is already in the Shopping List!", "Dialog",JOptionPane.ERROR_MESSAGE);
+            }
+
+            else
+            {
+                activeProfile.getShoppingList().add(i);
+            }
         }
+
         if (i == null)
         {
             JOptionPane.showMessageDialog(new JFrame(),
                     "No Ingredient Found!", "Dialog",JOptionPane.ERROR_MESSAGE);
         }
 
-        if (activeProfile.getShoppingList().contains(i))
-        {
-            JOptionPane.showMessageDialog(new JFrame(),
-                    "Ingredient is already in the Shopping List!", "Dialog",JOptionPane.ERROR_MESSAGE);
-        }
+
         ProfileService ps = new ProfileService();
         ps.update(activeProfile, "");
         refreshContent();
