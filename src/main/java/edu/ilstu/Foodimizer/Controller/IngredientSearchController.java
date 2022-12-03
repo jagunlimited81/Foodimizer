@@ -2,15 +2,17 @@ package edu.ilstu.Foodimizer.Controller;
 
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
-import edu.ilstu.Foodimizer.app.db.service.RecipeService;
+import edu.ilstu.Foodimizer.app.db.service.IngredientService;
+import edu.ilstu.Foodimizer.app.db.service.RatingService;
+import edu.ilstu.Foodimizer.lib.RecipeComparator;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 import edu.ilstu.Foodimizer.ui.pages.RecipePage;
+import edu.ilstu.Foodimizer.ui.pages.RecipeSearchResultsPage;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.Set;
+import java.util.ArrayList;
 
 public class IngredientSearchController implements ActionListener {
 
@@ -23,11 +25,33 @@ public class IngredientSearchController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String ingredientName = searchText.getText();
+        String[] ingredientsAsString = searchText.getText().split(",\\s*");
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        IngredientService is = new IngredientService();
+        for (String s : ingredientsAsString) {
+            Ingredient ing = is.getFromName(s);
+            if (ing != null) {
+                for (Recipe r : ing.getRecipesThatContainThisIngredient()) {
+                    if (!recipes.contains(r)) {
+                        recipes.add(r);
+                    }
+                }
+            }
+        }
+        if (recipes.isEmpty()) {
+            System.out.println("no recipes");
+        } else {
+            RatingService rs = new RatingService();
+            recipes.sort(RecipeComparator.getRatingComparator(rs).thenComparing(Recipe::getName));
+            RecipeSearchResultsPage.getInstance().setActiveRecipes(recipes);
+            MainWindowContentManager.getInstance().goToPage("RecipeSearchResultsPage");
+        }
+        /*
         boolean notFoundMessage = true;
         Ingredient ingredientInRecipe = new Ingredient();
-        List<Recipe> recipes = new RecipeService().getAll();
+        //List<Recipe> recipes = new RecipeService().getAll();
 
-        for (Recipe recipe: recipes) {
+        for (Recipe recipe : recipes) {
             Set<Ingredient> listOfIngredient = recipe.getRecipeIngredients();
             for (Ingredient ingredient : listOfIngredient) {
                 if (ingredient.getName().equals(ingredientName)) {
@@ -41,7 +65,7 @@ public class IngredientSearchController implements ActionListener {
         // recipeThatContainInputIngredient will contain the list of recipe
         Set<Recipe> recipeThatContainInputIngredient = ingredientInRecipe.getRecipesThatContainThisIngredient();
         StringBuilder text_recipe = new StringBuilder("Below are the list of recipe for " + ingredientName + ": \n");
-        for (Recipe r: recipeThatContainInputIngredient) {
+        for (Recipe r : recipeThatContainInputIngredient) {
             text_recipe.append(r.getName()).append("\n");
         }
         text_recipe.append("Enter the recipe you want to go to: ");
@@ -63,6 +87,8 @@ public class IngredientSearchController implements ActionListener {
                 JOptionPane.showMessageDialog(new JFrame(), "No Recipe Found",
                         "Dialog", JOptionPane.ERROR_MESSAGE);
         }
+
+         */
     }
 
     private void buttonPressed(Recipe r) {

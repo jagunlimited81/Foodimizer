@@ -5,6 +5,7 @@ import javax.swing.*;
 public abstract class Page extends JPanel {
     public Page() {
     }
+
     public void refreshContent() {
         this.removeAll();
         init();

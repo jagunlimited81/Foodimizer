@@ -9,6 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ProfileSelector extends Page {
+    JPanel contentPane;
+    JPanel profileSelectPanel;
+    JScrollPane contentScrollPanel;
+    StateManager sm;
+
     public ProfileSelector() {
         super();
         init();
@@ -44,9 +49,4 @@ public class ProfileSelector extends Page {
         this.setLayout(new BorderLayout());
         this.add(contentPane, BorderLayout.CENTER);
     }
-
-    JPanel contentPane;
-    JPanel profileSelectPanel;
-    JScrollPane contentScrollPanel;
-    StateManager sm;
 }

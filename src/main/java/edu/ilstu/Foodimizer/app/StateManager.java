@@ -12,17 +12,13 @@ public class StateManager {
         init();
     }
 
-    private void init() {
-    }
-
     public static StateManager getInstance() {
         if (instance == null)
             instance = new StateManager();
         return instance;
     }
 
-    public void setActiveProfile(Profile profile) {
-        this.activeProfile = profile;
+    private void init() {
     }
 
     /**
@@ -33,6 +29,10 @@ public class StateManager {
 
     public Profile getActiveProfile() {
         return activeProfile;
+    }
+
+    public void setActiveProfile(Profile profile) {
+        this.activeProfile = profile;
     }
 
 
