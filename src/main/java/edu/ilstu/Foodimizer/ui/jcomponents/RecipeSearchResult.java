@@ -6,7 +6,7 @@ import edu.ilstu.Foodimizer.app.db.models.Recipe;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class RecipeSearchResult extends JPanel {
@@ -50,14 +50,20 @@ public class RecipeSearchResult extends JPanel {
         GroupLayout matchLayout = new GroupLayout(matchPanel);
         matchPanel.setLayout(matchLayout);
         JLabel matchPercent = new JLabel("Match Percentage");
-        JLabel recipeCountIngredients = new JLabel("<html>You have " + getCountMatching(new ArrayList<>(recipe.getRecipeIngredients()), new ArrayList<>(StateManager.getInstance().getActiveProfile().getPantry())) + " ingredients<br/>out of " + recipe.getRecipeIngredients().size() + " in the recipe.</html>");
+        matchPercent.setFont(new Font(matchPercent.getFont().getName(), Font.BOLD, matchPercent.getFont().getSize()));
+        double numMatch = getCountMatching(new ArrayList<>(recipe.getRecipeIngredients()), new ArrayList<>(StateManager.getInstance().getActiveProfile().getPantry()));
+        double numTotal = recipe.getRecipeIngredients().size();
+        JLabel percent = new JLabel(new DecimalFormat("#").format((numMatch / numTotal) * 100) + "%");
+        JLabel recipeCountIngredients = new JLabel("<html>You have " + (int) numMatch + " ingredients<br/>out of " + (int) numTotal + " in the recipe.</html>");
         JLabel rating = new JLabel("Rating");
+        rating.setFont(new Font(rating.getFont().getName(), Font.BOLD, rating.getFont().getSize()));
         StarRating sr = new StarRating(recipe);
 
         matchLayout.setHorizontalGroup(
                 matchLayout.createSequentialGroup()
                         .addGroup(matchLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
                                 .addComponent(matchPercent)
+                                .addComponent(percent)
                                 .addComponent(recipeCountIngredients)
                                 .addComponent(rating)
                                 .addComponent(sr))
@@ -66,6 +72,7 @@ public class RecipeSearchResult extends JPanel {
         matchLayout.setVerticalGroup(
                 matchLayout.createSequentialGroup()
                         .addComponent(matchPercent)
+                        .addComponent(percent)
                         .addComponent(recipeCountIngredients)
                         .addComponent(rating)
                         .addComponent(sr)

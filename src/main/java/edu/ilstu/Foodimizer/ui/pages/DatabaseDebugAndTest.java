@@ -11,10 +11,12 @@ import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 public class DatabaseDebugAndTest extends Page {
+    Hashtable<JCheckBox, Ingredient> ht;
+
     public DatabaseDebugAndTest() {
         init();
     }
@@ -102,6 +104,4 @@ public class DatabaseDebugAndTest extends Page {
             }
         }
     }
-
-    Hashtable<JCheckBox, Ingredient> ht;
 }

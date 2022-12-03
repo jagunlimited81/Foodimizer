@@ -14,16 +14,18 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RecipeActionPane extends JPanel {
+    private JButton addOrRemoveFromFavoritesButton;
+
     public RecipeActionPane() {
         init();
     }
 
     public void init() {
-        contentPanel = new JPanel();
-        addAllToGroceryListButton = new JButton();
-        addMissingToGroceryListButton = new JButton();
+        JPanel contentPanel = new JPanel();
+        JButton addAllToGroceryListButton = new JButton();
+        JButton addMissingToGroceryListButton = new JButton();
         addOrRemoveFromFavoritesButton = new JButton();
-        printThisRecipeButton = new JButton();
+        JButton printThisRecipeButton = new JButton();
 
         /* this */
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -60,7 +62,6 @@ public class RecipeActionPane extends JPanel {
         this.add(contentPanel);
 
     }
-
 
     private void printThisRecipe() {
         SysDialogPrinter.print("Recipe", new PDFFormatter(new Recipe()));
@@ -113,7 +114,7 @@ public class RecipeActionPane extends JPanel {
         ProfileService ps = new ProfileService();
         ps.update(profile, "");
         RecipePage.getInstance().refreshContent();
-        JOptionPane.showMessageDialog(new JPanel(),"Added " + numIngredientsAddedToShoppingList + " ingredients to the shopping list");
+        JOptionPane.showMessageDialog(new JPanel(), "Added " + numIngredientsAddedToShoppingList + " ingredients to the shopping list");
     }
 
     private void addAllToGroceryList() {
@@ -129,13 +130,6 @@ public class RecipeActionPane extends JPanel {
         ProfileService ps = new ProfileService();
         ps.update(profile, "");
         RecipePage.getInstance().refreshContent();
-        JOptionPane.showMessageDialog(new JPanel(),"Added " + numIngredientsAddedToShoppingList + " ingredients to the shopping list");
+        JOptionPane.showMessageDialog(new JPanel(), "Added " + numIngredientsAddedToShoppingList + " ingredients to the shopping list");
     }
-
-    private JPanel contentPanel;
-    private JButton addAllToGroceryListButton;
-    private JButton addMissingToGroceryListButton;
-
-    private JButton addOrRemoveFromFavoritesButton;
-    private JButton printThisRecipeButton;
 }

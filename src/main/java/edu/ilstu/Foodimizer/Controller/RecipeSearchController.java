@@ -1,7 +1,9 @@
 package edu.ilstu.Foodimizer.Controller;
 
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
+import edu.ilstu.Foodimizer.app.db.service.RatingService;
 import edu.ilstu.Foodimizer.app.db.service.RecipeService;
+import edu.ilstu.Foodimizer.lib.RecipeComparator;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 import edu.ilstu.Foodimizer.ui.pages.RecipePage;
 import edu.ilstu.Foodimizer.ui.pages.RecipeSearchResultsPage;
@@ -40,6 +42,8 @@ public class RecipeSearchController implements ActionListener {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
+        RatingService rates = new RatingService();
+        foundRecipes.sort(RecipeComparator.getRatingComparator(rates).thenComparing(Recipe::getName));
         RecipeSearchResultsPage.getInstance().setActiveRecipes(foundRecipes);
         MainWindowContentManager.getInstance().goToPage("RecipeSearchResultsPage");
     }

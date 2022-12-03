@@ -3,7 +3,8 @@ package edu.ilstu.Foodimizer.Controller;
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.service.IngredientService;
-import edu.ilstu.Foodimizer.app.db.service.RecipeService;
+import edu.ilstu.Foodimizer.app.db.service.RatingService;
+import edu.ilstu.Foodimizer.lib.RecipeComparator;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 import edu.ilstu.Foodimizer.ui.pages.RecipePage;
 import edu.ilstu.Foodimizer.ui.pages.RecipeSearchResultsPage;
@@ -12,8 +13,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class IngredientSearchController implements ActionListener {
 
@@ -42,10 +41,11 @@ public class IngredientSearchController implements ActionListener {
         if (recipes.isEmpty()) {
             System.out.println("no recipes");
         } else {
+            RatingService rs = new RatingService();
+            recipes.sort(RecipeComparator.getRatingComparator(rs).thenComparing(Recipe::getName));
             RecipeSearchResultsPage.getInstance().setActiveRecipes(recipes);
             MainWindowContentManager.getInstance().goToPage("RecipeSearchResultsPage");
         }
-        return;
         /*
         boolean notFoundMessage = true;
         Ingredient ingredientInRecipe = new Ingredient();

@@ -7,6 +7,8 @@ import java.awt.*;
 
 public class FirstTimeWelcome extends Page {
 
+    JPanel contentPanel;
+
     public FirstTimeWelcome() {
         super();
         init();
@@ -52,8 +54,6 @@ public class FirstTimeWelcome extends Page {
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
         mwcm.goToPage("CreateProfile");
     }
-
-    JPanel contentPanel;
 
 
 }

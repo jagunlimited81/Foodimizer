@@ -1,12 +1,7 @@
 package edu.ilstu.Foodimizer.ui.jcomponents;
 
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.PathIterator;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.*;
+import java.awt.geom.*;
 
 
 public class Star2D implements Shape {
@@ -80,6 +75,29 @@ public class Star2D implements Shape {
         return path;
     }
 
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+        starShape = generateStar(x, getY(), getInnerRadius(), getOuterRadius(),
+                getBranchesCount());
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+        starShape = generateStar(getX(), y, getInnerRadius(), getOuterRadius(),
+                getBranchesCount());
+    }
+
+    public double getInnerRadius() {
+        return innerRadius;
+    }
 
     public void setInnerRadius(double innerRadius) {
         if (innerRadius >= outerRadius) {
@@ -92,19 +110,9 @@ public class Star2D implements Shape {
                 getBranchesCount());
     }
 
-
-    public void setX(double x) {
-        this.x = x;
-        starShape = generateStar(x, getY(), getInnerRadius(), getOuterRadius(),
-                getBranchesCount());
+    public double getOuterRadius() {
+        return outerRadius;
     }
-
-    public void setY(double y) {
-        this.y = y;
-        starShape = generateStar(getX(), y, getInnerRadius(), getOuterRadius(),
-                getBranchesCount());
-    }
-
 
     public void setOuterRadius(double outerRadius) {
         if (innerRadius >= outerRadius) {
@@ -117,6 +125,10 @@ public class Star2D implements Shape {
                 getBranchesCount());
     }
 
+    public int getBranchesCount() {
+        return branchesCount;
+    }
+
     public void setBranchesCount(int branchesCount) {
         if (branchesCount <= 2) {
             throw new IllegalArgumentException("The number of branches must"
@@ -126,31 +138,6 @@ public class Star2D implements Shape {
         this.branchesCount = branchesCount;
         starShape = generateStar(getX(), getY(), getInnerRadius(),
                 getOuterRadius(), branchesCount);
-    }
-
-
-    public double getX() {
-        return x;
-    }
-
-
-    public double getY() {
-        return y;
-    }
-
-
-    public double getInnerRadius() {
-        return innerRadius;
-    }
-
-
-    public double getOuterRadius() {
-        return outerRadius;
-    }
-
-
-    public int getBranchesCount() {
-        return branchesCount;
     }
 
     /**

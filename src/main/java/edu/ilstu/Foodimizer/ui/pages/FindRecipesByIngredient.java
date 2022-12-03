@@ -10,6 +10,15 @@ import java.awt.*;
 // Search for Recipe that have any ingredients in the pantry
 public class FindRecipesByIngredient extends Page {
 
+    JPanel contentPane;
+    JPanel logo_panel;
+    JPanel search_panel;
+    JLabel logo;
+    JLabel searchPrompt;
+    JTextField searchText;
+    JButton searchButton;
+    ImageIcon foodimizer_logo;
+
     public FindRecipesByIngredient() {
         init();
     }
@@ -64,15 +73,4 @@ public class FindRecipesByIngredient extends Page {
         add(contentPane);
 
     }
-
-    JPanel contentPane;
-    JPanel logo_panel;
-    JPanel search_panel;
-
-    JLabel logo;
-    JLabel searchPrompt;
-
-    JTextField searchText;
-    JButton searchButton;
-    ImageIcon foodimizer_logo;
 }

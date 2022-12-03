@@ -4,10 +4,7 @@ import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.JoinProfileRateRecipe;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
-import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.app.db.service.RatingService;
-import edu.ilstu.Foodimizer.app.db.service.RecipeService;
-import edu.ilstu.Foodimizer.ui.pages.Page;
 import edu.ilstu.Foodimizer.ui.pages.RecipePage;
 
 import javax.swing.*;
@@ -16,10 +13,10 @@ import java.util.ArrayList;
 
 public class StarRating extends JPanel {
 
-    byte rating = -1;
     final static byte starNum = 5;
-
+    byte rating = -1;
     Recipe recipe;
+    ArrayList<JButton> stars = new ArrayList<>();
 
     public StarRating() {
         recipe = RecipePage.getInstance().getActiveRecipe();
@@ -46,16 +43,16 @@ public class StarRating extends JPanel {
             Star star = new Star();
             star.addActionListener(e -> starActionPerformed(finalI));
 
-            star.setSelected(i <= rating && rating >= 0);
+            star.setSelected(i <= rating);
             stars.add(star);
             add(star);
         }
 
         // Create a 5-star grid layout
         setLayout(new java.awt.GridLayout(1, 5));
-        setMinimumSize(new Dimension(130,30));
-        setPreferredSize(new Dimension(130,30));
-        setMaximumSize(new Dimension(130,30));
+        setMinimumSize(new Dimension(130, 30));
+        setPreferredSize(new Dimension(130, 30));
+        setMaximumSize(new Dimension(130, 30));
     }
 
     private void starActionPerformed(byte starSelection) {
@@ -72,6 +69,7 @@ public class StarRating extends JPanel {
             jprr.setRecipe(recipe);
             jprr.setProfile(profile);
             jprr.setRating(rating);
+            profile.getRecipeRatings().add(jprr);
             rs.save(jprr);
         } else {
             jprr.setRating(rating);
@@ -79,6 +77,4 @@ public class StarRating extends JPanel {
         }
 
     }
-
-    ArrayList<JButton> stars = new ArrayList<>();
 }

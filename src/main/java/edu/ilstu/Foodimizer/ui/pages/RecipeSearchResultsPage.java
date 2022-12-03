@@ -1,14 +1,10 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
 import edu.ilstu.Foodimizer.app.StateManager;
-import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
-import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
-import edu.ilstu.Foodimizer.ui.jcomponents.RecipeActionPane;
 import edu.ilstu.Foodimizer.ui.jcomponents.RecipeSearchResult;
-import edu.ilstu.Foodimizer.ui.jcomponents.StarRating;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +15,9 @@ import java.util.List;
 
 public class RecipeSearchResultsPage extends Page {
 
+    private static RecipeSearchResultsPage instance = null;
     ArrayList<Recipe> recipesOnPage = new ArrayList<>();
+    JPanel contentPanel;
 
     public RecipeSearchResultsPage() {
         init();
@@ -64,8 +62,4 @@ public class RecipeSearchResultsPage extends Page {
         csp.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
         this.add(csp);
     }
-
-
-    JPanel contentPanel;
-    private static RecipeSearchResultsPage instance = null;
 }
