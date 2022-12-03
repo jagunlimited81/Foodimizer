@@ -4,8 +4,6 @@ package edu.ilstu.Foodimizer.app;
 import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
 import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.service.IngredientService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.Persistence;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -17,6 +15,11 @@ public class TestIngredientService {
     public static void setUp() {
         ServicesEntityManager sem = ServicesEntityManager.getInstance();
         sem.init("FoodimizerDB-TEST");
+    }
+
+    @AfterClass
+    public static void tearDown() {
+
     }
 
     @Test
@@ -50,10 +53,5 @@ public class TestIngredientService {
         Ingredient ingredient = is.getFromName("spinach");
         is.delete(ingredient);
         // assert is empty
-    }
-
-    @AfterClass
-    public static void tearDown() {
-
     }
 }

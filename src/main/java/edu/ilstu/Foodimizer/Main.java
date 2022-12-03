@@ -1,7 +1,6 @@
 package edu.ilstu.Foodimizer;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import edu.ilstu.Foodimizer.app.DatabaseFiller;
 import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
@@ -30,7 +29,7 @@ public class Main {
         DatabaseFiller dbf = new DatabaseFiller();
         dbf.createTestIngredients();
         dbf.createTestRecipes();
-        //dbf.createTestProfiles();
+        dbf.createTestProfiles();
 
 
         System.out.println("Starting JFrame...");
@@ -40,7 +39,7 @@ public class Main {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             JPanel mwcm = MainWindowContentManager.getInstance();
             MainWindowContentManager.getInstance().init();
-            frame.getContentPane().add(mwcm);
+            frame.setContentPane(mwcm);
             frame.setPreferredSize((new Dimension(1200, 675)));
             frame.pack();
             frame.setLocationByPlatform(true);

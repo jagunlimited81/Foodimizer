@@ -7,15 +7,12 @@ import edu.ilstu.Foodimizer.app.db.service.IngredientService;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.lib.ByteTools;
-import org.apache.derby.iapi.store.access.conglomerate.ScanManager;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Random;
-
-import static edu.ilstu.Foodimizer.lib.ByteTools.toByteArray;
 
 public class DatabaseFiller {
     IngredientService ingredientService;
@@ -44,7 +41,7 @@ public class DatabaseFiller {
 
             try {
                 Random rand = new Random();
-                image = ImageIO.read(this.getClass().getResource("/images/nopfp" + rand.nextInt(4) + ".png"));
+                image = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/nopfp" + rand.nextInt(4) + ".png")));
                 byte[] bytes = ByteTools.toByteArray(image, "png");
                 profile.setProfilePic(bytes);
             } catch (IOException e) {
@@ -113,7 +110,7 @@ public class DatabaseFiller {
         createRecipeFromString(recipeName, ingredients);
 
         recipeName = "Fried Rice";
-        ingredients = new String[]{"chilled rice", "egg", "carrot", "onion", "green onion", "peas", "garlic", "soy sauce", "oyster sauce", "toasted sesame oil", "butter" };
+        ingredients = new String[]{"chilled rice", "egg", "carrot", "onion", "green onion", "peas", "garlic", "soy sauce", "oyster sauce", "toasted sesame oil", "butter"};
         createRecipeFromString(recipeName, ingredients);
 
         recipeName = "Meat Pizza";
@@ -165,8 +162,6 @@ public class DatabaseFiller {
         recipeName = "Spaghetti Carbonara";
         ingredients = new String[]{"spaghetti", "egg", "parmesan", "black pepper", "olive oil", "slab guanciate", "bacon"};
         createRecipeFromString(recipeName, ingredients);
-
-
 
 
     }

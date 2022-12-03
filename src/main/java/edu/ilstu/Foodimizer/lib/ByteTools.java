@@ -13,8 +13,7 @@ public class ByteTools {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(bi, format, baos);
-        byte[] bytes = baos.toByteArray();
-        return bytes;
+        return baos.toByteArray();
 
     }
 
@@ -23,8 +22,7 @@ public class ByteTools {
             throws IOException {
 
         InputStream is = new ByteArrayInputStream(bytes);
-        BufferedImage bi = ImageIO.read(is);
-        return bi;
+        return ImageIO.read(is);
 
     }
 }

@@ -12,8 +12,17 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class RecipePage extends Page {
+    private static RecipePage instance = null;
+    private Recipe activeRecipe; // Holds the active recipe on the page
+
     public RecipePage() {
         init();
+    }
+
+    public static RecipePage getInstance() {
+        if (instance == null)
+            instance = new RecipePage();
+        return instance;
     }
 
     protected void init() {
@@ -26,36 +35,44 @@ public class RecipePage extends Page {
         }
 
         activeRecipe = recipe;
-        contentPane = new JPanel();
+        // The content pane is what holds all the panels, then the contentPane is added to this.
+        JPanel contentPane = new JPanel();
 
         /* Left Column */
-        leftColumn = new JPanel();
-        recipeImage = new JPanel();
-        recipeCookInfoPanel = new JPanel();
-        mealType = new JLabel();
-        servingSize = new JLabel();
-        cookMethod = new JLabel();
-        prepTime = new JLabel();
-        cookTime = new JLabel();
-        waitTime = new JLabel();
+        // Left column of the contentPane
+        JPanel leftColumn = new JPanel();
+        //TODO change to image
+        JPanel recipeImage = new JPanel();
+        JPanel recipeCookInfoPanel = new JPanel();
+        JLabel mealType = new JLabel();
+        JLabel servingSize = new JLabel();
+        JLabel cookMethod = new JLabel();
+        JLabel prepTime = new JLabel();
+        JLabel cookTime = new JLabel();
+        JLabel waitTime = new JLabel();
 
         /* Center Column */
-        centerColumn = new JPanel();
-        recipeHeader = new JPanel();
-        recipeNameTitle = new JLabel();
-        recipeDescription = new JTextArea();
-        sideBySideIngredientsActionPanel = new JPanel();
-        ingredientsListPanel = new JPanel();
-        ingredientsList = new JPanel();
-        ingredientsBox = new TitledBorder("Ingredients");
-        directionsHeader = new JLabel();
-        directions = new JPanel();
-        directionsTextPane = new JTextPane();
+        // Center column of the contentPane
+        JPanel centerColumn = new JPanel();
+        // Holds the title and description
+        JPanel recipeHeader = new JPanel();
+        JLabel recipeNameTitle = new JLabel();
+        JTextArea recipeDescription = new JTextArea();
+        // ?
+        JPanel sideBySideIngredientsActionPanel = new JPanel();
+        // TODO refactor
+        JPanel ingredientsListPanel = new JPanel();
+        JPanel ingredientsList = new JPanel();
+        TitledBorder ingredientsBox = new TitledBorder("Ingredients");
+        JLabel directionsHeader = new JLabel();
+        JPanel directions = new JPanel();
+        JTextPane directionsTextPane = new JTextPane();
 
         /* Right Column */
-        rightColumn = new JPanel();
+        // Right column of the contentPane
+        JPanel rightColumn = new JPanel();
 
-        gbc = new GridBagConstraints();
+        GridBagConstraints gbc = new GridBagConstraints();
 
         /* contentPane */
         //contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
@@ -70,12 +87,10 @@ public class RecipePage extends Page {
             recipeImage.setMaximumSize(new Dimension(200, 200));
             recipeImage.setMinimumSize(new Dimension(200, 200));
             recipeImage.setBackground(Color.gray);
-            recipeImage.setBorder(BorderFactory.createLineBorder(Color.red));
             recipeImage.setAlignmentX(Component.CENTER_ALIGNMENT);
             leftColumn.add(recipeImage);
 
             recipeCookInfoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-            recipeCookInfoPanel.setBorder(BorderFactory.createLineBorder(Color.red));
             GroupLayout rcipLayout = new GroupLayout(recipeCookInfoPanel);
             recipeCookInfoPanel.setLayout(rcipLayout);
             rcipLayout.setAutoCreateGaps(true);
@@ -203,15 +218,6 @@ public class RecipePage extends Page {
         this.add(contentPane);
     }
 
-
-    public static RecipePage getInstance() {
-        if (instance == null)
-            instance = new RecipePage();
-        return instance;
-    }
-
-    private static RecipePage instance = null;
-
     public Recipe getActiveRecipe() {
         return activeRecipe;
     }
@@ -220,32 +226,6 @@ public class RecipePage extends Page {
         this.activeRecipe = activeRecipe;
         setRecipe(activeRecipe);
     }
-
-    private Recipe activeRecipe; // Holds the active recipe on the page
-    private JPanel contentPane; // The content pane is what holds all of the jpanels, then the contentPane is added to this.
-    private JPanel leftColumn; // Left column of the contentPane
-    private JPanel recipeImage; //TODO change to image
-    private JPanel recipeCookInfoPanel;
-    private JLabel servingSize;
-    private JLabel cookMethod;
-    private JLabel mealType;
-    private JLabel cookTime;
-    private JLabel prepTime;
-    private JLabel waitTime;
-
-    private JPanel centerColumn; // Center column of the contentPane
-    private JPanel recipeHeader; // Holds the title and description
-    private JLabel recipeNameTitle;
-    private JTextArea recipeDescription;
-    private JPanel sideBySideIngredientsActionPanel; // ?
-    private TitledBorder ingredientsBox;
-    private JPanel ingredientsListPanel; // TODO refactor
-    private JPanel ingredientsList;
-    private JLabel directionsHeader;
-    private JPanel directions;
-    private JTextPane directionsTextPane;
-    private JPanel rightColumn; // Right column of the contentPane
-    private GridBagConstraints gbc;
 
 
 }

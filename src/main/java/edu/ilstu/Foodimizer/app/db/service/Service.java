@@ -1,7 +1,6 @@
 package edu.ilstu.Foodimizer.app.db.service;
 
 import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
-import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
@@ -57,6 +56,7 @@ public abstract class Service<T> {
             throw e;
         }
     }
+
     /**
      * @param s the name of the thing to search by
      * @return

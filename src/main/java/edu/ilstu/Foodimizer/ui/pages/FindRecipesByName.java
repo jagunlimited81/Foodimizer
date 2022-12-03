@@ -9,6 +9,16 @@ import java.awt.*;
 
 public class FindRecipesByName extends Page {
 
+    MainWindowContentManager contentManager;
+    JPanel contentPane;
+    JPanel logo_panel;
+    JPanel search_panel;
+    JLabel logo;
+    JLabel searchPrompt;
+    JTextField searchText;
+    JButton searchButton;
+    ImageIcon foodimizer_logo;
+
     public FindRecipesByName() {
         init();
     }
@@ -66,16 +76,4 @@ public class FindRecipesByName extends Page {
 
         add(contentPane);
     }
-
-    MainWindowContentManager contentManager;
-    JPanel contentPane;
-    JPanel logo_panel;
-    JPanel search_panel;
-
-    JLabel logo;
-    JLabel searchPrompt;
-
-    JTextField searchText;
-    JButton searchButton;
-    ImageIcon foodimizer_logo;
 }
