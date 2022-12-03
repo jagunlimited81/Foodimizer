@@ -42,6 +42,7 @@ public class AppBar extends JPanel {
         /* my grocery list */
         JMenu myGroceryList = new JMenu();
         JMenuItem myGroceryListGoTo = new JMenuItem();
+        myGroceryListGoTo.addActionListener(e -> goToPageActionPerformed("ShoppingList"));
         /* profiles */
         /* Profiles */
         JMenu profiles = new JMenu();
