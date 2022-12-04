@@ -1,14 +1,18 @@
 package edu.ilstu.Foodimizer;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import edu.ilstu.Foodimizer.app.DatabaseFiller;
 import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
+import edu.ilstu.Foodimizer.ui.pages.Page;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Main {
+
+    public static boolean darkLookAndFeel = true;
 
     /**
      * Entry point for the Foodimizer project
@@ -17,11 +21,8 @@ public class Main {
      */
     public static void main(String[] args) {
         /* Start the JFrame Application */
-        try {
-            FlatDarkLaf.setup();
-        } catch (Exception e) {
-            System.out.println("failed to FlatLaf");
-        }
+        initLookAndFeel();
+
         /* Initialize Database to use prod DB */
         ServicesEntityManager sem = ServicesEntityManager.getInstance();
         sem.init("FoodimizerDB");
@@ -47,5 +48,17 @@ public class Main {
             frame.setVisible(true);
             //frame.setResizable(false);
         });
+    }
+
+    public static void initLookAndFeel()
+    {
+        try {
+            if (darkLookAndFeel)
+                FlatDarkLaf.setup();
+            else
+                FlatLightLaf.setup();
+        } catch (Exception e) {
+            System.out.println("failed to FlatLaf");
+        }
     }
 }
