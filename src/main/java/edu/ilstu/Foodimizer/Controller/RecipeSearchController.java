@@ -31,6 +31,10 @@ public class RecipeSearchController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        searchRecipeByName();
+    }
+
+    private void searchRecipeByName() {
         List<Recipe> recipes = new RecipeService().getAll();
         if (comboBox != null)
             searchText = new JTextField(String.valueOf(comboBox.getSelectedItem()));
