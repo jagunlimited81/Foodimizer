@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 public class ShoppingList extends Page {
 
+    //JPanels
+    JPanel contentPanel;
+
     public ShoppingList() {
         super();
         init();
@@ -71,9 +74,6 @@ public class ShoppingList extends Page {
         this.add(contentPanel);
 
     }
-
-    //JPanels
-    JPanel contentPanel;
 
     private void clearShoppingList() {
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
