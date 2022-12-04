@@ -7,23 +7,14 @@ import edu.ilstu.Foodimizer.app.db.service.IngredientService;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyPantry extends Page {
-    private JList<Ingredient> ingredientPantryList;
-    private JPanel buttonPanel;
-    private JPanel ingredientsPanel;
-    private JPanel emptyPantryPanel;
-    private JPanel searchBarPanel;
-    private DefaultListModel<Ingredient> ingredientPantryModel;
-    private DefaultListModel<Ingredient> emptyPantryModel;
-    private JTextField searchTextField;
-    private JLabel searchPrompt;
     IngredientService is = new IngredientService();
+    JList availableIngredientsJList;
+    JList profilePantryJList;
+    JList dislikedIngredientsJList;
 
     public MyPantry() {
         super();
@@ -32,82 +23,129 @@ public class MyPantry extends Page {
 
     @Override
     protected void init() {
-        if (StateManager.getInstance().getActiveProfile() == null)
-            return;
+        if (StateManager.getInstance().getActiveProfile() == null) return;
+        /* Get Data */
+        ArrayList<Ingredient> pantryIngredients = new ArrayList<>(StateManager.getInstance().getActiveProfile().getPantry());
+        ArrayList<Ingredient> dislikedIngrediients = new ArrayList<>(StateManager.getInstance().getActiveProfile().getDislikedIngredients());
+        ArrayList<Ingredient> availableIngredients = new ArrayList<>(is.getAll());
+        availableIngredients.removeAll(pantryIngredients);
+        availableIngredients.removeAll(dislikedIngrediients);
+
         this.setLayout(new BorderLayout());
-
-        ArrayList<Ingredient> ingredients = new ArrayList<>(StateManager.getInstance().getActiveProfile().getPantry());
-        JList pantry = new JList<>(ingredients.toArray());
-
-        /* Button Implementation */
-        JButton addBtn = new JButton("Add");
-        //noinspection DuplicatedCode
-        addBtn.addActionListener(e->addIngredientToPantryFromList(ingredientPantryList));
-
-        JButton rmvBtn = new JButton("Remove");
-        //noinspection DuplicatedCode
-        rmvBtn.addActionListener(e->removeIngredientFromPantryList(pantry));
-
-        /* Buttons Panel */
-        buttonPanel = new JPanel();
-        buttonPanel.setBackground(Color.PINK);
-//        buttonPanel.setSize(500,500);
-        buttonPanel.add(addBtn);
-        buttonPanel.add(rmvBtn);
-        this.add(buttonPanel, BorderLayout.SOUTH);
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BorderLayout());
 
         /* Search Bar Panel */
-        searchBarPanel = new JPanel();
-        searchBarPanel.setBackground(Color.WHITE);
-//        buttonPanel.setSize(500,500);
-        JButton searchBtn = new JButton("Quick Add");
-        searchTextField = new JTextField(35);
-        searchTextField.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
-        searchBarPanel.add(searchTextField);
-        searchBarPanel.add(searchBtn);
-        searchPrompt = new JLabel("Search Ingredient: ");
-        searchPrompt.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
-        searchBtn.addActionListener(e -> addToPantry(searchTextField.getText()));
-        searchBarPanel.add(searchPrompt);
-//        this.add(searchPrompt);
-        this.add(searchBarPanel, BorderLayout.NORTH);
+        JPanel searchBarPanel = new JPanel();
+        {
+            JLabel searchLabel = new JLabel("Search Ingredient:");
+            searchLabel.setFont(new Font(searchLabel.getFont().getName(), Font.PLAIN, 20));
+            searchBarPanel.add(searchLabel);
 
-        /* Ingredients List */
-        ingredientsPanel = new JPanel();
-        ingredientsPanel.setBackground(Color.BLUE);
-//        ingredientPantryList = new JList(activeProfile.getPantry().toArray());
-        ArrayList<Ingredient> availableIngredients;
-        availableIngredients = new ArrayList<>(is.getAll());
-        availableIngredients.removeAll(StateManager.getInstance().getActiveProfile().getPantry());
-        ingredientPantryList = new JList(availableIngredients.toArray());
-        ingredientsPanel.add(ingredientPantryList);
-        ingredientPantryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        ingredientPantryList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        ingredientPantryList.setVisibleRowCount(-1);
-//        activePantryList.setPreferredSize(new Dimension(500,500));
-        ingredientsPanel.setBorder(BorderFactory.createTitledBorder("Ingredients List"));
-        this.add(ingredientsPanel, BorderLayout.WEST);
+            JTextField searchTextField = new JTextField(35);
+            searchTextField.setFont(new Font(searchTextField.getFont().getName(), Font.PLAIN, 20));
+            searchBarPanel.add(searchTextField);
 
+            JButton searchBtn = new JButton("Quick Add");
+            searchBtn.addActionListener(e -> addToPantry(searchTextField.getText()));
+            searchBarPanel.add(searchBtn);
+        }
+        contentPanel.add(searchBarPanel, BorderLayout.NORTH);
 
-        /* Empty Pantry Panel */
-        emptyPantryPanel = new JPanel();
-        emptyPantryPanel.add(pantry);
-        emptyPantryPanel.setBorder(BorderFactory.createTitledBorder("Pantry"));
-        this.add(emptyPantryPanel, BorderLayout.EAST);
+        /* Available Ingredients Panel */
+        JPanel ingredientsPanel = new JPanel();
+        ingredientsPanel.setLayout(new BorderLayout());
+        JScrollPane ingredientsPanelScrollPane = new JScrollPane(ingredientsPanel);
+        ingredientsPanelScrollPane.setBorder(BorderFactory.createTitledBorder("Ingredients List"));
+        {
+            /* Jlist */
+            availableIngredientsJList = new JList(availableIngredients.toArray());
+            ingredientsPanel.add(availableIngredientsJList);
+//            ingredientPantryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+//            ingredientPantryList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+//            ingredientPantryList.setVisibleRowCount(-1);
+        }
+        ingredientsPanelScrollPane.setPreferredSize(new Dimension(this.getWidth()/3, this.getHeight()));
 
-        /* Split Pane Panel */
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, emptyPantryPanel, ingredientsPanel);
-        //might need to change this to ingredientsPanel once main is pull OR
-        //create another listScroller for both lists.
-        JScrollPane listScroller = new JScrollPane(ingredientsPanel);
-        listScroller.setPreferredSize(new Dimension(getPreferredSize()));
-        splitPane.setLeftComponent(new JScrollPane(ingredientsPanel));
-        splitPane.setRightComponent(emptyPantryPanel);
-        splitPane.setResizeWeight(0.5);
-        this.add(splitPane);
+        contentPanel.add(ingredientsPanelScrollPane, BorderLayout.WEST);
+
+        /* Profile Pantry Panel */
+        JPanel profilePantryIngredientsPanel = new JPanel();
+        profilePantryIngredientsPanel.setLayout(new BorderLayout());
+        JScrollPane profilePantryIngredientsPanelScrollPane = new JScrollPane(profilePantryIngredientsPanel);
+        profilePantryIngredientsPanelScrollPane.setBorder(BorderFactory.createTitledBorder("Pantry"));
+        {
+            profilePantryJList = new JList<>(pantryIngredients.toArray());
+            profilePantryIngredientsPanel.add(profilePantryJList);
+        }
+        profilePantryIngredientsPanelScrollPane.setPreferredSize(new Dimension(this.getWidth()/3, this.getHeight()));
+        contentPanel.add(profilePantryIngredientsPanelScrollPane, BorderLayout.CENTER);
+
+        /* Dislikes Panel */
+        JPanel dislikedIngredientsPanel = new JPanel();
+        dislikedIngredientsPanel.setLayout(new BorderLayout());
+        JScrollPane dislikedIngredientsPanelScrollPane = new JScrollPane(dislikedIngredientsPanel);
+        dislikedIngredientsPanelScrollPane.setBorder(BorderFactory.createTitledBorder("Disliked"));
+        {
+            dislikedIngredientsJList = new JList<>(dislikedIngrediients.toArray());
+            dislikedIngredientsPanel.add(dislikedIngredientsJList);
+        }
+        dislikedIngredientsPanelScrollPane.setPreferredSize(new Dimension(this.getWidth()/3, this.getHeight()));
+        contentPanel.add(dislikedIngredientsPanelScrollPane, BorderLayout.EAST);
+
+        /* Buttons Panel */
+        JPanel buttonPanel = new JPanel();
+        {
+            JButton addBtn = new JButton("Add");
+            addBtn.addActionListener(e -> addIngredientToPantryFromList(availableIngredientsJList));
+            buttonPanel.add(addBtn);
+
+            JButton rmvBtn = new JButton("Remove");
+            rmvBtn.addActionListener(e -> removeIngredientFromPantryList(profilePantryJList));
+            buttonPanel.add(rmvBtn);
+
+            JButton addToDislikedIngredients = new JButton("Dislike");
+            addToDislikedIngredients.addActionListener(e -> addDislike(availableIngredientsJList, profilePantryJList));
+            buttonPanel.add(addToDislikedIngredients);
+
+            JButton removeFromDislikedIngredients = new JButton("remove Dislike");
+            removeFromDislikedIngredients.addActionListener(e -> removeDislike(dislikedIngredientsJList));
+            buttonPanel.add(removeFromDislikedIngredients);
+        }
+        contentPanel.add(buttonPanel, BorderLayout.SOUTH);
+        this.add(contentPanel, BorderLayout.CENTER);
     }
 
-    private void addToPantry(String ingText){
+    private void addDislike(JList availableIngredientsJList, JList profilePantryJList) {
+        IngredientService is = new IngredientService();
+        Profile activeProfile = StateManager.getInstance().getActiveProfile();
+        ProfileService ps = new ProfileService();
+
+        for (Object i : availableIngredientsJList.getSelectedValuesList()) {
+            activeProfile.getDislikedIngredients().add((Ingredient) i);
+
+        }
+        for (Object i : profilePantryJList.getSelectedValuesList()) {
+            activeProfile.getDislikedIngredients().add((Ingredient) i);
+            activeProfile.getPantry().remove(i);
+        }
+        ps.update(activeProfile, "");
+        refreshContent();
+    }
+
+    private void removeDislike(JList dislikedIngredientsJList) {
+        IngredientService is = new IngredientService();
+        Profile activeProfile = StateManager.getInstance().getActiveProfile();
+        ProfileService ps = new ProfileService();
+
+        for (Object i : dislikedIngredientsJList.getSelectedValuesList()) {
+            activeProfile.getDislikedIngredients().remove((Ingredient) i);
+        }
+        ps.update(activeProfile, "");
+        refreshContent();
+    }
+
+    private void addToPantry(String ingText) {
         IngredientService is = new IngredientService();
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         Ingredient i = is.getFromName(ingText.toLowerCase());
@@ -137,7 +175,7 @@ public class MyPantry extends Page {
         ProfileService ps = new ProfileService();
         //list.getSelectedValuesList();
         for (Object i : list.getSelectedValuesList()) {
-            if (activeProfile.getPantry().contains((Ingredient) i)){
+            if (activeProfile.getPantry().contains((Ingredient) i)) {
                 //TODO Show Pop up
             } else {
                 activeProfile.getPantry().add((Ingredient) i);
