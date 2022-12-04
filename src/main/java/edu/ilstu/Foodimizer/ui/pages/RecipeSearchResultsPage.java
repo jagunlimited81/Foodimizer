@@ -60,6 +60,7 @@ public class RecipeSearchResultsPage extends Page {
         }
         JScrollPane csp = new JScrollPane(contentPanel);
         csp.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
+        this.setLayout(new BorderLayout());
         this.add(csp);
     }
 }
