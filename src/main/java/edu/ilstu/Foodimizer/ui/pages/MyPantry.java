@@ -61,9 +61,6 @@ public class MyPantry extends Page {
             /* Jlist */
             availableIngredientsJList = new JList(availableIngredients.toArray());
             ingredientsPanel.add(availableIngredientsJList);
-//            ingredientPantryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-//            ingredientPantryList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-//            ingredientPantryList.setVisibleRowCount(-1);
         }
         ingredientsPanelScrollPane.setPreferredSize(new Dimension(this.getWidth()/3, this.getHeight()));
 
@@ -151,6 +148,10 @@ public class MyPantry extends Page {
         Ingredient i = is.getFromName(ingText.toLowerCase());
         if (i != null) {
             activeProfile.getPantry().add(i);
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "No Ingredient Found In Pantry", "Dialog",
+                    JOptionPane.ERROR_MESSAGE);
         }
         ProfileService ps = new ProfileService();
         ps.update(activeProfile, "");
