@@ -30,7 +30,7 @@ public class ShoppingList extends Page {
         ArrayList<Ingredient> ingredients = new ArrayList<>(StateManager.getInstance().getActiveProfile().getShoppingList());
         JList shoppingList = new JList<>(ingredients.toArray());
 
-        JLabel title = new JLabel("My Shopping List");
+        JLabel title = new JLabel("My Grocery Shopping List");
         title.setFont(new Font("Verdana", Font.PLAIN, 22));
 
         //Create Buttons to be able to trigger the clearing of the list, and saving the List to PDF
