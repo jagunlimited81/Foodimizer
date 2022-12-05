@@ -64,7 +64,7 @@ public class RecipeActionPane extends JPanel {
     }
 
     private void printThisRecipe() {
-        SysDialogPrinter.print("Recipe", new PDFFormatter(new Recipe()));
+        SysDialogPrinter.print("Recipe", new PDFFormatter(RecipePage.getInstance().getActiveRecipe()));
     }
 
     private void addToFavorites() {

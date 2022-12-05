@@ -5,6 +5,9 @@ import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.service.IngredientService;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
+import edu.ilstu.Foodimizer.lib.PDFFormatter;
+import edu.ilstu.Foodimizer.lib.SysDialogPrinter;
+import jakarta.persistence.criteria.CriteriaBuilder;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +42,7 @@ public class ShoppingList extends Page {
         JButton clearListButton = new JButton("Clear the Shopping List");
         clearListButton.addActionListener(e -> clearShoppingList());
         JButton pdfButton = new JButton("Print Shopping List to PDF");
-//      pdfButton.addActionListener(e->saveToPDF());
+        pdfButton.addActionListener(e->printShoppingList());
         JButton addIngButton = new JButton("Add Ingredient");
         JTextField addIngText = new JTextField();
         addIngButton.addActionListener(e -> addIngredientToShoppingList(addIngText.getText()));
@@ -131,4 +134,8 @@ public class ShoppingList extends Page {
         refreshContent();
     }
 
+    private void printShoppingList() {
+        java.util.List<Ingredient> shoplst = StateManager.getInstance().getActiveProfile().getShoppingList().stream().toList();
+        SysDialogPrinter.print("Shopping list", new PDFFormatter(shoplst));
+    }
 }
