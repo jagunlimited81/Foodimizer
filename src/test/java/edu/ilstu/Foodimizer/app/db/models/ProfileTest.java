@@ -25,9 +25,8 @@ public class ProfileTest {
         ps = new ProfileService();
     }
 
-    @After
-    @Test
-    public void tearDown() throws Exception {
+    @AfterClass
+    public static void tearDown() throws Exception {
         List<Profile> createdDuringTesting = ps.getAll();
         for (Profile p : createdDuringTesting) {
             ps.delete(p);
@@ -39,7 +38,7 @@ public class ProfileTest {
         Ingredient ing = new Ingredient();
         ing.setName("Ham");
 
-        prof.addDislike(ing);
+        prof.addIngredientToDisliked(ing);
 
         Assert.assertTrue(ing.getProfilesThatDislikeThisIngredient().contains(prof));
         Assert.assertTrue(prof.getDislikedIngredients().contains(ing));
@@ -49,9 +48,9 @@ public class ProfileTest {
     public void testRemoveDislike() {
         Ingredient ing = new Ingredient();
 
-        prof.addDislike(ing);
+        prof.addIngredientToDisliked(ing);
 
-        prof.removeDislike(ing);
+        prof.removeIngredientFromDisliked(ing);
         Assert.assertFalse(ing.getProfilesThatDislikeThisIngredient().contains(prof));
         Assert.assertFalse(prof.getDislikedIngredients().contains(ing));
     }

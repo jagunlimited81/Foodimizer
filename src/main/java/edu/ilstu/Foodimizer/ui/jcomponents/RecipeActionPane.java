@@ -70,14 +70,12 @@ public class RecipeActionPane extends JPanel {
     private void addToFavorites() {
         Recipe activeRecipe = RecipePage.getInstance().getActiveRecipe();
         ProfileService profileService = new ProfileService();
-        RecipeService recipeService = new RecipeService();
         StateManager sm = StateManager.getInstance();
 
         Profile profile = sm.getActiveProfile();
 
         profile.addRecipeToFavorites(activeRecipe);
         profileService.update(sm.getActiveProfile(), "");
-        recipeService.update(activeRecipe, "");
         addOrRemoveFromFavoritesButton.setText("Remove from favorites list");
         addOrRemoveFromFavoritesButton.removeActionListener(addOrRemoveFromFavoritesButton.getActionListeners()[0]);
         addOrRemoveFromFavoritesButton.addActionListener(e -> removeFromFavorites());
@@ -86,14 +84,12 @@ public class RecipeActionPane extends JPanel {
     private void removeFromFavorites() {
         Recipe activeRecipe = RecipePage.getInstance().getActiveRecipe();
         ProfileService profileService = new ProfileService();
-        RecipeService recipeService = new RecipeService();
         StateManager sm = StateManager.getInstance();
 
         Profile profile = sm.getActiveProfile();
 
         profile.removeRecipeFromFavorites(activeRecipe);
         profileService.update(sm.getActiveProfile(), "");
-        recipeService.update(activeRecipe, "");
         addOrRemoveFromFavoritesButton.setText("Add to favorites list");
         addOrRemoveFromFavoritesButton.removeActionListener(addOrRemoveFromFavoritesButton.getActionListeners()[0]);
         addOrRemoveFromFavoritesButton.addActionListener(e -> addToFavorites());

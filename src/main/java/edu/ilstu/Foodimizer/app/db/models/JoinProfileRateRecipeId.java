@@ -2,11 +2,13 @@ package edu.ilstu.Foodimizer.app.db.models;
 
 import jakarta.persistence.Embeddable;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
 public class JoinProfileRateRecipeId implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long profileId;
