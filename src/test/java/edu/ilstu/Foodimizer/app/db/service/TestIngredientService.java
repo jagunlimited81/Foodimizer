@@ -1,4 +1,4 @@
-package edu.ilstu.Foodimizer.app;
+package edu.ilstu.Foodimizer.app.db.service;
 
 
 import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
