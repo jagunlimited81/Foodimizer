@@ -5,6 +5,7 @@ import edu.ilstu.Foodimizer.Controller.SearchFunction;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 
 // Search for Recipe that have any ingredients in the pantry
@@ -38,7 +39,7 @@ public class FindRecipesByIngredient extends Page {
             logo_panel.setPreferredSize(new Dimension(300, 300));
             logo_panel.setBackground(Color.white);
 
-            foodimizer_logo = new ImageIcon("logo.png");
+            foodimizer_logo = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("/images/logo.png")));
             logo = new JLabel(foodimizer_logo);
 
             logo_panel.add(logo);

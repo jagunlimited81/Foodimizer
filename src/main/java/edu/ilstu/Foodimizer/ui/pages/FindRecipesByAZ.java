@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class FindRecipesByAZ extends Page {
     ImageIcon foodimizer_logo;
@@ -45,7 +46,7 @@ public class FindRecipesByAZ extends Page {
             logo_panel.setPreferredSize(new Dimension(350, 350));
             logo_panel.setBackground(Color.white);
 
-            foodimizer_logo = new ImageIcon("logo.png");
+            foodimizer_logo = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("/images/logo.png")));
             logo = new JLabel(foodimizer_logo);
 
             logo_panel.add(logo);
