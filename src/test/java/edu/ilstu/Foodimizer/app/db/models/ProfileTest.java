@@ -78,7 +78,6 @@ public class ProfileTest {
     }
 
     @Test
-    @Ignore
     public void testClearShoppingList() {
         Ingredient ing1 = new Ingredient();
         ing1.setName("Coffee");
