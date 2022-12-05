@@ -27,9 +27,13 @@ public class Main {
         sem.init("FoodimizerDB");
 
         DatabaseFiller dbf = new DatabaseFiller();
-        dbf.createTestIngredients();
-        dbf.createTestRecipes();
-        dbf.createTestProfiles();
+        try {
+            dbf.createTestIngredients();
+            dbf.createTestRecipes();
+        } catch (Exception ignored) {
+
+        }
+        //dbf.createTestProfiles();
 
 
         System.out.println("Starting JFrame...");

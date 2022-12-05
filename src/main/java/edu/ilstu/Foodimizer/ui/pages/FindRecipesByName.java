@@ -6,6 +6,7 @@ import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class FindRecipesByName extends Page {
 
@@ -40,7 +41,7 @@ public class FindRecipesByName extends Page {
             logo_panel.setPreferredSize(new Dimension(300, 300));
             logo_panel.setBackground(Color.white);
 
-            foodimizer_logo = new ImageIcon("logo.png");
+            foodimizer_logo = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("/images/logo.png")));
             logo = new JLabel(foodimizer_logo);
 
             logo_panel.add(logo);

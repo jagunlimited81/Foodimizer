@@ -2,6 +2,7 @@ package edu.ilstu.Foodimizer.ui.jcomponents;
 
 import edu.ilstu.Foodimizer.app.StateManager;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
+import edu.ilstu.Foodimizer.app.db.service.RatingService;
 import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.lib.RecipeComparator;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
@@ -29,13 +30,12 @@ public class AppBar extends JPanel {
         /* MenuBar */
         JMenuBar menuBar1 = new JMenuBar();
         /* FindRecipesMenu */
-        /* FindRecipesMenu */
         JMenu findRecipesMenu = new JMenu();
         JMenuItem findRecipesByNameItem = new JMenuItem();
         JMenuItem findRecipesByIngredientsItem = new JMenuItem();
         JMenuItem findRecipesByIngredientsInPantryItem = new JMenuItem();
+        JMenuItem findRecipesByFavoritesItem = new JMenuItem();
         JMenuItem findRecipesByAZItem = new JMenuItem();
-        /* my pantry */
         /* My Pantry */
         JMenu myPantry = new JMenu();
         JMenuItem myPantryGoToPantry = new JMenuItem();
@@ -43,13 +43,11 @@ public class AppBar extends JPanel {
         JMenu myGroceryList = new JMenu();
         JMenuItem myGroceryListGoTo = new JMenuItem();
         myGroceryListGoTo.addActionListener(e -> goToPageActionPerformed("ShoppingList"));
-        /* profiles */
         /* Profiles */
         JMenu profiles = new JMenu();
         JMenuItem profilesGoTo = new JMenuItem();
         JMenuItem createProfileGoTo = new JMenuItem();
         JMenuItem editProfileGoTo = new JMenuItem();
-        /* Debug */
         /* Debug/Test */
         JMenu debug = new JMenu();
         JMenuItem databaseDebugGoTo = new JMenuItem();
@@ -96,6 +94,11 @@ public class AppBar extends JPanel {
                 findRecipesByIngredientsInPantryItem.setMnemonic('p');
                 findRecipesByIngredientsInPantryItem.addActionListener(e -> pantryIngredientsActionPerformed());
                 findRecipesMenu.add(findRecipesByIngredientsInPantryItem);
+
+                findRecipesByFavoritesItem.setText("Favorite Recipes");
+                findRecipesByFavoritesItem.setMnemonic('f');
+                findRecipesByFavoritesItem.addActionListener(e -> favoriteRecipesActionPerformed());
+                findRecipesMenu.add(findRecipesByFavoritesItem);
 
                 findRecipesByAZItem.setText("Browse All Recipes");
                 findRecipesByAZItem.setMnemonic('z');
@@ -167,6 +170,14 @@ public class AppBar extends JPanel {
         RecipeService rs = new RecipeService();
         rs.searchByIngredients(new ArrayList<>(StateManager.getInstance().getActiveProfile().getPantry()));
         RecipeSearchResultsPage.getInstance().setActiveRecipes(rs.searchByIngredients(new ArrayList<>(StateManager.getInstance().getActiveProfile().getPantry())));
+        MainWindowContentManager.getInstance().goToPage("RecipeSearchResultsPage");
+    }
+
+    private void favoriteRecipesActionPerformed() {
+        ArrayList<Recipe> list = new ArrayList<>(StateManager.getInstance().getActiveProfile().getFavoriteRecipes());
+        RatingService rs = new RatingService();
+        list.sort(RecipeComparator.getRatingComparator(rs));
+        RecipeSearchResultsPage.getInstance().setActiveRecipes(list);
         MainWindowContentManager.getInstance().goToPage("RecipeSearchResultsPage");
     }
 
