@@ -18,11 +18,10 @@ public class ShoppingList extends Page {
     }
 
     @Override
-    protected void init() { //TODO implement everyhing else
+    protected void init() {
         if (StateManager.getInstance().getActiveProfile() == null)
             return;
         contentPanel = new JPanel();
-        //listAndButtonPanel = new JPanel();
         GroupLayout layout = new GroupLayout(contentPanel);
         contentPanel.setLayout(layout);
 //        layout.setAutoCreateGaps(true);
@@ -44,18 +43,19 @@ public class ShoppingList extends Page {
         JButton addIngButton = new JButton("Add Ingredient");
         JTextField addIngText = new JTextField();
         addIngButton.addActionListener(e -> addIngredientToShoppingList(addIngText.getText()));
+
+        //Layout for the full Page
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                                 .addComponent(title)
+                                .addComponent(shoppingList))
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(addIngText)
                                 .addComponent(addIngButton)
                                 .addComponent(removeIngButton)
                                 .addComponent(clearListButton)
                                 .addComponent(pdfButton))
-                                .addComponent(shoppingList))
-
         );
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
@@ -74,6 +74,7 @@ public class ShoppingList extends Page {
 
     //JPanel
     JPanel contentPanel;
+
 
     private void clearShoppingList() {
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
@@ -117,7 +118,12 @@ public class ShoppingList extends Page {
         IngredientService is = new IngredientService();
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         ProfileService ps = new ProfileService();
-        //list.getSelectedValuesList();
+//        if(list.getSelectedValuesList().equals(null))
+//        {
+//            JOptionPane.showMessageDialog(new JFrame(),
+//                    "No Ingredients Selected!", "Dialog",JOptionPane.ERROR_MESSAGE);
+//        }
+
         for (Object i : list.getSelectedValuesList()) {
             activeProfile.getShoppingList().remove(i);
         }
