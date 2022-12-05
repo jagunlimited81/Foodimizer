@@ -81,7 +81,7 @@ public class Profile {
      *
      * @param ingredient The ingredient to add to dislikedIngredients
      */
-    public void addDislike(Ingredient ingredient) {
+    public void addIngredientToDisliked(Ingredient ingredient) {
         this.dislikedIngredients.add(ingredient);
         ingredient.getProfilesThatDislikeThisIngredient().add(this);
     }
@@ -91,7 +91,7 @@ public class Profile {
      *
      * @param ingredient The ingredient to remove from dislikedIngredients
      */
-    public void removeDislike(Ingredient ingredient) {
+    public void removeIngredientFromDisliked(Ingredient ingredient) {
         this.dislikedIngredients.remove(ingredient);
         ingredient.getProfilesThatDislikeThisIngredient().remove(this);
     }

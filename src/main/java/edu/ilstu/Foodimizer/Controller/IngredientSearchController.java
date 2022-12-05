@@ -24,6 +24,10 @@ public class IngredientSearchController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        searchRecipesByIngredients();
+    }
+
+    private void searchRecipesByIngredients() {
         String ingredientName = searchText.getText();
         String[] ingredientsAsString = searchText.getText().split(",\\s*");
         ArrayList<Recipe> recipes = new ArrayList<>();
@@ -46,6 +50,8 @@ public class IngredientSearchController implements ActionListener {
             RecipeSearchResultsPage.getInstance().setActiveRecipes(recipes);
             MainWindowContentManager.getInstance().goToPage("RecipeSearchResultsPage");
         }
+    }
+
         /*
         boolean notFoundMessage = true;
         Ingredient ingredientInRecipe = new Ingredient();
@@ -89,7 +95,7 @@ public class IngredientSearchController implements ActionListener {
         }
 
          */
-    }
+
 
     private void buttonPressed(Recipe r) {
         MainWindowContentManager contentManager = MainWindowContentManager.getInstance();

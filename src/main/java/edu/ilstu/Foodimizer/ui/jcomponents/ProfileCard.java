@@ -29,13 +29,13 @@ public class ProfileCard extends JPanel implements MouseListener {
         /* ----this---- */
         //setMaximumSize(cardSize);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(BorderFactory.createLineBorder(Color.RED));
+        //setBorder(BorderFactory.createLineBorder(Color.RED));
         /* ----pfp----*/
         JPanel pfp = new JPanel();
         pfp.setPreferredSize(profilePicSize);
         pfp.setMaximumSize(profilePicSize);
         pfp.addMouseListener(this);
-        pfp.setBorder(BorderFactory.createLineBorder(Color.RED));
+        //pfp.setBorder(BorderFactory.createLineBorder(Color.RED));
         try {
             BufferedImage profilePic = ByteTools.toBufferedImage(profile.getProfilePic());
             ImageIcon ii = new ImageIcon(profilePic);
