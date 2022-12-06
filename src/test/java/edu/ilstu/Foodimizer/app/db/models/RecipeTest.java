@@ -20,13 +20,17 @@ public class RecipeTest {
         ServicesEntityManager sem = ServicesEntityManager.getInstance();
         sem.init("FoodimizerDB-TEST");
 
+    }
+
+    @Before
+    public void beforeTest() {
         rec = new Recipe();
         rec.setName("TestProfile");
         rs = new RecipeService();
     }
 
-    @AfterClass
-    public static void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         List<Recipe> createdDuringTesting = rs.getAll();
         for (Recipe r : createdDuringTesting) {
             rs.delete(r);

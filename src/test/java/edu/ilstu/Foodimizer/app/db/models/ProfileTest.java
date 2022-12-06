@@ -19,14 +19,17 @@ public class ProfileTest {
     public static void setUp() throws Exception {
         ServicesEntityManager sem = ServicesEntityManager.getInstance();
         sem.init("FoodimizerDB-TEST");
+    }
 
+    @Before
+    public void beforeTests() {
         prof = new Profile();
         prof.setName("TestProfile");
         ps = new ProfileService();
     }
 
-    @AfterClass
-    public static void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         List<Profile> createdDuringTesting = ps.getAll();
         for (Profile p : createdDuringTesting) {
             ps.delete(p);
