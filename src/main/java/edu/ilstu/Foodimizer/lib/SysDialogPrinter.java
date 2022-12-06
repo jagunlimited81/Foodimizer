@@ -1,6 +1,8 @@
 package edu.ilstu.Foodimizer.lib;
 
 
+import javax.swing.*;
+import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
@@ -9,7 +11,9 @@ public class SysDialogPrinter {
         // Obtain a Printerjob
         PrinterJob pj = PrinterJob.getPrinterJob();
         pj.setJobName(jobName);
-        pj.setPrintable(page);
+        PageFormat pf = pj.pageDialog(pj.defaultPage());
+        pj.setPrintable(page, pf);
+
         if (!pj.printDialog()) //if not ok
             return;
         try {
@@ -17,6 +21,7 @@ public class SysDialogPrinter {
         } catch (PrinterException ex) {
             // The job did not complete
             System.out.println("[FAIL] Failed to print");
+            JOptionPane.showMessageDialog(new JPanel(), (jobName + " failed to print."));
         }
     }
 }
