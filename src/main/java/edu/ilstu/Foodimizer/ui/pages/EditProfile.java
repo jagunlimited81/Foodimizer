@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.security.InvalidParameterException;
 import java.util.Objects;
 
 public class EditProfile extends Page {
@@ -102,27 +104,43 @@ public class EditProfile extends Page {
 
     private void editProfile() {
         StateManager sm = StateManager.getInstance();
-        if (!InputValidator.validateProfileName(name.getText())) {
-            JOptionPane.showMessageDialog(new JPanel(), "Failed to update Profile.\nOnly alphanumeric characters and spaces are allowed.", "Failed to update profile " + sm.getActiveProfile().getName(), JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        ProfileService ps = new ProfileService();
-
-        Profile profile = sm.getActiveProfile();
-        BufferedImage image;
-        profile.setName(name.getText());
 
         try {
-            image = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/nopfp" + pfpChoice.getSelectedIndex() + ".png")));
-            byte[] bytes = ByteTools.toByteArray(image, "png");
-            profile.setProfilePic(bytes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            editActiveProfileName(name.getText());
+        } catch (InvalidParameterException ipe) {
+            JOptionPane.showMessageDialog(new JPanel(), "Failed to update Profile.\nOnly alphanumeric characters and spaces are allowed.", "Failed to update profile " + sm.getActiveProfile().getName(), JOptionPane.ERROR_MESSAGE);
         }
 
-        ps.update(profile, "");
+        editActiveProfileIcon("/images/nopfp" + pfpChoice.getSelectedIndex() + ".png");
+
         MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
         mwcm.goToPage("ProfileSelector");
     }
 
+    public void editActiveProfileName(String name) throws InvalidParameterException {
+        if (!InputValidator.validateProfileName(name)) {
+            throw new InvalidParameterException();
+        }
+        StateManager sm = StateManager.getInstance();
+        ProfileService ps = new ProfileService();
+
+        Profile profile = sm.getActiveProfile();
+        profile.setName(name);
+    }
+
+    public void editActiveProfileIcon(String imagePath) {
+        StateManager sm = StateManager.getInstance();
+        Profile activeProf = sm.getActiveProfile();
+        BufferedImage image;
+        try {
+            image = ImageIO.read(Objects.requireNonNull(this.getClass().getResource(imagePath)));
+            byte[] bytes = ByteTools.toByteArray(image, "png");
+            activeProf.setProfilePic(bytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        ProfileService ps = new ProfileService();
+        ps.update(activeProf, "");
+    }
 }

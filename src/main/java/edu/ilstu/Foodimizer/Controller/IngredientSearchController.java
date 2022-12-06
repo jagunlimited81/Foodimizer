@@ -29,19 +29,8 @@ public class IngredientSearchController implements ActionListener {
 
     private void searchRecipesByIngredients() {
         String ingredientName = searchText.getText();
-        String[] ingredientsAsString = ingredientName.split(",\\s*");
-        ArrayList<Recipe> recipes = new ArrayList<>();
-        IngredientService is = new IngredientService();
-        for (String s : ingredientsAsString) {
-            Ingredient ing = is.getFromName(s);
-            if (ing != null) {
-                for (Recipe r : ing.getRecipesThatContainThisIngredient()) {
-                    if (!recipes.contains(r)) {
-                        recipes.add(r);
-                    }
-                }
-            }
-        }
+        String[] ingredientsAsString = searchText.getText().split(",\\s*");
+        ArrayList<Recipe> recipes = getRecipesWithIngredients(ingredientsAsString);
         if (recipes.isEmpty()) {
             System.out.println("no recipes");
         } else {
@@ -52,6 +41,24 @@ public class IngredientSearchController implements ActionListener {
         }
     }
 
+    public ArrayList<Recipe> getRecipesWithIngredients(String[] ingredientsAsString)
+    {
+        IngredientService is = new IngredientService();
+
+        ArrayList<Recipe> recipesFound = new ArrayList<Recipe>();
+        for (String s : ingredientsAsString) {
+            Ingredient ing = is.getFromName(s);
+            if (ing != null) {
+                for (Recipe r : ing.getRecipesThatContainThisIngredient()) {
+                    if (!recipesFound.contains(r)) {
+                        recipesFound.add(r);
+                    }
+                }
+            }
+        }
+
+        return recipesFound;
+    }
         /*
         boolean notFoundMessage = true;
         Ingredient ingredientInRecipe = new Ingredient();

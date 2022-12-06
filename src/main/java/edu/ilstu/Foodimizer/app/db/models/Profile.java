@@ -121,6 +121,10 @@ public class Profile {
     }
 
     public void clearShoppingList() {
+        for (Ingredient ing : this.shoppingList)
+        {
+            ing.getProfilesShoppingListsThatContainThisIngredient().remove(this);
+        }
         this.getShoppingList().removeAll(this.getShoppingList());
     }
 
