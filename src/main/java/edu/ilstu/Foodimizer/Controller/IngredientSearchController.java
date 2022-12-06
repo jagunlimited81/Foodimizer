@@ -29,7 +29,7 @@ public class IngredientSearchController implements ActionListener {
 
     private void searchRecipesByIngredients() {
         String ingredientName = searchText.getText();
-        String[] ingredientsAsString = searchText.getText().split(",\\s*");
+        String[] ingredientsAsString = ingredientName.split(",\\s*");
         ArrayList<Recipe> recipes = new ArrayList<>();
         IngredientService is = new IngredientService();
         for (String s : ingredientsAsString) {
