@@ -14,7 +14,7 @@ This is a project for IT 386 Principles of Software Engineering at ISU
 
 1. Download [Intellij Community Edition](https://www.jetbrains.com/idea/download/#section=windows) from JetBrains
 2. Setup IntelliJ
-    1. [IntelliJ doocumentaion link](https://www.jetbrains.com/help/idea/getting-started.html)
+    1. [IntelliJ documentation link](https://www.jetbrains.com/help/idea/getting-started.html)
 3. New Project from VCS (Version Control Set)
 4. Enter your GitHub Credentials
 5. Select Foodimizer, then click clone
@@ -70,11 +70,11 @@ A: Dependencies are managed through the ```pom.xml``` file. The ```pom.xml``` fi
 
 #### Q: What is the build schedule?
 
-A: Builds are created on every commit to the main branch. They are stored in github actions.
+A: Builds are created on every commit to the main branch. They are stored in GitHub actions.
 
 #### Q: Do I have to use IntelliJ? I want to use Eclipse... etc.
 
-A: IntelliJ is not required. This project uses maven, so any IDE that can interact with maven should be useable.
+A: IntelliJ is not required. This project uses maven, so any IDE that can interact with maven should be usable.
 
 ---
 
