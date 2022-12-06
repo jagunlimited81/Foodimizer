@@ -199,6 +199,7 @@ public class DatabaseFiller {
         ingredients = new String[]{"bacon", "ground beef", "hamburger bun", "cheese", "lettuce", "tomato", "salt", "pepper", "pickles", "ketchup"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("The ultimate bacon cheeseburger with beef cooked in bacon fat, a bacon fat mayonnaise, onions caramelized in bacon fat, buns toasted in bacon fat, and a crisp bacon weave topping. ");
+        recipeService.save(recipe);
 
         recipeName = "Black Beans Burger";
         ingredients = new String[]{"black beans", "hamburger bun", "olive oil", "bell pepper", "yellow onion", "garlic cloves", "ground cumin", "chilli powder", "garlic powder", "paprika", "bread crumbs", "feta cheese", "egg", "salt", "pepper", "ketchup"};
@@ -286,147 +287,175 @@ public class DatabaseFiller {
         ingredients = new String[]{"ham", "cheese", "bread"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Classic delicious ham and cheese");
-
+        recipeService.save(recipe);
 
         recipeName = "Beef Taco";
         ingredients = new String[]{"ground beef", "tortilla", "lettuce", "sour cream", "tomato", "taco seasoning", "salt", "cumin", "lime"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Class mexican beef taco");
+        recipeService.save(recipe);
 
         recipeName = "Pork Taco";
         ingredients = new String[]{"pork taco", "tortilla", "lettuce", "sour cream", "tomato", "taco seasoning", "salt", "cumin", "lime"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Class mexican pork taco");
+        recipeService.save(recipe);
 
         recipeName = "Lime Margarita";
         ingredients = new String[]{"lime", "tequila", "triple sec", "salt"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Who doesn't want lime margarita in their recipe cook book?");
+        recipeService.save(recipe);
 
         recipeName = "Chicken Parmesan";
         ingredients = new String[]{"chicken", "salt", "pepper", "egg", "bread crumbs", "parmesan cheese", "olive oil", "basil", "tomato sauce"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Classic Italian Chicken Parmesan made with linguini");
+        recipeService.save(recipe);
 
         recipeName = "Spaghetti Bolognese";
         ingredients = new String[]{"olive oil", "meat", "onion", "carrot", "celery sticks", "garlic cloves", "rosemary", "tomato sauce", "basil", "dried oregano", "fresh bay leaves"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Long strings of pasta with an Italian ragù made with minced beef, bacon and tomatoes, served with Parmesan cheese");
+        recipeService.save(recipe);
 
         recipeName = "Fried Rice";
         ingredients = new String[]{"chilled rice", "egg", "carrot", "onion", "green onion", "peas", "garlic", "soy sauce", "oyster sauce", "toasted sesame oil", "butter"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Basic Chinese Fried Rice");
+        recipeService.save(recipe);
 
         recipeName = "Meat Pizza";
         ingredients = new String[]{"water", "dry yeast", "granulated sugar", "all purpose flour", "salt", "pizza sauce", "mozzarella", "parmesan cheese", "bacon", "ham", "sausage", "ground black pepper", "pepperoni slices"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Freshly made home made meat pizza better than Domino");
+        recipeService.save(recipe);
 
         recipeName = "Pad Thai";
         ingredients = new String[]{"flat rice noodles", "Tablespoons oil", "garlic", "egg", "bean sprout", "red bell pepper", "green onions", "peanut", "lime", "cilantro", "fish sauce", "soy sauce", "brown sugar", "rice vinegar", "sriracha hot sauce", "creamy peanut butter"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Thai Classic Noodle");
+        recipeService.save(recipe);
 
         recipeName = "Steak Quesadillas";
         ingredients = new String[]{"tortillas", "cheese", "steak", "onion"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Your favorite steak quesadillas");
+        recipeService.save(recipe);
 
         recipeName = "Chicken Quesadillas";
         ingredients = new String[]{"tortillas", "cheese", "chicken", "onion"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Your favorite chicken quesadillas");
+        recipeService.save(recipe);
 
         recipeName = "Jollof Rice";
         ingredients = new String[]{"vegetable oil", "fresh plum", "red onions", "hot pepper", "tomato paste", "curry powder", "dried thyme", "dried bay leaves", "chicken stock", "unsalted butter", "rice", "salt", "black pepper", "white pepper", "tomatoes"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Class African Fried Rice");
+        recipeService.save(recipe);
 
         recipeName = "Chicken Taco";
         ingredients = new String[]{"chicken", "tortilla", "lettuce", "sour cream", "tomato", "taco seasoning", "salt", "cumin", "lime"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Classic mexican chicken taco");
+        recipeService.save(recipe);
 
         recipeName = "Shrimp Taco";
         ingredients = new String[]{"shrimp", "tortilla", "lettuce", "sour cream", "tomato", "taco seasoning", "salt", "cumin", "lime"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Class mexican shrimp taco");
+        recipeService.save(recipe);
 
         recipeName = "Cambodia Pork Rice";
         ingredients = new String[]{"garlic", "soy sauce", "palm sugar", "coconut milk", "fish sauce", "lime"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Cambodia classic breakfast meal");
+        recipeService.save(recipe);
 
         recipeName = "Orange Chicken";
         ingredients = new String[]{"chicken", "egg", "cornstarch", "flour", "oil", "orange juice", "sugar", "rice vinegar", "soy sauce", "ginger", "garlic powder", "red chilli flakes", "orange zest"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Panda Express Orange Chicken");
+        recipeService.save(recipe);
 
         recipeName = "Kung Pao Chicken";
         ingredients = new String[]{"chicken", "chinese wine", "chinese black vinegar", "hoisin sauce", "dark soy sauce", "light soy sauce", "chicken broth"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Panda Express Kung Pao Chicken");
+        recipeService.save(recipe);
 
         recipeName = "Spaghetti Meatball";
         ingredients = new String[]{"spaghetti", "ground beef", "bread crumbs", "parsley", "parmesan", "egg", "garlic", "red pepper flakes", "olive oil", "onion", "crush tomatoes", "bay leaf", "black pepper"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Classic Spaghetti Meatball");
+        recipeService.save(recipe);
 
         recipeName = "Spaghetti Carbonara";
         ingredients = new String[]{"spaghetti", "egg", "parmesan", "black pepper", "olive oil", "slab guanciate", "bacon"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Classic Spaghetti Carbonara");
+        recipeService.save(recipe);
 
         recipeName = "Mutton Biryani";
         ingredients = new String[]{"basmati rice", "mutton", "red chilli powder", "garama masala powder", "turemic powder", "water", "onion", "chilli", "salt", "garam masala", "mint leaves", "oil", "strands mace", "black cumin", "green cardamon", "black cardamon", "star anise", "pepper corn", "cinnamon", "clove"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("India Fried Rice with Mutton");
+        recipeService.save(recipe);
 
         recipeName = "Pineapple Fried Rice";
         ingredients = new String[]{"coconut oil", "egg", "pineapple", "red bell pepper", "green onion", "garlic", "cashew", "soy sauce", "rice", "salt", "lime", "sriracha", "cilantro"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Thai Fried Rice serve with pineapple.");
+        recipeService.save(recipe);
 
         recipeName = "Lasagna";
         ingredients = new String[]{"olive oil", "ground beef", "onion", "red bell pepper", "garlic", "tomato sauce", "tomato paste", "crushed tomato", "oregano", "parsley", "italian seasoning", "garlic salt", "wine vinegar", "salt", "sugar"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Italian Lasagna");
+        recipeService.save(recipe);
 
         recipeName = "Chicken Caesar Salad";
         ingredients = new String[]{"chicken", "olive oil", "cajun seasoning", "lettuce", "croutons", "parmesan cheese", "mayonnaise", "lemon juice", "anchovy paste", "worcestershire sauce", "dijon mustard", "garlic"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Classic Chicken Caeser Salad");
+        recipeService.save(recipe);
 
         recipeName = "Chicken Caesar Wrap";
         ingredients = new String[]{"chicken", "tomato wrap", "olive oil", "cajun seasoning", "lettuce", "croutons", "parmesan cheese", "mayonnaise", "lemon juice", "anchovy paste", "worcestershire sauce", "dijon mustard", "garlic"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Classic Chicken Caeser Wrap");
+        recipeService.save(recipe);
 
         recipeName = "Chicken Noodle Soup";
         ingredients = new String[]{"chicken", "pasta", "butter", "celery", "carrot", "basil", "oregano", "salt", "black pepper", "onion", "chicken broth"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("FNot a can chicken noodle soup. A better one.");
+        recipeService.save(recipe);
 
         recipeName = "Beef Noodle Soup";
         ingredients = new String[]{"beef", "pasta", "butter", "celery", "carrot", "basil", "oregano", "salt", "black pepper", "beef broth", "onion"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Not a can beef noodle soup.");
+        recipeService.save(recipe);
 
         recipeName = "Turkey Sandwich";
         ingredients = new String[]{"white bread", "cheese", "lettuce", "tomato", "cucumber", "turkey", "mayonnaise"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Favorite Breakfast Turkey Sandwich");
+        recipeService.save(recipe);
 
         recipeName = "Ham Sandwich";
         ingredients = new String[]{"white bread", "cheese", "lettuce", "tomato", "cucumber", "ham", "mayonnaise"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Favorite Breakfast Ham Sandwich");
+        recipeService.save(recipe);
 
         recipeName = "Roast Beef Sandwich";
         ingredients = new String[]{"white bread", "cheese", "lettuce", "tomato", "cucumber", "roast beef", "mayonnaise"};
         recipe = createRecipeFromString(recipeName, ingredients);
         recipe.setDescription("Favorite Breakfast Roast Beef Sandwich");
+        recipeService.save(recipe);
     }
 
     /**
@@ -451,7 +480,6 @@ public class DatabaseFiller {
                 recipe.addIngredient(existingIngredient);
             }
         }
-        recipeService.save(recipe);
         return recipe;
     }
 }
