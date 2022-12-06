@@ -74,13 +74,22 @@ public class CreateProfile extends Page {
             JOptionPane.showMessageDialog(new JPanel(), "Failed to create Profile.\nOnly alphanumeric characters and spaces are allowed.", "Failed to create profile " + name.getText(), JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        createProfile(name.getText(), "/images/nopfp" + pfpChoice.getSelectedIndex() + ".png");
+
+        MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
+        mwcm.goToPage("ProfileSelector");
+    }
+
+    public void createProfile(String name, String imagePath) {
+        BufferedImage image;
+
         ProfileService ps = new ProfileService();
         Profile profile = new Profile();
-        BufferedImage image;
-        profile.setName(name.getText());
+        profile.setName(name);
 
         try {
-            image = ImageIO.read(Objects.requireNonNull(this.getClass().getResource("/images/nopfp" + pfpChoice.getSelectedIndex() + ".png")));
+            image = ImageIO.read(Objects.requireNonNull(this.getClass().getResource(imagePath)));
             byte[] bytes = ByteTools.toByteArray(image, "png");
             profile.setProfilePic(bytes);
         } catch (IOException e) {
@@ -88,8 +97,5 @@ public class CreateProfile extends Page {
         }
 
         ps.save(profile);
-        MainWindowContentManager mwcm = MainWindowContentManager.getInstance();
-        mwcm.goToPage("ProfileSelector");
     }
-
 }
