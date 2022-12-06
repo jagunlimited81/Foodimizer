@@ -34,7 +34,7 @@ public class RecipeTest {
     }
 
     @Test
-    public void addIngredient() {
+    public void testAddIngredient() {
         Ingredient ing = new Ingredient();
 
         rec.addIngredient(ing);
@@ -44,7 +44,7 @@ public class RecipeTest {
     }
 
     @Test
-    public void removeIngredient() {
+    public void testRemoveIngredient() {
         Ingredient ing = new Ingredient();
 
         rec.addIngredient(ing);
