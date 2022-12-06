@@ -1,7 +1,6 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
 import edu.ilstu.Foodimizer.Controller.IngredientSearchController;
-import edu.ilstu.Foodimizer.Controller.SearchFunction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,9 +60,7 @@ public class FindRecipesByIngredient extends Page {
 
             searchButton = new JButton("Search");
             searchButton.setFont(new Font("Helvetica Neue", Font.PLAIN, 20));
-
-            SearchFunction searchFunction = new SearchFunction(ingredientSearchController);
-            searchFunction.searchIngredient(searchButton);
+            searchButton.addActionListener(ingredientSearchController);
 
             search_panel.add(searchPrompt, BorderLayout.WEST);
             search_panel.add(searchText, BorderLayout.CENTER);

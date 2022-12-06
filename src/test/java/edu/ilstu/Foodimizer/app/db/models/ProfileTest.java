@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 
+@Ignore
 public class ProfileTest {
     private static Profile prof;
     private static ProfileService ps;

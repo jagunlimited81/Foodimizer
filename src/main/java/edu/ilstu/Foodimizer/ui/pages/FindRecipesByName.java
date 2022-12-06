@@ -1,7 +1,6 @@
 package edu.ilstu.Foodimizer.ui.pages;
 
 import edu.ilstu.Foodimizer.Controller.RecipeSearchController;
-import edu.ilstu.Foodimizer.Controller.SearchFunction;
 import edu.ilstu.Foodimizer.ui.MainWindowContentManager;
 
 import javax.swing.*;
@@ -66,8 +65,7 @@ public class FindRecipesByName extends Page {
 
             // Declare an object of RecipeSearchController class to make the searchButton to go to the recipe page
             RecipeSearchController recipeSearchController = new RecipeSearchController(searchText, searchButton);
-            SearchFunction searchFunction = new SearchFunction(recipeSearchController);
-            searchFunction.searchRecipe(searchButton);
+            searchButton.addActionListener(recipeSearchController);
 
             search_panel.add(searchPrompt, BorderLayout.WEST);
             search_panel.add(searchText, BorderLayout.CENTER);

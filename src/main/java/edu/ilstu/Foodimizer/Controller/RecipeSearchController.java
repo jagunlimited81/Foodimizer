@@ -35,13 +35,11 @@ public class RecipeSearchController implements ActionListener {
     }
 
     private void searchRecipeByName() {
-        List<Recipe> recipes = new RecipeService().getAll();
         if (comboBox != null)
             searchText = new JTextField(String.valueOf(comboBox.getSelectedItem()));
-        boolean notFoundMessage = true;
         RecipeService rs = new RecipeService();
         ArrayList<Recipe> foundRecipes = new ArrayList<>(rs.searchLikeString(searchText.getText(), Recipe.class));
-        if (foundRecipes.isEmpty()) {
+        if (checkRecipe(searchText.getText())) {
             JOptionPane.showMessageDialog(new JFrame(), "No Recipe Found", "Dialog",
                     JOptionPane.ERROR_MESSAGE);
             return;
@@ -50,6 +48,14 @@ public class RecipeSearchController implements ActionListener {
         foundRecipes.sort(RecipeComparator.getRatingComparator(rates).thenComparing(Recipe::getName));
         RecipeSearchResultsPage.getInstance().setActiveRecipes(foundRecipes);
         MainWindowContentManager.getInstance().goToPage("RecipeSearchResultsPage");
+    }
+
+    // Check if the recipe is in the pantry or not
+    public boolean checkRecipe(String recipeName) {
+        RecipeService rs = new RecipeService();
+        ArrayList<Recipe> foundRecipes = new ArrayList<>(rs.searchLikeString(recipeName, Recipe.class));
+
+        return foundRecipes.isEmpty();
     }
 
     private void buttonPressed(Recipe r) {

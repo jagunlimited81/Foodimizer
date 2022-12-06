@@ -58,6 +58,9 @@ public class RecipePage extends Page {
         JPanel recipeHeader = new JPanel();
         JLabel recipeNameTitle = new JLabel();
         JTextArea recipeDescription = new JTextArea();
+        //recipeDescription.setColumns(25);
+        recipeDescription.setLineWrap(true);
+        recipeDescription.setWrapStyleWord(true);
         // ?
         JPanel sideBySideIngredientsActionPanel = new JPanel();
         // TODO refactor
@@ -71,8 +74,6 @@ public class RecipePage extends Page {
         /* Right Column */
         // Right column of the contentPane
         JPanel rightColumn = new JPanel();
-
-        GridBagConstraints gbc = new GridBagConstraints();
 
         /* contentPane */
         //contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
@@ -199,6 +200,7 @@ public class RecipePage extends Page {
             directions.add(directionsTextPane);
             centerColumn.add(directions, BorderLayout.CENTER);
         }
+        centerColumn.setPreferredSize(new Dimension(this.getWidth()/4, this.getHeight()));
         JScrollPane centerScrollPane = new JScrollPane(centerColumn);
         centerScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         centerScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);

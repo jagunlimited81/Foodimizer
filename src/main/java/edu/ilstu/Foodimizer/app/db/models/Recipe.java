@@ -2,6 +2,7 @@ package edu.ilstu.Foodimizer.app.db.models;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,8 +33,10 @@ public class Recipe {
     @Column(name = "name")
     private String name;
     @Column(name = "description")
+    @Lob
     private String description;
     @Column(name = "directions")
+    @Lob
     private String directions;
     @Column(name = "mealType")
     private String mealType;
