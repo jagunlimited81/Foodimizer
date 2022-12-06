@@ -26,7 +26,6 @@ public class AppBar extends JPanel {
         JPanel titlePanel = new JPanel();
         JLabel title = new JLabel();
         profileCornerMenu = new ProfileCornerMenu();
-        /* menubar */
         /* MenuBar */
         JMenuBar menuBar1 = new JMenuBar();
         /* FindRecipesMenu */
@@ -48,9 +47,6 @@ public class AppBar extends JPanel {
         JMenuItem profilesGoTo = new JMenuItem();
         JMenuItem createProfileGoTo = new JMenuItem();
         JMenuItem editProfileGoTo = new JMenuItem();
-        /* Debug/Test */
-        JMenu debug = new JMenu();
-        JMenuItem databaseDebugGoTo = new JMenuItem();
 
         JLabel description = new JLabel();
         /* this */
@@ -143,14 +139,6 @@ public class AppBar extends JPanel {
             }
             menuBar1.add(profiles);
             /* Debug */
-            {
-                debug.setText("Debug/Test");
-
-                databaseDebugGoTo.setText("Database Test Page");
-                databaseDebugGoTo.addActionListener(e -> goToPageActionPerformed("DatabaseDebugAndTest"));
-                debug.add(databaseDebugGoTo);
-            }
-            menuBar1.add(debug);
         }
 
 

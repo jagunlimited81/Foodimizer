@@ -5,7 +5,6 @@ import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
 import edu.ilstu.Foodimizer.app.db.service.ProfileService;
-import edu.ilstu.Foodimizer.app.db.service.RecipeService;
 import edu.ilstu.Foodimizer.lib.PDFFormatter;
 import edu.ilstu.Foodimizer.lib.SysDialogPrinter;
 import edu.ilstu.Foodimizer.ui.pages.RecipePage;
