@@ -77,7 +77,7 @@ public class MyPantryTest {
     }
 
     @Test
-    public void addToPantry() throws Exception {
+    public void testAddToPantry() throws Exception {
         myPan = new MyPantry();
         myPan.addToPantry(ing.toString());
 
@@ -85,7 +85,7 @@ public class MyPantryTest {
     }
 
     @Test
-    public void addDislike() {
+    public void testAddDislike() {
         ArrayList<Ingredient> list = new ArrayList<>();
         ArrayList<Ingredient> list2 = new ArrayList<>();
         list.add(ing3);
@@ -103,7 +103,7 @@ public class MyPantryTest {
     }
 
     @Test
-    public void removeDislike() {
+    public void testRemoveDislike() {
         ArrayList<Ingredient> list = new ArrayList<>();
         ArrayList<Ingredient> list2 = new ArrayList<>();
         list.add(ing3);
@@ -122,7 +122,7 @@ public class MyPantryTest {
     }
 
     @Test
-    public void addIngredientToPantryFromList() {
+    public void testAddIngredientToPantryFromList() {
         ArrayList<Ingredient> list = new ArrayList<>();
         list.add(ing5);
         JList availableIngredientsJList = new JList<>(list.toArray());
@@ -135,7 +135,7 @@ public class MyPantryTest {
     }
 
     @Test
-    public void removeIngredientFromPantryList() {
+    public void testRemoveIngredientFromPantryList() {
         ArrayList<Ingredient> list = new ArrayList<>();
         list.add(ing4);
 

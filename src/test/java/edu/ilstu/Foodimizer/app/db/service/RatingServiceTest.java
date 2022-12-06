@@ -1,47 +1,54 @@
 package edu.ilstu.Foodimizer.app.db.service;
 
 import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
+import edu.ilstu.Foodimizer.app.db.models.Ingredient;
 import edu.ilstu.Foodimizer.app.db.models.JoinProfileRateRecipe;
 import edu.ilstu.Foodimizer.app.db.models.Profile;
 import edu.ilstu.Foodimizer.app.db.models.Recipe;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
+import java.util.List;
 
 public class RatingServiceTest {
-    static ProfileService ps;
-    static Profile profile;
+    private ProfileService ps;
+    private Profile profile;
 
-    static RecipeService rs;
-    static Recipe recipe;
+    private RecipeService rs;
+    private Recipe recipe;
 
-    static RatingService rts;
+    private RatingService rts;
 
 
     @BeforeClass
     public static void setUp() {
         ServicesEntityManager sem = ServicesEntityManager.getInstance();
         sem.init("FoodimizerDB-TEST");
-
-        ps = new ProfileService();
-        profile = new Profile();
-        profile.setName("TESTPROFILE");
-        ps.save(profile);
-
-        rs = new RecipeService();
-        recipe = new Recipe();
-        recipe.setName("TESTRECIPE");
-        rs.save(recipe);
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @Before
+    public void before() {
+        ps = new ProfileService();
+        rs = new RecipeService();
+    }
 
+    @After
+    public void tearDown() {
+        List<JoinProfileRateRecipe> createdDuringTesting = rts.getAll();
+        for (JoinProfileRateRecipe jprr : createdDuringTesting) {
+            rts.delete(jprr);
+        }
     }
 
     @Test
     public void testGetRatingObj() {
+        profile = new Profile();
+        profile.setName("TESTPROFILE");
+        ps.save(profile);
+
+        recipe = new Recipe();
+        recipe.setName("TESTRECIPE");
+        rs.save(recipe);
+
         rts = new RatingService();
         JoinProfileRateRecipe jprr = new JoinProfileRateRecipe();
         jprr.setRecipe(recipe);
