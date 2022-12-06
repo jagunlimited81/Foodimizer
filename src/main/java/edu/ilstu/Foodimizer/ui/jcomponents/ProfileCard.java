@@ -23,7 +23,6 @@ public class ProfileCard extends JPanel implements MouseListener {
 
     private void init() {
 
-        Dimension cardSize = new Dimension(200, 400);
         Dimension profilePicSize = new Dimension(200, 200);
 
         /* ----this---- */
