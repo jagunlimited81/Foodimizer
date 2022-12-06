@@ -154,9 +154,10 @@ public class DatabaseFiller {
         recipe.setCookMethod("Pan");
         recipe.setServingSize(1);
         recipe.setDescription("Just a hamburger bun with fries can make you thirsty.");
-        recipe.setDirections("1. Put your hamburger ban in your toaster" +
-                "\n2. Heat your frying pan then add your oil to the pan. Throw your fries into the frying pan." +
-                "\n3. After the fries are cooked, add them to your hamburger bun with and top it off with the melted cheese");
+        recipe.setDirections("""
+                1. Put your hamburger ban in your toaster
+                2. Heat your frying pan then add your oil to the pan. Throw your fries into the frying pan.
+                3. After the fries are cooked, add them to your hamburger bun with and top it off with the melted cheese""");
         recipe.setMealType("Lunch and Dinner");
         recipe.setPrepTime(0);
         recipe.setCookTime(5);
@@ -169,10 +170,11 @@ public class DatabaseFiller {
         recipe.setCookMethod("Oven and Skillet");
         recipe.setServingSize(1);
         recipe.setDescription("Every time we visit Springfield, Illinois we have to eat one of their famous horseshoes. The cheese sauce is a little different depending on where you stop to eat, seems everyone has their own way of making it.");
-//        recipe.setDirections("1. Preheat the oven to 400 degrees F (200 degrees C). Spread french fries out on a baking sheet. Bake for 20 minutes in the preheated oven, or until golden brown. " +
-//                "\n2. Meanwhile, divide the ground beef into four equal parts and form into patties. Fry the patties in a large skillet over medium-high heat until well done, about 4 minutes per side. " +
-//                "\n3. Melt the butter in a saucepan over medium heat and whisk in the flour. Cook while stirring constantly for 4 minutes to cook out the flavor of raw flour. Gradually whisk in the half-and-half so that no lumps form. Bring to a simmer then remove from the heat and add the cheese; stir until melted. Season with salt, pepper, and hot sauce to taste. " +
-//                "\n4. Place 2 slices of toasted bread onto 2 dinner plates and top each slice with a hamburger patty. Top each patty with cooked french fries. Pour the cheese sauce on top of everything and serve immediately. ");
+        recipe.setDirections("""
+                1. Preheat the oven to 400 degrees F (200 degrees C). Spread french fries out on a baking sheet. Bake for 20 minutes in the preheated oven, or until golden brown.\s
+                2. Meanwhile, divide the ground beef into four equal parts and form into patties. Fry the patties in a large skillet over medium-high heat until well done, about 4 minutes per side.\s
+                3. Melt the butter in a saucepan over medium heat and whisk in the flour. Cook while stirring constantly for 4 minutes to cook out the flavor of raw flour. Gradually whisk in the half-and-half so that no lumps form. Bring to a simmer then remove from the heat and add the cheese; stir until melted. Season with salt, pepper, and hot sauce to taste.\s
+                4. Place 2 slices of toasted bread onto 2 dinner plates and top each slice with a hamburger patty. Top each patty with cooked french fries. Pour the cheese sauce on top of everything and serve immediately.\s""");
         recipe.setMealType("Lunch and Dinner");
         recipe.setPrepTime(0);
         recipe.setCookTime(24);
