@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+
 public class MyPantry extends Page {
     IngredientService is = new IngredientService();
     JList availableIngredientsJList;
@@ -47,7 +48,7 @@ public class MyPantry extends Page {
             searchBarPanel.add(searchTextField);
 
             JButton searchBtn = new JButton("Quick Add");
-            searchBtn.addActionListener(e -> addToPantry(searchTextField.getText()));
+            searchBtn.addActionListener(e -> addToPantryImplementor(searchTextField.getText()));
             searchBarPanel.add(searchBtn);
         }
         contentPanel.add(searchBarPanel, BorderLayout.NORTH);
@@ -94,26 +95,31 @@ public class MyPantry extends Page {
         JPanel buttonPanel = new JPanel();
         {
             JButton addBtn = new JButton("Add");
-            addBtn.addActionListener(e -> addIngredientToPantryFromList(availableIngredientsJList));
+            addBtn.addActionListener(e -> addIngredientToPantryFromListImplementor(availableIngredientsJList));
             buttonPanel.add(addBtn);
 
             JButton rmvBtn = new JButton("Remove");
-            rmvBtn.addActionListener(e -> removeIngredientFromPantryList(profilePantryJList));
+            rmvBtn.addActionListener(e -> removeIngredientFromPantryListImplementor(profilePantryJList));
             buttonPanel.add(rmvBtn);
 
             JButton addToDislikedIngredients = new JButton("Dislike");
-            addToDislikedIngredients.addActionListener(e -> addDislike(availableIngredientsJList, profilePantryJList));
+            addToDislikedIngredients.addActionListener(e -> addDislikeImplementor(availableIngredientsJList, profilePantryJList));
             buttonPanel.add(addToDislikedIngredients);
 
             JButton removeFromDislikedIngredients = new JButton("remove Dislike");
-            removeFromDislikedIngredients.addActionListener(e -> removeDislike(dislikedIngredientsJList));
+            removeFromDislikedIngredients.addActionListener(e -> removeDislikeImplementor(dislikedIngredientsJList));
             buttonPanel.add(removeFromDislikedIngredients);
         }
         contentPanel.add(buttonPanel, BorderLayout.SOUTH);
         this.add(contentPanel, BorderLayout.CENTER);
     }
 
-    private void addDislike(JList availableIngredientsJList, JList profilePantryJList) {
+    private void addDislikeImplementor(JList availableIngredientsJList, JList profilePantryJList) {
+        addDislike(availableIngredientsJList, profilePantryJList);
+        refreshContent();
+    }
+
+    public void addDislike(JList availableIngredientsJList, JList profilePantryJList) {
         IngredientService is = new IngredientService();
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         ProfileService ps = new ProfileService();
@@ -127,10 +133,14 @@ public class MyPantry extends Page {
             activeProfile.getPantry().remove(i);
         }
         ps.update(activeProfile, "");
+    }
+
+    private void removeDislikeImplementor(JList dislikedIngredientsJList) {
+        removeDislike(dislikedIngredientsJList);
         refreshContent();
     }
 
-    private void removeDislike(JList dislikedIngredientsJList) {
+    public void removeDislike(JList dislikedIngredientsJList){
         IngredientService is = new IngredientService();
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         ProfileService ps = new ProfileService();
@@ -139,26 +149,39 @@ public class MyPantry extends Page {
             activeProfile.getDislikedIngredients().remove((Ingredient) i);
         }
         ps.update(activeProfile, "");
+    }
+
+    private void addToPantryImplementor(String ingText) {
+        try {
+            addToPantry(ingText);
+        } catch (IllegalArgumentException e){
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "No Ingredient Found In Pantry", "Dialog",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
         refreshContent();
     }
 
-    private void addToPantry(String ingText) {
+    public void addToPantry(String ingText){
         IngredientService is = new IngredientService();
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         Ingredient i = is.getFromName(ingText.toLowerCase());
         if (i != null) {
             activeProfile.getPantry().add(i);
         } else {
-            JOptionPane.showMessageDialog(new JFrame(),
-                    "No Ingredient Found In Pantry", "Dialog",
-                    JOptionPane.ERROR_MESSAGE);
+            throw new IllegalArgumentException("No Ingredient Found In Pantry");
         }
         ProfileService ps = new ProfileService();
         ps.update(activeProfile, "");
+    }
+
+    private void removeIngredientFromPantryListImplementor(JList list) {
+        removeIngredientFromPantryList(list);
         refreshContent();
     }
 
-    private void removeIngredientFromPantryList(JList list) {
+    public void removeIngredientFromPantryList(JList list){
         IngredientService is = new IngredientService();
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         ProfileService ps = new ProfileService();
@@ -167,10 +190,14 @@ public class MyPantry extends Page {
             activeProfile.getPantry().remove(i);
         }
         ps.update(activeProfile, "");
+    }
+
+    private void addIngredientToPantryFromListImplementor(JList list) {
+        addIngredientToPantryFromList(list);
         refreshContent();
     }
 
-    private void addIngredientToPantryFromList(JList list) {
+    public void addIngredientToPantryFromList(JList list){
         IngredientService is = new IngredientService();
         Profile activeProfile = StateManager.getInstance().getActiveProfile();
         ProfileService ps = new ProfileService();
@@ -183,6 +210,5 @@ public class MyPantry extends Page {
             }
         }
         ps.update(activeProfile, "");
-        refreshContent();
     }
 }
