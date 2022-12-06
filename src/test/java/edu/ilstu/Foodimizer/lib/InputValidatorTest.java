@@ -3,6 +3,7 @@ package edu.ilstu.Foodimizer.lib;
 import edu.ilstu.Foodimizer.app.db.ServicesEntityManager;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,8 +11,8 @@ import static org.junit.Assert.*;
 public class InputValidatorTest {
 
     private static InputValidator iv = null;
-    @Before
-    public void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         ServicesEntityManager sem = ServicesEntityManager.getInstance();
         sem.init("FoodimizerDB-TEST");
     }
